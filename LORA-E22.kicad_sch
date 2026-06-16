@@ -4723,8 +4723,8 @@
 				(justify right)
 			)
 		)
-		(property "Value" "BESDU0603"
-			(at 121.158 109.22 90)
+		(property "Value" "BESDU0603-14"
+			(at 117.094 108.966 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4915,7 +4915,7 @@
 				)
 			)
 		)
-		(property "Value" "SMAJ5.0A"
+		(property "Value" "SMAJ3.3A"
 			(at 127 73.66 0)
 			(show_name no)
 			(do_not_autoplace no)
