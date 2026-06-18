@@ -5735,7 +5735,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 100.33 162.56 0)
 			(hide yes)
 			(show_name no)
@@ -6345,7 +6345,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 88.9 162.56 0)
 			(hide yes)
 			(show_name no)
@@ -7264,7 +7264,7 @@
 				)
 			)
 		)
-		(property "Value" "100nF 16V"
+		(property "Value" "100nF"
 			(at 84.328 179.07 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7318,7 +7318,7 @@
 				)
 			)
 		)
-		(property "Voltage Rating" ""
+		(property "Voltage Rating" "16V"
 			(at 83.82 176.53 0)
 			(hide yes)
 			(show_name no)

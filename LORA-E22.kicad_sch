@@ -4664,7 +4664,7 @@
 				)
 			)
 		)
-		(property "Voltage Rating" ""
+		(property "Voltage Rating" "10V"
 			(at 203.2 77.47 0)
 			(hide yes)
 			(show_name no)
@@ -5084,7 +5084,7 @@
 				)
 			)
 		)
-		(property "Voltage Rating" ""
+		(property "Voltage Rating" "10V"
 			(at 193.04 77.47 0)
 			(hide yes)
 			(show_name no)
