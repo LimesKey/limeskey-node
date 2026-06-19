@@ -41,3 +41,11 @@ fp-info-cache
 
 # Local project settings
 *.kicad_prl
+
+/dfm
+
+ibom.html
+
+*.csv
+
+*.zip

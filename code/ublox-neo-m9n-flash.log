@@ -1,0 +1,97 @@
+PS C:\Users\ryand> & "C:\Program Files (x86)\u-blox\u-center_v25.06\ubxfwupdate.exe" -p COM5 -b 115200:115200:115200 --no-fis 1 -s 0 -t 1 -v 1 "C:\Users\ryand\Downloads\JU_EXT_404.907640e53126add7de4708d754b575ef.bin"
+----------CMD line arguments-----------
+Image file:        C:\Users\ryand\Downloads\JU_EXT_404.907640e53126add7de4708d754b575ef.bin
+Flash:             <compiled-in>
+Fis:               flash.xml
+Port:              COM5
+Baudrates:         115200/115200/115200
+Safeboot:          0
+Reset:             1
+AutoBaud:          0
+Verbose:           1
+Erase all:         1
+Erase only:        0
+Training sequence: 1
+Chip erase:        0
+Merging FIS:       1
+Update RAM:        0
+Use USB alt:       0
+---------------------------------------
+  0.0 u-blox Firmware Update Tool version 24.11
+  0.0 Updating Firmware 'C:\Users\ryand\Downloads\JU_EXT_404.907640e53126add7de4708d754b575ef.bin' of receiver over 'COM5'
+  0.0   - Opening and buffering image file
+  0.0   - Verifying image
+  0.0   - Got an encrypted image with footer info
+  0.0   - CRC Value             :    F130DAC7
+  0.0   - Footer Version        :    0
+  0.0   - Number of Images      :    1
+  0.0   - Footer Size           :    24
+  0.0   - Image Config Size     :    0
+  0.0   - Image 0 Size          :    677116
+  0.0   - Trying to open port COM5
+  0.0   - Setting baudrate to 115200
+  0.3   - Sending training sequence
+  0.3   - Received Version information
+  0.3   - Receiver currently running SW 'EXT CORE 4.04 (7f89f7)'
+  0.3   - Receiver HW '00190000', Generation 9.0
+  0.3   - Sending ROM CRC Poll
+  0.3 ROM CRC: 0x118B2060
+  0.3 u-blox9 ROM1.02 hardware detected (0x118B2060)
+  0.3  Getting Port connection to receiver
+  0.3   - Connected port is: UART1
+  0.3  Starting LDR TSK
+  0.3   - LDR TSK started successfully
+  0.3  Identify flash loader
+  0.3   - Uploader version 5.1 detected
+  0.3  Stop GPS operation
+  0.3  Detecting Flash manufacturer and device IDs
+  0.3   - Flash ManId: 0x009D DevId: 0x6014
+  0.3   - Not merging anything
+  0.3   - Flash size:   1048576
+  0.3   -  Flash block:  256 x 4096
+  0.5   - Setting baudrate to 115200
+  0.8  Receiver info collected, downloading to flash...
+  3.9   - Resending pkt 0x0
+  3.9   - Resending pkt 0x1
+  3.9   - Resending pkt 0x2
+  3.9   - Resending pkt 0x3
+  3.9   - Resending pkt 0x4
+  3.9   - Resending pkt 0x5
+  3.9   - Resending pkt 0x6
+  4.0   - Resending pkt 0x7
+  4.0   - Resending pkt 0x8
+  4.0   - Resending pkt 0x9
+  6.9   - Resending pkt 0x0
+  6.9   - Resending pkt 0x1
+  6.9   - Resending pkt 0x2
+  6.9   - Resending pkt 0x3
+  6.9   - Resending pkt 0x4
+  6.9   - Resending pkt 0x5
+  6.9   - Resending pkt 0x6
+  7.0   - Resending pkt 0x7
+  7.0   - Resending pkt 0x8
+  7.0   - Resending pkt 0x9
+  9.9   - Resending pkt 0x0
+  9.9   - Resending pkt 0x1
+  9.9   - Resending pkt 0x2
+  9.9   - Resending pkt 0x3
+  9.9   - Resending pkt 0x4
+  9.9   - Resending pkt 0x5
+  9.9   - Resending pkt 0x6
+ 10.0   - Resending pkt 0x7
+ 10.0   - Resending pkt 0x8
+ 10.0   - Resending pkt 0x9
+ 12.9   - Resending pkt 0x0
+ 12.9   - Resending pkt 0x1
+ 12.9   - Resending pkt 0x2
+ 12.9   - Resending pkt 0x3
+ 12.9   - Resending pkt 0x4
+ 12.9   - Resending pkt 0x5
+ 13.0   - Resending pkt 0x6
+ 13.0   - Resending pkt 0x7
+ 13.0   - Resending pkt 0x8
+ 13.0   - Resending pkt 0x9
+ 15.9 ERROR: Write retries for packet 0 exceeded.
+ 15.9 Firmware Update FAILED
+ 15.9   - Transfer time duration: 15.850917 sec
+PS C:\Users\ryand>
