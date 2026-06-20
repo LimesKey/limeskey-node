@@ -1,0 +1,99 @@
+PS C:\Users\ryand> & "C:\Program Files (x86)\u-blox\u-center_v25.06\ubxfwupdate.exe" -p COM5 -b 9600:9600:9600 --no-fis 1 -s 0 -t 1 -C 1 -v 1 "C:\Users\ryand\Downloads\JU_EXT_404.907640e53126add7de4708d754b575ef.bin"
+----------CMD line arguments-----------
+Image file:        C:\Users\ryand\Downloads\JU_EXT_404.907640e53126add7de4708d754b575ef.bin
+Flash:             <compiled-in>
+Fis:               flash.xml
+Port:              COM5
+Baudrates:         9600/9600/9600
+Safeboot:          0
+Reset:             1
+AutoBaud:          0
+Verbose:           1
+Erase all:         1
+Erase only:        0
+Training sequence: 1
+Chip erase:        1
+Merging FIS:       1
+Update RAM:        0
+Use USB alt:       0
+---------------------------------------
+  0.0 u-blox Firmware Update Tool version 24.11
+  0.0 Updating Firmware 'C:\Users\ryand\Downloads\JU_EXT_404.907640e53126add7de4708d754b575ef.bin' of receiver over 'COM5'
+  0.0   - Opening and buffering image file
+  0.0   - Verifying image
+  0.0   - Got an encrypted image with footer info
+  0.0   - CRC Value             :    F130DAC7
+  0.0   - Footer Version        :    0
+  0.0   - Number of Images      :    1
+  0.0   - Footer Size           :    24
+  0.0   - Image Config Size     :    0
+  0.0   - Image 0 Size          :    677116
+  0.0   - Trying to open port COM5
+  0.0   - Setting baudrate to 9600
+  0.3   - Sending training sequence
+  0.4   - Received Version information
+  0.4   - Receiver currently running SW 'ROM BOOT 1.02 (a11814)'
+  0.4   - Receiver HW '00190000', Generation 9.0
+  0.4   - Sending ROM CRC Poll
+  0.5 ROM CRC: 0x118B2060
+  0.5 u-blox9 ROM1.02 hardware detected (0x118B2060)
+  0.5  Getting Port connection to receiver
+  0.5   - Connected port is: UART1
+  0.5  Starting LDR TSK
+  0.6   - LDR TSK started successfully
+  0.6  Identify flash loader
+  0.6   - Uploader version 5.1 detected
+  0.6  Stop GPS operation
+  0.6  Detecting Flash manufacturer and device IDs
+  0.7   - Flash ManId: 0x009D DevId: 0x6014
+  0.8   - Not merging anything
+  0.8   - Flash size:   1048576
+  0.8   -  Flash block:  256 x 4096
+  1.0   - Setting baudrate to 9600
+  1.3 Chip erase started
+  1.3  Receiver info collected, downloading to flash...
+  3.4 Chip erase complete
+  4.3   - Resending pkt 0x0
+  4.4   - Resending pkt 0x1
+  4.4   - Resending pkt 0x2
+  4.4   - Resending pkt 0x3
+  4.4   - Resending pkt 0x4
+  4.4   - Resending pkt 0x5
+  4.4   - Resending pkt 0x6
+  4.4   - Resending pkt 0x7
+  4.4   - Resending pkt 0x8
+  4.5   - Resending pkt 0x9
+  7.3   - Resending pkt 0x0
+  7.4   - Resending pkt 0x1
+  7.4   - Resending pkt 0x2
+  7.4   - Resending pkt 0x3
+  7.4   - Resending pkt 0x4
+  7.4   - Resending pkt 0x5
+  7.4   - Resending pkt 0x6
+  7.4   - Resending pkt 0x7
+  7.4   - Resending pkt 0x8
+  7.5   - Resending pkt 0x9
+ 10.3   - Resending pkt 0x0
+ 10.4   - Resending pkt 0x1
+ 10.4   - Resending pkt 0x2
+ 10.4   - Resending pkt 0x3
+ 10.4   - Resending pkt 0x4
+ 10.4   - Resending pkt 0x5
+ 10.4   - Resending pkt 0x6
+ 10.4   - Resending pkt 0x7
+ 10.5   - Resending pkt 0x8
+ 10.5   - Resending pkt 0x9
+ 13.3   - Resending pkt 0x0
+ 13.4   - Resending pkt 0x1
+ 13.4   - Resending pkt 0x2
+ 13.4   - Resending pkt 0x3
+ 13.4   - Resending pkt 0x4
+ 13.4   - Resending pkt 0x5
+ 13.4   - Resending pkt 0x6
+ 13.4   - Resending pkt 0x7
+ 13.5   - Resending pkt 0x8
+ 13.5   - Resending pkt 0x9
+ 16.3 ERROR: Write retries for packet 0 exceeded.
+ 16.3 Firmware Update FAILED
+
+ 16.3   - Transfer time duration: 16.329527 sec
