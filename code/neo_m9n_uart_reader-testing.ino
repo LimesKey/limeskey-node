@@ -1,53 +1,50 @@
 /*
- * NEO-M9N GNSS reader (SPI)  --  limeskey-node / Seeed XIAO ESP32-C6
+ * NEO-M9N GNSS reader (UART)  --  limeskey-node / Seeed XIAO ESP32-C6
  *
- * Use once D_SEL is bridged to GND (SPI selected). Shares the SPI bus with the
- * SX1262, so each device has its own chip select; the radio's NSS is held high
- * here so it releases MISO while the GNSS is addressed.
+ * The module runs in UART+I2C mode and streams UBX-NAV-PVT at 1 Hz, 115200 8N1.
+ * This reads that stream, validates each UBX checksum, and prints a verbose,
+ * human-readable position report once per navigation epoch.
  *
- * Reads the module by clocking 0xFF and streaming the reply into a
- * checksum-validated UBX state machine. 0xFF is the module's idle byte but can
- * also appear inside a payload, so nothing is filtered: the parser only acts on
- * frames whose Fletcher checksum matches, and a drain stops only when 0xFF runs
- * appear at a packet boundary (buffer genuinely empty).
- *
- * Datasheet limits (UBX-19014285): SPI max clock 5.5 MHz, but max DATA rate only
- * 125 kB/s. 1 MHz sits on that ceiling and invites mid-frame 0xFF stuffing, so
- * this runs at 250 kHz. CPOL = 0, CPHA = 0 => SPI_MODE0.
- *
- * Wiring (matches the SPI bring-up net list):
- *   SCK    -> GPIO19      MISO -> GPIO20      MOSI -> GPIO18
- *   CS_GPS -> GPIO2  (through R3)
+ * Wiring (these pins are shared with the SX1262 SPI bus):
+ *   ESP32 GPIO20  <- NEO pin 20 (TXD)    [ESP32 RX]
+ *   ESP32 GPIO18  -> NEO pin 21 (RXD)    [ESP32 TX]
+ * Hold the radio's NSS high (LORA_NSS_PIN) so the SX1262 releases the shared
+ * SDO/MISO line while the GNSS drives it.
  */
 
-#include <SPI.h>
+#include <HardwareSerial.h>
 
 // ---------------- CONFIG ----------------
-#define CS_PIN        2        // CS_GPS (GPIO2, through R3)
-#define SCK_PIN       19
-#define MISO_PIN      20
-#define MOSI_PIN      18
-#define SPI_HZ        250000   // 250 kHz: under the 125 kB/s data ceiling for contiguous frames
-#define LORA_NSS_PIN  -1       // set to the SX1262 NSS GPIO so it releases the shared MISO; -1 to skip
-#define PPS_PIN       -1       // set if PPS is broken out; -1 to skip
-#define DRAIN_MS      250      // how often to drain the module's SPI buffer
-#define DRAIN_MAX     4096     // safety cap on bytes clocked per drain
-#define IDLE_RUN      4        // consecutive 0xFF at a packet boundary => buffer empty
+#define GNSS          Serial1   // ESP32-C6 UART1
+#define GNSS_RX_PIN   20        // ESP32 receives NEO TXD
+#define GNSS_TX_PIN   18        // ESP32 transmits to NEO RXD
+#define GNSS_BAUD     9600
+#define LORA_NSS_PIN  21        // set to the SX1262 NSS GPIO; -1 to skip
+#define PPS_PIN       -1        // set if PPS is broken out; -1 to skip
 // ----------------------------------------
-
-SPISettings gnssSpi(SPI_HZ, MSBFIRST, SPI_MODE0);   // u-blox: CPOL=0, CPHA=0
-
-static inline void csLow()  { digitalWrite(CS_PIN, LOW);  }
-static inline void csHigh() { digitalWrite(CS_PIN, HIGH); }
 
 // ---- little-endian field readers ----
 static inline uint32_t u32(const uint8_t* p){ return (uint32_t)p[0] | ((uint32_t)p[1]<<8) | ((uint32_t)p[2]<<16) | ((uint32_t)p[3]<<24); }
 static inline int32_t  i32(const uint8_t* p){ return (int32_t)u32(p); }
 static inline uint16_t u16(const uint8_t* p){ return (uint16_t)p[0] | ((uint16_t)p[1]<<8); }
 
-bool gotData = false;   // set once any valid UBX frame is decoded
+// ---- transmit a UBX frame (used to poll MON-VER) ----
+void sendUBX(uint8_t cls, uint8_t id, const uint8_t* payload, uint16_t len) {
+  uint8_t ckA = 0, ckB = 0;
+  auto ck = [&](uint8_t b){ ckA += b; ckB += ckA; };
 
-// ---- decoders (identical to the UART reader) ----
+  uint8_t hdr[6] = {0xB5, 0x62, cls, id, (uint8_t)(len & 0xFF), (uint8_t)(len >> 8)};
+  ck(cls); ck(id); ck(len & 0xFF); ck(len >> 8);
+  for (uint16_t i = 0; i < len; i++) ck(payload[i]);
+
+  GNSS.write(hdr, 6);
+  if (len && payload) GNSS.write(payload, len);
+  GNSS.write(ckA);
+  GNSS.write(ckB);
+  GNSS.flush();
+}
+
+// ---- decoders ----
 const char* fixName(uint8_t t) {
   switch (t) {
     case 0:  return "no fix";
@@ -113,7 +110,6 @@ void printMonVer(const uint8_t* p, uint16_t len) {
 }
 
 void onUbxMessage(uint8_t cls, uint8_t id, const uint8_t* p, uint16_t len) {
-  gotData = true;
   if      (cls == 0x01 && id == 0x07 && len >= 92) printNavPvt(p);
   else if (cls == 0x0A && id == 0x04)              printMonVer(p, len);
   else if (cls == 0x05 && len >= 2)                                    // ACK / NAK
@@ -127,8 +123,6 @@ static UbxState st = WAIT_S1;
 static uint8_t  msgCls, msgId, ckA, ckB, rxCkA;
 static uint16_t msgLen, payIdx;
 static uint8_t  payload[256];   // NAV-PVT is 92; MON-VER with extensions can reach ~220
-
-static inline bool ubxIdle() { return st == WAIT_S1; }
 
 void ubxFeed(uint8_t b) {
   switch (st) {
@@ -150,72 +144,23 @@ void ubxFeed(uint8_t b) {
   }
 }
 
-// ---- transmit a UBX frame over SPI; reply bytes clocked back are parsed too ----
-void sendUBX(uint8_t cls, uint8_t id, const uint8_t* p, uint16_t len) {
-  uint8_t ckA = 0, ckB = 0;
-  auto ck = [&](uint8_t b){ ckA += b; ckB += ckA; };
-  uint8_t hdr[6] = {0xB5, 0x62, cls, id, (uint8_t)(len & 0xFF), (uint8_t)(len >> 8)};
-  ck(cls); ck(id); ck(len & 0xFF); ck(len >> 8);
-  for (uint16_t i = 0; i < len; i++) ck(p[i]);
-
-  SPI.beginTransaction(gnssSpi);
-  csLow();
-  for (int i = 0; i < 6; i++)            ubxFeed(SPI.transfer(hdr[i]));
-  for (uint16_t i = 0; i < len; i++)     ubxFeed(SPI.transfer(p[i]));
-  ubxFeed(SPI.transfer(ckA));
-  ubxFeed(SPI.transfer(ckB));
-  csHigh();
-  SPI.endTransaction();
-}
-
-// ---- clock the module's buffer until it goes idle at a packet boundary ----
-void drainGNSS() {
-  SPI.beginTransaction(gnssSpi);
-  csLow();
-  uint16_t total = 0, idle = 0;
-  while (total < DRAIN_MAX) {
-    uint8_t b = SPI.transfer(0xFF);
-    ubxFeed(b);
-    total++;
-    if (b == 0xFF && ubxIdle()) { if (++idle >= IDLE_RUN) break; }
-    else idle = 0;
-  }
-  csHigh();
-  SPI.endTransaction();
-}
-
-unsigned long lastDrain = 0, startMs = 0;
-bool warned = false;
-
 void setup() {
   Serial.begin(115200);
   delay(1500);
-  Serial.println("\n=== NEO-M9N SPI reader (limeskey-node) ===");
+  Serial.println("\n=== NEO-M9N UART reader (limeskey-node) ===");
 
   if (LORA_NSS_PIN >= 0) { pinMode(LORA_NSS_PIN, OUTPUT); digitalWrite(LORA_NSS_PIN, HIGH); }
   if (PPS_PIN >= 0) pinMode(PPS_PIN, INPUT);
 
-  pinMode(CS_PIN, OUTPUT);
-  csHigh();
-  SPI.begin(SCK_PIN, MISO_PIN, MOSI_PIN, CS_PIN);
-  Serial.printf("SPI up: SCK=%d MISO=%d MOSI=%d CS=%d @ %d Hz, MODE0\n",
-                SCK_PIN, MISO_PIN, MOSI_PIN, CS_PIN, SPI_HZ);
+  GNSS.setRxBufferSize(1024);   // must precede begin(); 1 Hz UBX bursts are large
+  GNSS.begin(GNSS_BAUD, SERIAL_8N1, GNSS_RX_PIN, GNSS_TX_PIN);
+  Serial.printf("Listening on UART1 @ %d 8N1   (RX=GPIO%d, TX=GPIO%d)\n",
+                GNSS_BAUD, GNSS_RX_PIN, GNSS_TX_PIN);
 
   delay(200);
   sendUBX(0x0A, 0x04, nullptr, 0);   // request firmware version once
-  startMs = millis();
 }
 
 void loop() {
-  if (millis() - lastDrain >= DRAIN_MS) {
-    lastDrain = millis();
-    drainGNSS();
-  }
-
-  if (!gotData && !warned && millis() - startMs > 6000) {
-    warned = true;
-    Serial.println("\n[!] 6 s and no UBX frame decoded: bus is returning only 0xFF.");
-    Serial.println("    Confirm D_SEL = GND (SPI selected) and power-cycle the module,");
-    Serial.println("    and that the SX1262 NSS is held high so it isn't driving MISO.");
-  }
+  while (GNSS.available()) ubxFeed((uint8_t)GNSS.read());
 }

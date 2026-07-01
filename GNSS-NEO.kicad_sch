@@ -2940,6 +2940,16 @@
 		)
 		(uuid "daa33215-2fd3-4f47-9f66-0e4a8df0b636")
 	)
+	(text "todo: switch module to use UART and not SPI"
+		(exclude_from_sim no)
+		(at 214.376 91.186 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "05ab3c93-a87a-46d4-9364-c6d8105142df")
+	)
 	(text "LEDs and Jumpers"
 		(exclude_from_sim no)
 		(at 52.07 47.498 0)
@@ -2985,6 +2995,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "32182fe4-f942-434a-a56c-3535033d0c73")
+	)
+	(junction
+		(at 184.15 57.15)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "352b7585-850c-4bb2-8f0d-3e6575fcac74")
 	)
 	(junction
 		(at 78.74 176.53)
@@ -3035,10 +3051,22 @@
 		(uuid "b5656920-a251-435c-b6e3-14a6f434bb6b")
 	)
 	(junction
+		(at 168.91 77.47)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b8f3828d-3ae1-4cb5-b9a5-799e697d6cbe")
+	)
+	(junction
 		(at 100.33 154.94)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "ca450b9c-3427-488e-b9b6-4a4463cb70de")
+	)
+	(junction
+		(at 185.42 72.39)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "ca7204dd-ddf7-4a1f-aca0-f7e50776be22")
 	)
 	(junction
 		(at 88.9 165.1)
@@ -3072,7 +3100,7 @@
 	)
 	(wire
 		(pts
-			(xy 180.34 73.66) (xy 180.34 69.85)
+			(xy 168.91 82.55) (xy 168.91 77.47)
 		)
 		(stroke
 			(width 0)
@@ -3222,6 +3250,16 @@
 	)
 	(wire
 		(pts
+			(xy 181.61 72.39) (xy 185.42 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2fa47d63-1179-4a1d-8bab-bc870bc587ce")
+	)
+	(wire
+		(pts
 			(xy 92.71 95.25) (xy 92.71 88.9)
 		)
 		(stroke
@@ -3249,6 +3287,16 @@
 			(type default)
 		)
 		(uuid "3864c8d1-ca65-41f6-a09e-621e36c1b5c9")
+	)
+	(wire
+		(pts
+			(xy 171.45 72.39) (xy 176.53 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a0cfa02-12a1-4681-876c-5f88289324eb")
 	)
 	(wire
 		(pts
@@ -3282,6 +3330,16 @@
 	)
 	(wire
 		(pts
+			(xy 185.42 72.39) (xy 185.42 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "47000d6f-c97a-4ceb-a110-f5123e8211ad")
+	)
+	(wire
+		(pts
 			(xy 58.42 66.04) (xy 58.42 69.85)
 		)
 		(stroke
@@ -3289,6 +3347,16 @@
 			(type default)
 		)
 		(uuid "483a1d95-6f8d-4f07-9f90-2a1707877bfc")
+	)
+	(wire
+		(pts
+			(xy 168.91 77.47) (xy 173.99 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4e512d5b-f4bd-4a93-8563-ebf598b522b3")
 	)
 	(wire
 		(pts
@@ -3372,16 +3440,6 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 72.39) (xy 198.12 72.39)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "67d4eb7b-3029-4ab2-b34e-7d12b81ac924")
-	)
-	(wire
-		(pts
 			(xy 234.95 20.32) (xy 215.9 20.32)
 		)
 		(stroke
@@ -3389,6 +3447,16 @@
 			(type default)
 		)
 		(uuid "68159e91-9eda-46a0-9e1f-c390e408e8eb")
+	)
+	(wire
+		(pts
+			(xy 171.45 66.04) (xy 171.45 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6822d333-63d6-4d56-8a87-bdd82299b2c2")
 	)
 	(wire
 		(pts
@@ -3412,7 +3480,7 @@
 	)
 	(wire
 		(pts
-			(xy 195.58 57.15) (xy 198.12 57.15)
+			(xy 181.61 57.15) (xy 184.15 57.15)
 		)
 		(stroke
 			(width 0)
@@ -3482,6 +3550,16 @@
 	)
 	(wire
 		(pts
+			(xy 168.91 77.47) (xy 168.91 69.85)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "824bd4af-2470-4d05-8b73-9c62f9676347")
+	)
+	(wire
+		(pts
 			(xy 193.04 74.93) (xy 198.12 74.93)
 		)
 		(stroke
@@ -3489,6 +3567,16 @@
 			(type default)
 		)
 		(uuid "85850671-9ce2-41dc-8fd6-554093300571")
+	)
+	(wire
+		(pts
+			(xy 185.42 77.47) (xy 184.15 77.47)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "88fc8b30-2a5e-476e-8b1f-81d2092e59e3")
 	)
 	(wire
 		(pts
@@ -3672,6 +3760,16 @@
 	)
 	(wire
 		(pts
+			(xy 185.42 72.39) (xy 198.12 72.39)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "cae77a60-7672-44a0-b051-10a35e448071")
+	)
+	(wire
+		(pts
 			(xy 210.82 30.48) (xy 210.82 34.29)
 		)
 		(stroke
@@ -3722,7 +3820,7 @@
 	)
 	(wire
 		(pts
-			(xy 180.34 69.85) (xy 182.88 69.85)
+			(xy 168.91 69.85) (xy 182.88 69.85)
 		)
 		(stroke
 			(width 0)
@@ -3759,6 +3857,16 @@
 			(type default)
 		)
 		(uuid "ea82fb50-74b1-4a9f-96f5-081a9ab262a1")
+	)
+	(wire
+		(pts
+			(xy 184.15 57.15) (xy 198.12 57.15)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "efbc3e2b-2187-4a34-a77a-7fc5e326008b")
 	)
 	(wire
 		(pts
@@ -3921,17 +4029,6 @@
 		)
 		(uuid "374e9e51-2e9d-437e-a6ba-04034b0822de")
 	)
-	(hierarchical_label "RESET"
-		(shape input)
-		(at 194.31 72.39 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "79fbbd0f-1888-4695-88bd-837dcd39cef3")
-	)
 	(hierarchical_label "PPS"
 		(shape output)
 		(at 237.49 64.77 0)
@@ -3967,7 +4064,7 @@
 	)
 	(hierarchical_label "SDA{slash}SPI_SS"
 		(shape bidirectional)
-		(at 195.58 57.15 180)
+		(at 181.61 57.15 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4060,6 +4157,118 @@
 			(project "meshtastic"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
 					(reference "#PWR020")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Switch:SW_Push")
+		(at 179.07 77.47 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files no)
+		(dnp no)
+		(uuid "07283a37-3567-4eb8-ac0a-e123d6e918d5")
+		(property "Reference" "SW2"
+			(at 179.07 81.534 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SW_Push"
+			(at 179.07 79.248 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Button_Switch_SMD:SW_Push_SPST_NO_Alps_SKRK"
+			(at 179.07 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.07 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Push button switch, generic, two pins"
+			(at 179.07 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 179.07 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" ""
+			(at 179.07 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 179.07 77.47 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d55710ba-d6bd-4116-b552-73dde752a15a")
+		)
+		(pin "2"
+			(uuid "967e0b53-6ebb-42ab-948c-9d71e3c8fee8")
+		)
+		(instances
+			(project "meshtastic"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
+					(reference "SW2")
 					(unit 1)
 				)
 			)
@@ -4563,8 +4772,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 180.34 73.66 0)
+		(lib_id "power:+3V3")
+		(at 171.45 66.04 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -4573,9 +4782,9 @@
 		(in_pos_files yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "2b60b6e9-9657-45bc-b887-3ca06cbacd48")
-		(property "Reference" "#PWR021"
-			(at 180.34 80.01 0)
+		(uuid "20aad315-4a5f-4f7b-8330-5aca43bbd09b")
+		(property "Reference" "#PWR056"
+			(at 171.45 69.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4585,8 +4794,8 @@
 				)
 			)
 		)
-		(property "Value" "GND"
-			(at 180.34 78.74 0)
+		(property "Value" "+3V3"
+			(at 171.45 60.96 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4596,7 +4805,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 180.34 73.66 0)
+			(at 171.45 66.04 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4607,7 +4816,85 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 180.34 73.66 0)
+			(at 171.45 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 171.45 66.04 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c84cf0ce-8d63-4f30-a995-9bc92418ecdc")
+		)
+		(instances
+			(project "meshtastic"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
+					(reference "#PWR056")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 168.91 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "2b60b6e9-9657-45bc-b887-3ca06cbacd48")
+		(property "Reference" "#PWR021"
+			(at 168.91 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 168.91 87.63 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 168.91 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 168.91 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4618,7 +4905,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 180.34 73.66 0)
+			(at 168.91 82.55 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4713,6 +5000,118 @@
 			(project "meshtastic"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
 					(reference "#PWR038")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:TestPoint_Probe")
+		(at 184.15 57.15 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom no)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "355dc923-0603-4866-96ff-0694acf6bc96")
+		(property "Reference" "TP2"
+			(at 187.96 54.2924 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "CS_GPS"
+			(at 187.96 56.8324 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "TestPoint:TestPoint_Loop_D1.80mm_Drill1.0mm_Beaded"
+			(at 189.23 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 189.23 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "test point (alternative probe-style design)"
+			(at 184.15 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 184.15 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" ""
+			(at 184.15 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 184.15 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "52894b44-6d07-454e-ad50-f607b34b140f")
+		)
+		(instances
+			(project "meshtastic"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
+					(reference "TP2")
 					(unit 1)
 				)
 			)
@@ -5157,6 +5556,118 @@
 			(project "meshtastic"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
 					(reference "#PWR024")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 179.07 72.39 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "5b66140a-eae9-41dc-9ea5-09ed64211925")
+		(property "Reference" "R7"
+			(at 179.07 70.612 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "10k"
+			(at 179.07 72.39 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 179.07 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.07 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 179.07 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 179.07 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" ""
+			(at 179.07 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 179.07 72.39 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "c8f998f6-7659-41eb-a2a6-7c34ce8dc49d")
+		)
+		(pin "2"
+			(uuid "32a28507-5880-4b6b-ae95-d5fa64963b51")
+		)
+		(instances
+			(project "meshtastic"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -6675,7 +7186,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "TestPoint_Probe"
+		(property "Value" "LNA_EN"
 			(at 241.3 51.7524 0)
 			(show_name no)
 			(do_not_autoplace no)

@@ -5641,7 +5641,7 @@
 		(uuid "fc775630-9e86-4102-b2f4-6bf702c7ed2c")
 	)
 	(no_connect
-		(at 248.92 25.4)
+		(at 248.92 22.86)
 		(uuid "0301db0c-0ffc-4f08-b9fd-2f0d01485ce0")
 	)
 	(no_connect
@@ -6200,16 +6200,6 @@
 	)
 	(wire
 		(pts
-			(xy 238.76 20.32) (xy 238.76 21.59)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5310ba34-2861-40ca-875e-69542a01b131")
-	)
-	(wire
-		(pts
 			(xy 78.74 163.83) (xy 78.74 162.56)
 		)
 		(stroke
@@ -6447,16 +6437,6 @@
 			(type default)
 		)
 		(uuid "8614451c-42f0-403f-a460-d093fdf6b1ca")
-	)
-	(wire
-		(pts
-			(xy 238.76 26.67) (xy 238.76 27.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "88669eda-bc49-4298-92f4-0683a1aeeb8a")
 	)
 	(wire
 		(pts
@@ -7140,16 +7120,6 @@
 	)
 	(wire
 		(pts
-			(xy 238.76 27.94) (xy 248.92 27.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "efc16ccb-b552-4db3-b802-d9c476858cb2")
-	)
-	(wire
-		(pts
 			(xy 71.12 29.21) (xy 71.12 27.94)
 		)
 		(stroke
@@ -7259,7 +7229,7 @@
 		(uuid "fe40fc5e-5a7b-4b92-82bb-b95ba5c3465e")
 	)
 	(label "MISO"
-		(at 248.92 41.91 180)
+		(at 248.92 35.56 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7269,7 +7239,7 @@
 		(uuid "02a057c8-9720-4138-84e4-ee95b17c2796")
 	)
 	(label "NRST_LORA"
-		(at 248.92 63.5 180)
+		(at 248.92 57.15 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7319,7 +7289,7 @@
 		(uuid "2ec5a1f8-6672-4acf-bf86-1037247f248b")
 	)
 	(label "SCK"
-		(at 248.92 36.83 180)
+		(at 248.92 30.48 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7339,7 +7309,7 @@
 		(uuid "401883d6-40c1-4456-97ac-8a987b96249a")
 	)
 	(label "SCK"
-		(at 248.92 74.93 180)
+		(at 248.92 68.58 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7429,7 +7399,7 @@
 		(uuid "6f1ff21d-5290-47f2-bd65-f9b148fcc66a")
 	)
 	(label "EN_LORA"
-		(at 248.92 60.96 180)
+		(at 248.92 54.61 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7449,7 +7419,7 @@
 		(uuid "91c7f6e7-1d10-45a2-9781-b1c2f3663b05")
 	)
 	(label "CS_GPS"
-		(at 248.92 34.29 180)
+		(at 248.92 27.94 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7479,7 +7449,7 @@
 		(uuid "a14d7244-64ae-4c5c-9480-fdf99aef4535")
 	)
 	(label "CS_LORA"
-		(at 248.92 72.39 180)
+		(at 248.92 66.04 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7489,7 +7459,7 @@
 		(uuid "a3f171d2-aea6-4a0d-b4cc-54346eb6a790")
 	)
 	(label "TR_CTRL"
-		(at 248.92 66.04 180)
+		(at 248.92 59.69 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7519,7 +7489,7 @@
 		(uuid "b460e445-f348-4539-a601-42625f879830")
 	)
 	(label "DIO1_LORA"
-		(at 248.92 58.42 180)
+		(at 248.92 52.07 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7549,7 +7519,7 @@
 		(uuid "bc8c5c11-2722-4106-a739-de726c88549e")
 	)
 	(label "MOSI"
-		(at 248.92 39.37 180)
+		(at 248.92 33.02 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7589,7 +7559,7 @@
 		(uuid "c5a68747-047e-47de-8850-10cb45a635ce")
 	)
 	(label "MISO"
-		(at 248.92 80.01 180)
+		(at 248.92 73.66 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7599,7 +7569,7 @@
 		(uuid "ce1f4ee8-3e68-4532-93e1-c98543f61918")
 	)
 	(label "MOSI"
-		(at 248.92 77.47 180)
+		(at 248.92 71.12 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7629,7 +7599,7 @@
 		(uuid "ef9ff5e6-faae-470e-be2b-806a02be81ff")
 	)
 	(label "BUSY_LORA"
-		(at 248.92 55.88 180)
+		(at 248.92 49.53 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -13411,84 +13381,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 238.76 20.32 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "8652bf8a-fa49-458e-b7f8-3a9855be9a8b")
-		(property "Reference" "#PWR016"
-			(at 238.76 24.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 238.76 15.24 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 238.76 20.32 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 238.76 20.32 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 238.76 20.32 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "ba425fc2-ba2f-40cd-bf86-232c2313ffec")
-		)
-		(instances
-			(project "meshtastic"
-				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
-					(reference "#PWR016")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:-BATT")
 		(at 137.16 175.26 180)
 		(unit 1)
@@ -15919,121 +15811,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_Small")
-		(at 238.76 24.13 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ef0fa82b-ae77-4d85-b4e1-bcbd7fb24dd5")
-		(property "Reference" "R7"
-			(at 241.3 22.8599 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "10k"
-			(at 241.3 25.3999 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 238.76 24.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 238.76 24.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor, small symbol"
-			(at 238.76 24.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 238.76 24.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Voltage Rating" ""
-			(at 238.76 24.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Tolerance" ""
-			(at 238.76 24.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "7bf5afaa-1554-4d33-a319-4872471d8922")
-		)
-		(pin "2"
-			(uuid "8fce8122-9db8-444f-a6f8-06d5d5251946")
-		)
-		(instances
-			(project "meshtastic"
-				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
-					(reference "R7")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:GND")
 		(at 257.81 152.4 0)
 		(unit 1)
@@ -16825,8 +16602,8 @@
 		)
 	)
 	(sheet
-		(at 248.92 22.86)
-		(size 31.75 21.59)
+		(at 248.92 20.32)
+		(size 31.75 17.78)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
@@ -16841,7 +16618,7 @@
 		)
 		(uuid "5443eb24-9bcb-4330-89ee-947146bd4a27")
 		(property "Sheetname" "GNSS"
-			(at 248.92 22.1484 0)
+			(at 248.92 19.6084 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -16852,7 +16629,7 @@
 			)
 		)
 		(property "Sheetfile" "GNSS-NEO.kicad_sch"
-			(at 248.92 45.0346 0)
+			(at 248.92 38.6846 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -16863,7 +16640,7 @@
 			)
 		)
 		(pin "PPS" output
-			(at 248.92 25.4 180)
+			(at 248.92 22.86 180)
 			(uuid "25765675-9080-4a85-9aa1-18c1eb19aa1a")
 			(effects
 				(font
@@ -16872,18 +16649,8 @@
 				(justify left)
 			)
 		)
-		(pin "RESET" input
-			(at 248.92 27.94 180)
-			(uuid "e0db1ba6-e147-44a3-8c9c-b7d895fcc753")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "RXD{slash}SPI_MOSI" input
-			(at 248.92 39.37 180)
+			(at 248.92 33.02 180)
 			(uuid "d68b6e09-375d-408c-8399-04d445e0acd2")
 			(effects
 				(font
@@ -16893,7 +16660,7 @@
 			)
 		)
 		(pin "SCL{slash}SPI_CLK" bidirectional
-			(at 248.92 36.83 180)
+			(at 248.92 30.48 180)
 			(uuid "4c066d0d-1ad3-41db-aee7-800d167ce596")
 			(effects
 				(font
@@ -16903,7 +16670,7 @@
 			)
 		)
 		(pin "SDA{slash}SPI_SS" bidirectional
-			(at 248.92 34.29 180)
+			(at 248.92 27.94 180)
 			(uuid "2f8b8983-900c-44cb-86e1-5f7ec62ea092")
 			(effects
 				(font
@@ -16913,7 +16680,7 @@
 			)
 		)
 		(pin "TXD{slash}SPI_MISO" output
-			(at 248.92 41.91 180)
+			(at 248.92 35.56 180)
 			(uuid "ffba36b5-e2ab-4408-9ae2-d0a2df59c792")
 			(effects
 				(font
@@ -16931,7 +16698,7 @@
 		)
 	)
 	(sheet
-		(at 248.92 53.34)
+		(at 248.92 46.99)
 		(size 31.75 29.21)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16947,7 +16714,7 @@
 		)
 		(uuid "a8463f07-c31a-442f-966c-3f51ff19a9b1")
 		(property "Sheetname" "LORA"
-			(at 248.92 52.6284 0)
+			(at 248.92 46.2784 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -16958,7 +16725,7 @@
 			)
 		)
 		(property "Sheetfile" "LORA-E22.kicad_sch"
-			(at 248.92 83.1346 0)
+			(at 248.92 76.7846 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -16969,7 +16736,7 @@
 			)
 		)
 		(pin "BUSY" output
-			(at 248.92 55.88 180)
+			(at 248.92 49.53 180)
 			(uuid "056ec7bd-4698-42f5-9352-e9b614ba4cb5")
 			(effects
 				(font
@@ -16979,7 +16746,7 @@
 			)
 		)
 		(pin "DIO1" output
-			(at 248.92 58.42 180)
+			(at 248.92 52.07 180)
 			(uuid "a94d7dcf-8858-4835-8507-4c1f93e28f3f")
 			(effects
 				(font
@@ -16989,7 +16756,7 @@
 			)
 		)
 		(pin "EN" input
-			(at 248.92 60.96 180)
+			(at 248.92 54.61 180)
 			(uuid "02a97344-5fda-44ba-803d-9c2ecebf8ba6")
 			(effects
 				(font
@@ -16999,7 +16766,7 @@
 			)
 		)
 		(pin "MISO" output
-			(at 248.92 80.01 180)
+			(at 248.92 73.66 180)
 			(uuid "916cde13-d84c-4a93-8b20-74e3763d2886")
 			(effects
 				(font
@@ -17009,7 +16776,7 @@
 			)
 		)
 		(pin "MOSI" input
-			(at 248.92 77.47 180)
+			(at 248.92 71.12 180)
 			(uuid "c34291b8-c966-4fc6-91bd-82ba76a3ef3d")
 			(effects
 				(font
@@ -17019,7 +16786,7 @@
 			)
 		)
 		(pin "RESET" input
-			(at 248.92 63.5 180)
+			(at 248.92 57.15 180)
 			(uuid "10a6cd7f-e0ac-4af2-aa77-6d7edfe40e76")
 			(effects
 				(font
@@ -17029,7 +16796,7 @@
 			)
 		)
 		(pin "SCK" input
-			(at 248.92 74.93 180)
+			(at 248.92 68.58 180)
 			(uuid "adde3a09-8c5d-4ab7-bdd9-0b7c3d102b0d")
 			(effects
 				(font
@@ -17039,7 +16806,7 @@
 			)
 		)
 		(pin "CS" input
-			(at 248.92 72.39 180)
+			(at 248.92 66.04 180)
 			(uuid "2d4e1ee8-bc60-4477-b9c8-e00b8aa1a895")
 			(effects
 				(font
@@ -17049,7 +16816,7 @@
 			)
 		)
 		(pin "TR_CTRL" output
-			(at 248.92 66.04 180)
+			(at 248.92 59.69 180)
 			(uuid "e3f0c7fe-e86a-47a0-988e-891ef2b9c643")
 			(effects
 				(font
