@@ -53,3 +53,88 @@ ibom.html
 ordered.zip
 
 .serena
+
+# ---------------------------------------------------------------------------
+# KiCad reports and exports not covered above
+# ---------------------------------------------------------------------------
+*.rpt
+*.drc
+*.erc
+*.pos
+*.lck
+_autosave*
+*.orig
+*.rej
+
+# Other archive formats (matches the *.zip rule above)
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.tgz
+
+# ---------------------------------------------------------------------------
+# Editors / IDEs
+# ---------------------------------------------------------------------------
+.vscode/
+.idea/
+*.iml
+*.sublime-workspace
+*.swp
+*.swo
+.nfs*
+
+# ---------------------------------------------------------------------------
+# OS cruft
+# ---------------------------------------------------------------------------
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+.directory
+.Trash-*
+.fuse_hidden*
+
+# ---------------------------------------------------------------------------
+# Python (KiCad plugins, action scripts, helper tooling)
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.python-version
+
+# ---------------------------------------------------------------------------
+# Embedded build output (Arduino / PlatformIO / esptool)
+# NOTE: *.log is deliberately NOT ignored: code/*.log flash logs are tracked.
+# ---------------------------------------------------------------------------
+.pio/
+.pioenvs/
+.piolibdeps/
+build/
+*.elf
+*.hex
+*.uf2
+*.map
+node_modules/
+npm-debug.log*
+
+# ---------------------------------------------------------------------------
+# Secrets
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---------------------------------------------------------------------------
+# AI tooling local state
+# ---------------------------------------------------------------------------
+.claude/settings.local.json
+CLAUDE.local.md
+.aider*
