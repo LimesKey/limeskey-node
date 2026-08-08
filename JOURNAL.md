@@ -7,3 +7,10 @@ I've already protected the RF frontends of the LORA and GNSS modules, with ESD d
 ![KiCad Schematic TPS259470](/docs/img/Screenshot_1-2026_08_07_23:45.png)
 
 Considering maybe adding a cheap 50-cent TVS diode to the TPS259470LRPWR input as the datasheet says may be helpful. I'll have to see.
+
+## Finalizing circuit protection - 2 hours (2026-08-08)
+* Switched from the `TPS259470LRPWR` to the `TPS259474LRPWR` for slightly better OVLO tolerances (5.5% to 1.7%), allowing the trip voltage to be more precise. 
+* Added rechargable battery to V_BCKP on U2.
+* Decided on using the `TPS259474ARPWR` for future buck converter output
+
+![KiCad Schematic GNSS](/docs/img/Screenshot_1-2026_08_08_03:13.png)
