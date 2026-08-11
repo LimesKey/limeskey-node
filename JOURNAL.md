@@ -14,3 +14,22 @@ Considering maybe adding a cheap 50-cent TVS diode to the TPS259470LRPWR input a
 * Decided on using the `TPS259474ARPWR` for future buck converter output
 
 ![KiCad Schematic GNSS](/docs/img/Screenshot_1-2026_08_08_03:13.png)
+
+
+## Research BMS and Charge controller choices - 2 hours (2026-08-09)
+I think I've settled on using the `MAX17320Gxx`, I was thinking of initally going with the `BQ40Z50` but with that one you are forced to use some of TI's software and buy their testing equipment in order to program it. The MAX17320 is only a little more and has a whole host of nice to have features like cycle count and intelligent algorithms to calculate percentage. It is however quite expensive at 8$ CAD per IC, but I think it's worth the safety and ease of use aspects. I watched [this youtuber](https://www.youtube.com/watch?v=UUr-CJudg38) on how he designed his BMS, it was quite insightful. 
+
+![MAX17320 schematic image](/docs/img/MAX17320.png)
+
+### Charge Controller Selection
+As for the charge controller, I went with the [BQ25798](https://www.ti.com/product/BQ25798), it's relatively cheap at $3 CAD each, it's modern and a recent design, highly efficient. It supports a wide range of input voltages (USB-C PD fast-charging!) and even can communicate with the microcontroller to set custom charge limits to preserve battery health. However, it's a little noisy with it's four switching mosfets, so it's going to take some considerations in layout as to not interrupt any data lines and RF components/traces.
+
+My goal was to get a slightly more premium BMS that had some of the nice features you'd see in mobile phones.
+
+## Wiring up the BMS - 3 hours (2026-08-10)
+
+| my design | reference design |
+| :---: | :---: |
+| <img src="docs/img/bms-wiring.png" width="800" alt="Custom Schematic"> | <img src="docs/img/max17320-schematic-examp.png" width="800" alt="Reference Schematic"> |
+
+I'm sure there are still some issues or things to double check, but it's a good start. I studed the example block diagram schematic from the datasheet, and a few other schematics I could find when googling "MAX17320G22+ kicad schematic". Claude said the `AON7534` N-channel mosfet would be best, so I trusted it. I'm trying to think how I'll have the thermistor placed, because I'm using two 21700 battery holders next to eachother. Perhaps I could expose some copper and use one of those SMD NTC thermistors? The batteries would then be sitting very close to the thermistor, and perhaps I could add some type of thermally conductive but not electrically conductive type of material or foam. I don't like the idea of taping the thermistor to the batteries...
