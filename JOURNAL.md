@@ -33,3 +33,11 @@ My goal was to get a slightly more premium BMS that had some of the nice feature
 | <img src="docs/img/bms-wiring.png" width="800" alt="Custom Schematic"> | <img src="docs/img/max17320-schematic-examp.png" width="800" alt="Reference Schematic"> |
 
 I'm sure there are still some issues or things to double check, but it's a good start. I studed the example block diagram schematic from the datasheet, and a few other schematics I could find when googling "MAX17320G22+ kicad schematic". Claude said the `AON7534` N-channel mosfet would be best, so I trusted it. I'm trying to think how I'll have the thermistor placed, because I'm using two 21700 battery holders next to eachother. Perhaps I could expose some copper and use one of those SMD NTC thermistors? The batteries would then be sitting very close to the thermistor, and perhaps I could add some type of thermally conductive but not electrically conductive type of material or foam. I don't like the idea of taping the thermistor to the batteries...
+
+## Confirming BMS wiring, adding testpoints and voltage/power ratings to components - 3 hours (2026-08-13)
+
+Spent some time today double checking the wiring on the BMS and learning more about it from the datasheet. I'm much more comfident in my wiring now, and I added some DNP components in case I need to swap anything or make changes to it afterwards, testpoints as well. Most of my capacitors I was planning on using are well below the voltage rating they should be for the BMS, so I made sure to explicitly mention capacitor voltage ratings in the part field on KiCad.
+
+Next steps would be to make the `MAX17320G22+` symbol a little more pretty and organize my wiring, and to wire the charge controller. It's a little hard to read in it's current state. So many components on such a small symbol. Maybe I'll ask in the KiCad Discord on suggestions how to make the BMS schematic a little more clear.
+
+![BMS MAX17320 changes](/docs/img/bms-revamp.png)

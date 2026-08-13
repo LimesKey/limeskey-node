@@ -3948,7 +3948,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp yes)
-		(fields_autoplaced yes)
 		(uuid "18b84608-b92b-46ab-a7fd-41256236329e")
 		(property "Reference" "C38"
 			(at 69.85 168.9162 0)
@@ -3961,8 +3960,9 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10nF"
-			(at 69.85 171.4562 0)
+		(property "Value" "1pF C0G"
+			(at 56.642 173.482 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4822,7 +4822,6 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp yes)
-		(fields_autoplaced yes)
 		(uuid "50845e82-bf31-41e8-9b65-14fdbf590771")
 		(property "Reference" "C37"
 			(at 54.61 168.9162 0)
@@ -4835,8 +4834,8 @@
 				(justify left)
 			)
 		)
-		(property "Value" "10nF"
-			(at 54.61 171.4562 0)
+		(property "Value" "1pF C0G"
+			(at 54.61 170.942 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6895,7 +6894,7 @@
 		(in_bom no)
 		(on_board yes)
 		(in_pos_files yes)
-		(dnp no)
+		(dnp yes)
 		(uuid "c92fc807-37d7-4fad-925f-ef0f27a96819")
 		(property "Reference" "JP6"
 			(at 91.44 169.926 0)
@@ -6917,7 +6916,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm"
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 91.44 172.72 0)
 			(hide yes)
 			(show_name no)
