@@ -41,3 +41,19 @@ Spent some time today double checking the wiring on the BMS and learning more ab
 Next steps would be to make the `MAX17320G22+` symbol a little more pretty and organize my wiring, and to wire the charge controller. It's a little hard to read in it's current state. So many components on such a small symbol. Maybe I'll ask in the KiCad Discord on suggestions how to make the BMS schematic a little more clear.
 
 ![BMS MAX17320 changes](/docs/img/bms-revamp.png)
+
+## Wiring up the Charge Controller & selecting buck converter and PD IC - 4 hours (2026-08-14)
+
+Following the reference application schematic for the [BQ25798](https://www.ti.com/product/BQ25798) and calculated the inductor current for my application. Reading over the data, it's actually a pretty impressive piece of silicon for how many features it has in such a small package. It uses Narrow voltage DC (NVDC), so it'll take power directly from your USB-C circutry, regulate it within a certain range similar to your battery, and then you can power your buck converter and downstream devices from it's `SYS` output at up to 6A. No external power muxing needed, and it's really efficient. Battery charge current can be set fixed, or dynamically through it's I2C bus. Downside is the high frequency switching (750KHz - 1.5MHz), but I think if I physically keep it distanced away enough from the RF components, and choose a good inductor, I should be okay.
+
+One thing I tried to keep in mind for the charge controller and BMS circutry, even though I'm only planning on having two series batteries, I should try to make most of the components compatible for if I wanted the max both ICs support of 4S. This means having all the components rated for `>25V`, so choosing capacitors that are rated for 50V. In turn this would mean having to add more capacitors than I normally would, in order to satisfy capacitor's DC bias derating at higher voltages.
+
+![wired BQ25798 schematic](/docs/img/bq25798.png)
+*I do need to clean this up and make it look more understandable...*
+
+For the USB-PD, I wanted to choose something cheap, easy and small. I have no need for extra features or for it to support a wide range of USB chargers. I went with the [HUSB238](https://en.hynetek.com/2421.html), specifically the `HUSB238_002DD`. It's about $0.70 CAD on LCSC each, and supports a fixed 9V USB trigger. The more common option would be to use the `CH224K`, but it had a large package and looked "old", although it's cheaper.
+
+Lastly, I need a 5V rail to run off the outputted `SYS` from the charge controller, so approximately a `5V - 8.8V` input. Claude helped me choose the `LM61460-Q1`, specifically the [LM61460AASQRJRRQ1](https://www.ti.com/product/LM61460-Q1/part-details/LM61460AASQRJRRQ1). It's a little steep at $2 CAD on [LCSC](https://www.lcsc.com/product-detail/C1855832.html), but using TI components is nice, and this IC is ideal for powering sensitive high frequency components from it (it has "Low EMI" in the title). One of the ways it can achieve this low-emi is by being able to customize its switching frequency, thereby sacrificing efficency for switching at a frequency that doesn't interfere with frequencies otherwhere on the board.
+
+> The switching frequency can be set or synchronized between 200 kHz and 2.2 MHz to avoid noise sensitive frequency bands.
+
