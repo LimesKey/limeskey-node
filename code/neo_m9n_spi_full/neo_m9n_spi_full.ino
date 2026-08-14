@@ -1,5 +1,5 @@
 /*
- * NEO-M9N GNSS reader (SPI)  --  limeskey-node / Seeed XIAO ESP32-C6
+ * NEO-M9N GNSS reader (SPI)  --  parsnip-node / Seeed XIAO ESP32-C6
  *
  * Use once D_SEL is bridged to GND (SPI selected). Shares the SPI bus with the
  * SX1262, so each device has its own chip select; the radio's NSS is held high
@@ -119,7 +119,7 @@
 
 // ================= CREDENTIALS =================
 //
-// This repository is PUBLIC (github.com/LimesKey/limeskey-node, GPL-3.0). Do not
+// This repository is PUBLIC (github.com/LimesKey/parsnip-node, GPL-3.0). Do not
 // commit a real SSID and password. Once this builds, move them into a local
 // secrets.h and add that file to .gitignore:
 //
@@ -1412,7 +1412,7 @@ static bool waitForUbx(uint16_t tries) {
 void setup() {
   Serial.begin(115200);
   delay(1500);
-  Serial.println("\r\n=== NEO-M9N SPI reader (limeskey-node) ===");
+  Serial.println("\r\n=== NEO-M9N SPI reader (parsnip-node) ===");
   Serial.printf("Config writes go to %s\r\n",
                 CFG_PERSIST ? "RAM|BBR|Flash (persistent)" : "RAM only (session)");
 

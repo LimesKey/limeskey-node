@@ -1,5 +1,5 @@
 /*
- * NEO-M9N GNSS reader (SPI)  --  limeskey-node / Seeed XIAO ESP32-C6
+ * NEO-M9N GNSS reader (SPI)  --  parsnip-node / Seeed XIAO ESP32-C6
  *
  * Use once D_SEL is bridged to GND (SPI selected). Shares the SPI bus with the
  * SX1262, so each device has its own chip select; the radio's NSS is held high
@@ -190,7 +190,7 @@ bool warned = false;
 void setup() {
   Serial.begin(115200);
   delay(1500);
-  Serial.println("\n=== NEO-M9N SPI reader (limeskey-node) ===");
+  Serial.println("\n=== NEO-M9N SPI reader (parsnip-node) ===");
 
   if (LORA_NSS_PIN >= 0) { pinMode(LORA_NSS_PIN, OUTPUT); digitalWrite(LORA_NSS_PIN, HIGH); }
   if (PPS_PIN >= 0) pinMode(PPS_PIN, INPUT);

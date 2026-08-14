@@ -1,4 +1,4 @@
-# limeskey-node
+# parsnip-node
 A battery-powered, portable Meshtastic mesh node built around a Seeed XIAO ESP32-C6, an Ebyte E22P-915M30S LoRa front end, and a u-blox NEO-M9N GNSS receiver. Designed from scratch in KiCad and fabricated at JLCPCB, it targets 915 MHz operation in Canada under ISED RSS-247.
 
 ## Overview
@@ -8,15 +8,15 @@ The goal is a self-contained Meshtastic node that pairs one of the longest range
 <table>
   <tr>
     <td align="center" width="33%">
-      <img src="docs/img/pcb-front-table.png" alt="Assembled limeskey-node board on the bench" width="260">
+      <img src="docs/img/pcb-front-table.png" alt="Assembled parsnip-node board on the bench" width="260">
       <br><sub><b>Assembled board</b></sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/pcb-outside.png" alt="limeskey-node during outdoor testing, front" width="260">
+      <img src="docs/img/pcb-outside.png" alt="parsnip-node during outdoor testing, front" width="260">
       <br><sub><b>Outdoor testing</b></sub>
     </td>
     <td align="center" width="33%">
-      <img src="docs/img/pcb-outside-back.png" alt="limeskey-node during outdoor testing, back" width="260">
+      <img src="docs/img/pcb-outside-back.png" alt="parsnip-node during outdoor testing, back" width="260">
       <br><sub><b>Outdoor testing, back</b></sub>
     </td>
   </tr>
@@ -62,5 +62,5 @@ The E22P `EN` (module pin 6) is held high for both RX and TX. The T/R switch (pi
 Firmware is a Meshtastic fork tracked as the `firmware` submodule ([LimesKey/firmware](https://github.com/LimesKey/firmware)). Development uses VS Code with the pioarduino extension, which Meshtastic pins for ESP32-C6 / Arduino-ESP32 3.x support. A device variant declares the pin map above and the PA control lines so TX actually keys up. Unfortunately there are some extensive changes to the Meshtastic firmware in order to incorporate a SPI GNSS module, as this is not natively supported by Meshtastic.
  
 ```bash
-git clone --recurse-submodules https://github.com/LimesKey/limeskey-node.git
+git clone --recurse-submodules https://github.com/LimesKey/parsnip-node.git
 ```

@@ -1,5 +1,5 @@
 /*
- * NEO-M9N GNSS reader (UART)  --  limeskey-node / Seeed XIAO ESP32-C6
+ * NEO-M9N GNSS reader (UART)  --  parsnip-node / Seeed XIAO ESP32-C6
  *
  * The module runs in UART+I2C mode and streams UBX-NAV-PVT at 1 Hz, 115200 8N1.
  * This reads that stream, validates each UBX checksum, and prints a verbose,
@@ -147,7 +147,7 @@ void ubxFeed(uint8_t b) {
 void setup() {
   Serial.begin(115200);
   delay(1500);
-  Serial.println("\n=== NEO-M9N UART reader (limeskey-node) ===");
+  Serial.println("\n=== NEO-M9N UART reader (parsnip-node) ===");
 
   if (LORA_NSS_PIN >= 0) { pinMode(LORA_NSS_PIN, OUTPUT); digitalWrite(LORA_NSS_PIN, HIGH); }
   if (PPS_PIN >= 0) pinMode(PPS_PIN, INPUT);
