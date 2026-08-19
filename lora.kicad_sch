@@ -3171,9 +3171,9 @@
 		)
 		(uuid "2d0a6f60-23ac-44ca-84ae-33fd89bb9b53")
 	)
-	(text "DC-shorted antenna only"
+	(text "DC-shorted antenna only unless JP8 is cut"
 		(exclude_from_sim no)
-		(at 61.214 143.51 0)
+		(at 61.214 144.526 0)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -4702,10 +4702,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "01ebcac5-5238-4651-a98d-e3d8532b951d")
 		(property "Reference" "R1"
-			(at 189.23 83.82 90)
+			(at 189.23 86.614 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -4715,7 +4714,7 @@
 			)
 		)
 		(property "Value" "1k"
-			(at 189.23 86.36 90)
+			(at 189.23 88.9 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5289,10 +5288,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "23052cb6-b142-4fbb-bd82-2d89a29c3b5b")
 		(property "Reference" "R21"
-			(at 196.85 86.36 90)
+			(at 196.85 88.138 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -5302,7 +5300,7 @@
 			)
 		)
 		(property "Value" "100"
-			(at 196.85 88.9 90)
+			(at 196.85 91.44 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

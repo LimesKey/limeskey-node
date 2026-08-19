@@ -58,3 +58,17 @@ For the USB-PD, I wanted to choose something cheap, easy and small. I have no ne
 Lastly, I need a 5 V rail to run off the outputted `SYS` from the charge controller, so approximately a `5V - 8.8V` input. Claude helped me choose the `LM61460-Q1`, specifically the [LM61460AASQRJRRQ1](https://www.ti.com/product/LM61460-Q1/part-details/LM61460AASQRJRRQ1). It's a little steep at $2 CAD on [LCSC](https://www.lcsc.com/product-detail/C1855832.html), but using TI components is nice, and this IC is ideal for powering sensitive high-frequency components (it has "Low EMI" in the title). One of the ways it achieves this low EMI is by letting you customize its switching frequency, thereby sacrificing efficiency for switching at a frequency that doesn't interfere with frequencies elsewhere on the board.
 
 > The switching frequency can be set or synchronized between 200 kHz and 2.2 MHz to avoid noise sensitive frequency bands.
+
+## Reworking power rails, adding antenna detection, and organization  - 6 hours (2026-08-18)
+
+* Added the [LM61460-Q1](https://www.ti.com/product/LM61460-Q1/part-details/LM61460AASQRJRRQ1) as my 3V3 switching buck converter, which is the same as for the 5V rail.
+ 
+* Added an eFuse to the output of my 5V buck for additonal protection
+
+* Added LoRa antenna detection to prevent high power transmits from damaging the E22P RF frontend.
+
+* Renamed schematic sheets for clarity and to be updated for the name change from `limeskey-node` to `parsnip-node`
+  
+* Double checked capacitor voltage ratings are correct for the net
+
+For the antenna detection, I didn't think it was possible to implement without something like an expensive VNA. But apparently, since most LoRa antennas are DC-shorted, you can put a small amount of current on the antenna trace and check and see if it's still there with a FET. If the antenna is installed correctly, there should be no DC voltage on the antenna net, but if it wasn't, it would show 3V3 and the LoRA module would automatically stop transmitting.
