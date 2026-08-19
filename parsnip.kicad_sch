@@ -3507,6 +3507,12 @@
 		)
 	)
 	(junction
+		(at 62.23 104.14)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "3e7a1649-ce67-4d22-93e1-d8f22c231e60")
+	)
+	(junction
 		(at 264.16 143.51)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3531,6 +3537,12 @@
 		(uuid "672fc016-1a09-429b-a126-53c45794cb27")
 	)
 	(junction
+		(at 55.88 104.14)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "7afea69e-8acf-4282-86a9-09a08df13f1b")
+	)
+	(junction
 		(at 264.16 99.06)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3541,6 +3553,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "93248b59-5276-4515-9482-6675986c8762")
+	)
+	(junction
+		(at 52.07 111.76)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c50d689e-2453-4547-ba0f-822e972aa252")
 	)
 	(junction
 		(at 257.81 149.86)
@@ -3576,6 +3594,16 @@
 	)
 	(wire
 		(pts
+			(xy 52.07 104.14) (xy 55.88 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0cc847c9-436a-4db1-9224-e8ea7a7dfdab")
+	)
+	(wire
+		(pts
 			(xy 256.54 99.06) (xy 264.16 99.06)
 		)
 		(stroke
@@ -3583,6 +3611,36 @@
 			(type default)
 		)
 		(uuid "10c0a182-2387-4093-b1d1-b196bc23e011")
+	)
+	(wire
+		(pts
+			(xy 62.23 104.14) (xy 62.23 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "13e19ec0-6d0a-4e70-809b-99df8f24e96e")
+	)
+	(wire
+		(pts
+			(xy 34.29 111.76) (xy 52.07 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3ccf60d0-b802-4c24-81f9-edbd7d85f7d6")
+	)
+	(wire
+		(pts
+			(xy 55.88 105.41) (xy 55.88 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "546e8fd1-632d-4aad-ad31-719afcea8761")
 	)
 	(wire
 		(pts
@@ -3603,6 +3661,16 @@
 			(type default)
 		)
 		(uuid "7825ea74-f201-4666-8c09-dfb7582f7937")
+	)
+	(wire
+		(pts
+			(xy 52.07 105.41) (xy 52.07 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7e684c83-e291-48d5-b1a0-559fda7a52a5")
 	)
 	(wire
 		(pts
@@ -3656,6 +3724,16 @@
 	)
 	(wire
 		(pts
+			(xy 55.88 104.14) (xy 62.23 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a5bcd73a-d61c-4d38-8ec9-df82648e69bc")
+	)
+	(wire
+		(pts
 			(xy 264.16 97.79) (xy 264.16 99.06)
 		)
 		(stroke
@@ -3683,6 +3761,26 @@
 			(type default)
 		)
 		(uuid "ace2c4cb-82e8-4679-9ac2-0773abcc913d")
+	)
+	(wire
+		(pts
+			(xy 52.07 111.76) (xy 55.88 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ae783d75-c455-43fb-bff3-d3b9ec897b61")
+	)
+	(wire
+		(pts
+			(xy 55.88 111.76) (xy 55.88 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b9a724b1-7e44-40d0-88f9-3dcd4e35c01c")
 	)
 	(wire
 		(pts
@@ -3716,6 +3814,16 @@
 	)
 	(wire
 		(pts
+			(xy 52.07 111.76) (xy 52.07 110.49)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "da9c2cfc-5ec3-404f-aad4-aca10db51147")
+	)
+	(wire
+		(pts
 			(xy 255.27 121.92) (xy 255.27 120.65)
 		)
 		(stroke
@@ -3723,6 +3831,16 @@
 			(type default)
 		)
 		(uuid "dc130c70-1207-4c62-a277-799e64dbc9cb")
+	)
+	(wire
+		(pts
+			(xy 34.29 115.57) (xy 34.29 111.76)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ea84f04b-e2d8-41fd-9adc-06d1aa6f53c9")
 	)
 	(wire
 		(pts
@@ -3763,6 +3881,16 @@
 			(type default)
 		)
 		(uuid "f37e5175-8431-4f2a-a188-2417fa9a56ec")
+	)
+	(wire
+		(pts
+			(xy 62.23 102.87) (xy 62.23 104.14)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f5846505-e32e-41df-a657-ed542d0bffbf")
 	)
 	(wire
 		(pts
@@ -4190,9 +4318,87 @@
 			(uuid "d11da3ad-7f8a-45b6-918c-dcaff9e2f7ba")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "J7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 62.23 102.87 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "130d1cac-b0dc-46dc-830c-705b18569374")
+		(property "Reference" "#PWR0114"
+			(at 62.23 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 62.23 97.79 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 62.23 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 62.23 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 62.23 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4b497988-fe1b-4898-83e3-4469fc2078a1")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
+					(reference "#PWR0114")
 					(unit 1)
 				)
 			)
@@ -4335,7 +4541,7 @@
 			(uuid "970830bb-07c9-44ff-b5b4-a86a2784660c")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "H2")
 					(unit 1)
@@ -4495,7 +4701,7 @@
 			(uuid "68ef8d09-c207-409f-9cba-52deeb2e29c5")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "J2")
 					(unit 1)
@@ -4727,9 +4933,86 @@
 			(uuid "c7fb380a-5492-4b7d-82ca-95e1e091edd1")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "U7")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 34.29 115.57 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "24395349-da24-4dd4-8edd-87ed8be2cc87")
+		(property "Reference" "#PWR0115"
+			(at 34.29 121.92 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 34.29 119.888 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 34.29 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 34.29 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 34.29 115.57 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "802b6ae4-564e-49d9-80e6-372ee91c1647")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
+					(reference "#PWR0115")
 					(unit 1)
 				)
 			)
@@ -4805,7 +5088,7 @@
 			(uuid "01d9d052-dc1f-428d-bcc7-17eb147c6a7c")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR033")
 					(unit 1)
@@ -4950,7 +5233,7 @@
 			(uuid "858e260a-8fad-42b9-a74e-3ed1d533d081")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "H1")
 					(unit 1)
@@ -5028,7 +5311,7 @@
 			(uuid "fbdd56a6-4aa5-4418-8089-989c99ea6ed3")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR015")
 					(unit 1)
@@ -5106,7 +5389,7 @@
 			(uuid "2d3dce2f-6879-4e79-bec9-ff97bb145556")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR055")
 					(unit 1)
@@ -5254,7 +5537,7 @@
 			(uuid "06818a53-fad4-4632-9aa6-7d72083f159a")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "C27")
 					(unit 1)
@@ -5332,7 +5615,7 @@
 			(uuid "4dc5b7a4-3fbe-4fea-bd43-d5e56ffacbcf")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR07")
 					(unit 1)
@@ -5480,9 +5763,156 @@
 			(uuid "76c33ee0-afe4-49dc-8266-966fd2e81b82")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "C8")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small")
+		(at 52.07 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "716fe658-bfbb-4d72-8812-56492f96b5f7")
+		(property "Reference" "C25"
+			(at 50.038 102.108 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "1uF"
+			(at 47.498 105.664 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
+			(at 52.07 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 52.07 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor, small symbol"
+			(at 52.07 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 52.07 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" "16V"
+			(at 49.276 107.442 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 52.07 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" ""
+			(at 52.07 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 52.07 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "KLC_S5.1" ""
+			(at 52.07 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "60892dba-50d2-47a5-900a-6dd28894f040")
+		)
+		(pin "1"
+			(uuid "1de02896-205d-407d-b953-48a7d665f07d")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
+					(reference "C25")
 					(unit 1)
 				)
 			)
@@ -5558,7 +5988,7 @@
 			(uuid "235f1055-eb1f-4507-8293-8e40e74e6565")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR039")
 					(unit 1)
@@ -5636,7 +6066,7 @@
 			(uuid "1c14852f-9f9e-4c86-84ad-b0f69b4112e1")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR041")
 					(unit 1)
@@ -5748,7 +6178,7 @@
 			(uuid "82f6d391-bd2b-4f30-b2f8-20287360d5e5")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "F3")
 					(unit 1)
@@ -5826,7 +6256,7 @@
 			(uuid "4c4cdc12-8f14-43f3-bea5-ec2343d7a3b2")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR014")
 					(unit 1)
@@ -5904,7 +6334,7 @@
 			(uuid "f51d97aa-8765-47bb-8d74-e62b7c18fbf9")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR042")
 					(unit 1)
@@ -6016,7 +6446,7 @@
 			(uuid "d1c00916-b193-4e8b-a57f-f0b6fa8c4951")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "F4")
 					(unit 1)
@@ -6174,7 +6604,7 @@
 			(uuid "2bd3fa00-6c42-42e3-9df4-0b99887ac13c")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "J8")
 					(unit 1)
@@ -6319,7 +6749,7 @@
 			(uuid "ea562cc1-7517-4ef8-b7b7-85c26b1e53ca")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "H4")
 					(unit 1)
@@ -6466,7 +6896,7 @@
 			(uuid "d5568e7f-9852-46db-87ae-32e21d211629")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "C9")
 					(unit 1)
@@ -6578,9 +7008,122 @@
 			(uuid "164b78bc-859a-42c6-8af8-981b851b552f")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "F2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:C_Small")
+		(at 55.88 107.95 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "c033a335-5afd-408c-a508-3f66b87dba1e")
+		(property "Reference" "C131"
+			(at 54.61 102.108 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "10uF"
+			(at 56.642 110.49 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 55.88 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 55.88 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Unpolarized capacitor, small symbol"
+			(at 55.88 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C7472976"
+			(at 55.88 107.95 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" "16V"
+			(at 59.944 110.998 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 55.88 107.95 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "f75b3b29-c705-48d8-97d2-0136084c8912")
+		)
+		(pin "2"
+			(uuid "f252ace0-6dde-4a3c-9c76-8feafb92b231")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
+					(reference "C131")
 					(unit 1)
 				)
 			)
@@ -6656,7 +7199,7 @@
 			(uuid "dfbb4a9e-5389-4d30-8b5c-0614dca129ce")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR040")
 					(unit 1)
@@ -6834,7 +7377,7 @@
 			(uuid "4fd43384-cf23-4e6a-9199-80614c32bee2")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "D5")
 					(unit 1)
@@ -6912,7 +7455,7 @@
 			(uuid "b8c375d8-f157-4c37-afb2-947459c59227")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR012")
 					(unit 1)
@@ -7066,7 +7609,7 @@
 			(uuid "f6f478d6-95f0-4d9c-b0d9-d52e9c634a08")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "J1")
 					(unit 1)
@@ -7144,7 +7687,7 @@
 			(uuid "b989783f-9405-406b-aa3e-99026e2903ee")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "#PWR013")
 					(unit 1)
@@ -7322,7 +7865,7 @@
 			(uuid "1b339913-fa89-4efc-b7f3-549cc5d864e6")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "D4")
 					(unit 1)
@@ -7467,56 +8010,10 @@
 			(uuid "ce6c0e17-b980-45ee-b220-6b256a3e11cd")
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
 					(reference "H3")
 					(unit 1)
-				)
-			)
-		)
-	)
-	(sheet
-		(at 184.15 31.75)
-		(size 36.83 8.89)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(stroke
-			(width 0.1524)
-			(type solid)
-		)
-		(fill
-			(color 0 0 0 0)
-		)
-		(uuid "394887e0-c5eb-45fe-a43b-ed65e2bd0661")
-		(property "Sheetname" "Power_Management"
-			(at 184.15 31.0384 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left bottom)
-			)
-		)
-		(property "Sheetfile" "Power.kicad_sch"
-			(at 184.15 41.2246 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left top)
-			)
-		)
-		(instances
-			(project "meshtastic"
-				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
-					(page "2")
 				)
 			)
 		)
@@ -7548,7 +8045,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "GNSS-NEO.kicad_sch"
+		(property "Sheetfile" "gnss.kicad_sch"
 			(at 248.92 38.6846 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7610,9 +8107,9 @@
 			)
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
-					(page "4")
+					(page "6")
 				)
 			)
 		)
@@ -7633,7 +8130,7 @@
 			(color 0 0 0 0)
 		)
 		(uuid "a8463f07-c31a-442f-966c-3f51ff19a9b1")
-		(property "Sheetname" "LORA"
+		(property "Sheetname" "LoRa"
 			(at 248.92 46.2784 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7644,7 +8141,7 @@
 				(justify left bottom)
 			)
 		)
-		(property "Sheetfile" "LORA-E22.kicad_sch"
+		(property "Sheetfile" "lora.kicad_sch"
 			(at 248.92 76.7846 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7746,9 +8243,9 @@
 			)
 		)
 		(instances
-			(project "meshtastic"
+			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
-					(page "5")
+					(page "7")
 				)
 			)
 		)
@@ -7758,5 +8255,4 @@
 			(page "1")
 		)
 	)
-	(embedded_fonts no)
 )

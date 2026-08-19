@@ -274,7 +274,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/649cf6bd-2546-4bdf-8349-ce8411dd86e2")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -471,7 +471,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/ca403d1d-9e2f-4a6d-a8d0-c6d9ee42e1c2")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -660,7 +660,7 @@
 		(property ki_fp_filters "ublox*NEO*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/128ad609-7b44-4e69-9e2b-2e9e8dc06b1b")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1234,7 +1234,7 @@
 		(property ki_fp_filters "LED* LED_SMD:* LED_THT:*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/7b932b12-fcfc-4871-9f1b-67c0f716707d")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1485,7 +1485,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/69107d6c-f066-42ec-bbfe-5f0c20d3688a")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1682,7 +1682,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/08509647-3443-4b08-9731-aaeccf1bfcb6")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -1879,7 +1879,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/e258521d-f4f9-4a8d-b6dd-b58b9ce45d88")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2076,7 +2076,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/7957c591-b1f8-4b05-906b-28cceb3beea0")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2273,7 +2273,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/289a183e-c19f-434e-bbd1-2ccfb64eca90")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2471,7 +2471,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/9bd55f8c-0a51-44da-8e48-10c80262ef20")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2668,7 +2668,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/533216fe-d4a6-42fc-8dc3-3833965d6dec")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -2839,7 +2839,7 @@
 		(property ki_fp_filters "Connector*:*_1x??-1MP*")
 		(path "/010010ea-0ec1-4b80-ad8a-d30186e8609c")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3476,7 +3476,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/d3cd0441-d790-47b3-b1db-4ce6ac406d6f")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3673,7 +3673,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/17539a20-0caf-4487-862b-1e5cb29c0659")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -3870,7 +3870,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/24c18583-5338-422e-8356-7c25e3e801d7")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4067,7 +4067,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/7684046c-dfea-4a93-9def-c39e7ae1a503")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4264,7 +4264,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/67662da1-708d-40fa-a5ed-2ad0a75e1c58")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4461,7 +4461,7 @@
 		(property ki_fp_filters "MountingHole*Pad*")
 		(path "/136b3361-8e9a-4cd1-8357-5197c4d479ae")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -4646,7 +4646,7 @@
 		)
 		(path "/f0b74397-5c2e-4e18-8708-e712d07f7105")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5087,7 +5087,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/6d51a985-2dce-4501-8e7a-a03920d59b64")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5284,7 +5284,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/df3ca47a-0281-428b-898a-dd6f895ff1dc")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5481,7 +5481,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/a60da6f5-747a-4475-bfe1-7c5dd4b0bdfb")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5678,7 +5678,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/10d6d2a9-1420-49d2-a4d4-097a11f7b342")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -5875,7 +5875,7 @@
 		(property ki_fp_filters "CP_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/1e320c29-2fa1-419f-a099-78942359c851")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6361,7 +6361,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/8366d730-4e2e-4d36-a0dc-d6ce062e25ac")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6558,7 +6558,7 @@
 		(property ki_fp_filters "TO-???* *_Diode_* *SingleDiode* D_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/cefa0344-88cc-4e60-93b9-2dff23eb7901")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -6806,7 +6806,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/13c7984d-aec9-4431-9396-09e7e28bd73d")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7003,7 +7003,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/b5f9e195-7b2f-458f-8041-7cf86b7e1d16")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7200,7 +7200,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/6dc783b1-b92c-462a-b243-d4b95f258304")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7388,7 +7388,7 @@
 		)
 		(path "/1729a382-d127-4628-b5a0-7f80e0deb04c")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -7970,7 +7970,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/cd8f98d6-8b0e-419e-a9e8-66797f65bd46")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -8167,7 +8167,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/fdf3e331-2180-4a11-95f8-ea483254c255")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -8325,7 +8325,7 @@
 		(property ki_fp_filters "SOT?23*")
 		(path "/410970c1-4211-4c94-b8ac-0678ea10ebea")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -8746,7 +8746,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/473d584e-17f3-44ad-ba42-fc7670a92ac9")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -8943,7 +8943,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/46bfd27a-25d4-4991-9b67-9bf97378d185")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -9132,7 +9132,7 @@
 		(property ki_fp_filters "Texas*DQK*")
 		(path "/6aa7c333-ae65-4f76-97c2-e6f5a500e8a6")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -9505,7 +9505,7 @@
 		(property ki_fp_filters "MountingHole*Pad*")
 		(path "/91961188-ba65-484b-8b0d-9c8d9f78882a")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -9665,7 +9665,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/dd27013f-a76a-415e-b238-f58ec34308ac")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -9854,7 +9854,7 @@
 		(property ki_fp_filters "Texas*DQK*")
 		(path "/835b439f-c1e0-4384-9457-fd11457afe74")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -10219,7 +10219,7 @@
 		(property ki_fp_filters "SolderJumper*Bridged*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/6b2c75a1-2d7c-4061-b1ed-891788b1376a")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -10555,7 +10555,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/4acec2c7-6e00-491b-bdd0-4162ea47dce8")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -10752,7 +10752,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/1c82e277-ce62-4b73-8e4b-711658997f1a")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -10949,7 +10949,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/8a73bce4-51ba-4f6b-a080-73666aff0ebd")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -11146,7 +11146,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/619dcaf1-fc32-4b5d-ba16-6a9b2075c566")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -11343,7 +11343,7 @@
 		(property ki_fp_filters "MountingHole*Pad*")
 		(path "/f9d44005-039e-46b2-96fe-53d760bf8cfa")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -11503,7 +11503,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/82ce51ff-e7a3-413c-9a7b-f2eb8ca4d983")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -11700,7 +11700,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/1b12ccfc-e093-4ca6-9d0d-b0341e9862da")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -11897,7 +11897,7 @@
 		(property ki_fp_filters "Choke_* *Coil* Inductor_* L_*")
 		(path "/efaee1d5-2e35-4236-ae7a-8e0e74b15cd8")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -12096,7 +12096,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/602ae19a-4370-485d-8c72-38ed892c7070")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -12293,7 +12293,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/6e233016-e1f5-4272-b621-4472d4ca8c16")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -12481,7 +12481,7 @@
 		)
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/91a57815-f154-4a09-8fae-2942f97f1aba")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -12781,7 +12781,7 @@
 		(property ki_fp_filters "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/37278ed1-30ac-44f6-9d31-366b70ad0681")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -13206,7 +13206,7 @@
 		(property ki_fp_filters "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/aae066d7-b6e7-4a35-8bfe-01a9f4b36eb6")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -13747,7 +13747,7 @@
 		(property ki_fp_filters "Pin* Test*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/b2450620-d6b9-4431-a8e5-804836640736")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -13960,7 +13960,7 @@
 		(property ki_fp_filters "WSON*1.5x1.5mm*P0.5mm*")
 		(path "/db1992f9-0fdb-4cc3-aff0-a8bb2de9aa0c")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -14279,7 +14279,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/d01f5f97-e72b-4887-94c0-5d012fe0b665")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -14476,7 +14476,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/39b420c8-8662-4bd9-ad74-229a750819a4")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -14673,7 +14673,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/23052cb6-b142-4fbb-bd82-2d89a29c3b5b")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -14870,7 +14870,7 @@
 		(property ki_fp_filters "Choke_* *Coil* Inductor_* L_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/eb11dadf-51c2-488c-9bb2-3ffd94bc547f")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -15069,7 +15069,7 @@
 		(property ki_fp_filters "Connector*:*_1x??_*")
 		(path "/16356dad-5988-477e-a71c-ba29d0cbcb46")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -15982,7 +15982,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/ef0fa82b-ae77-4d85-b4e1-bcbd7fb24dd5")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -16179,7 +16179,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/27892be2-c527-466a-b19b-bca87f6c4d85")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -16376,7 +16376,7 @@
 		(property ki_fp_filters "TO-???* *_Diode_* *SingleDiode* D_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/9e4d9c00-7c33-4cb3-87ee-ea03b2845012")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -16616,7 +16616,7 @@
 		(property ki_fp_filters "*BNC* *SMA* *SMB* *SMC* *Cinch* *LEMO* *UMRF* *MCX* *U.FL*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/067c77d9-92bd-447a-aa72-3b83d4bf7fc3")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -17166,7 +17166,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/76d51360-97c1-4552-a82e-bc982b8db082")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -17363,7 +17363,7 @@
 		(property ki_fp_filters "Connector*:*_1x??_*")
 		(path "/e99fbe5e-4d1f-4fa9-82c3-14420a5c93a9")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -18134,7 +18134,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/f249bec8-aa0b-44c9-8d48-1c60b112d055")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -18341,7 +18341,7 @@
 		)
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/643fb54d-c4e3-4c58-bea9-5aa6db6e5d20")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -19103,7 +19103,7 @@
 		(property ki_fp_filters "SolderJumper*Open*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/b94f29ad-b903-4fe8-8c7f-8a1fc4eb7a47")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -19457,7 +19457,7 @@
 		(property ki_fp_filters "MountingHole*Pad*")
 		(path "/332b6272-83f0-4ed3-b19f-f67f6ba7345f")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -19617,7 +19617,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/c5972f8a-e359-4fe8-a894-f0b971c94e3e")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -19814,7 +19814,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/e9e9a5c5-3da0-421c-a651-039ee17d2ab9")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -20011,7 +20011,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/23e2906d-c550-4dc4-a31e-85b846d0f83f")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -20200,7 +20200,7 @@
 		(property ki_fp_filters "D*SMA*")
 		(path "/a8463f07-c31a-442f-966c-3f51ff19a9b1/c715ffb3-d075-4322-a171-dd955eb53300")
 		(sheetname "/LORA/")
-		(sheetfile "LORA-E22.kicad_sch")
+		(sheetfile "lora.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -20567,7 +20567,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/864d57f9-7f20-4212-86a1-cf4b9ab7965a")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -20764,7 +20764,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/92eb0d98-5778-4697-9595-d69ee21143c4")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -20986,7 +20986,7 @@
 		)
 		(path "/d4978d5d-4d71-4853-9271-78a1d4895f47")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -21428,7 +21428,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/7c0873d9-e42a-4064-838b-92bb3b521a9a")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -21625,7 +21625,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/4932e9cc-089b-46a4-8084-3046dcd293ad")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -21814,7 +21814,7 @@
 		(property ki_fp_filters "SolderJumper*Open*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/50bb753a-43a5-438e-a38f-c8da8f27bfde")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -22168,7 +22168,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/7ee5e677-e760-4cc2-a3b1-424a72c85bf8")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -22365,7 +22365,7 @@
 		(property ki_fp_filters "Inductor_* L_* *Ferrite*")
 		(path "/aa8e6d0f-a0d5-4742-917b-aa5fc54dbb15")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -22554,7 +22554,7 @@
 		(property ki_fp_filters "SolderJumper*Bridged*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/a4de9d29-8802-4548-9977-466df6e997e0")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -22890,7 +22890,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/6a2f1cbf-4813-4273-ae30-85dbc4443e34")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -23042,7 +23042,7 @@
 		(property ki_fp_filters "SOT?5?3*")
 		(path "/10c44533-0054-4eec-90d3-e63af6d14b1b")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -23390,7 +23390,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/4016e0ce-4b93-4e73-8ad3-3a9266a704c9")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -23587,7 +23587,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/d78d71f0-a753-482a-b3fb-84bdf4251a1f")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -23797,7 +23797,7 @@
 		(property ki_fp_filters "LED* LED_SMD:* LED_THT:*")
 		(path "/5443eb24-9bcb-4330-89ee-947146bd4a27/1454cb1b-66a8-4442-a3f7-5e5696eb284b")
 		(sheetname "/GNSS/")
-		(sheetfile "GNSS-NEO.kicad_sch")
+		(sheetfile "gnss.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -24067,7 +24067,7 @@
 		)
 		(path "/f228dec7-12cb-4493-a2cf-faefe37625ac")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -24415,7 +24415,7 @@
 		(property ki_fp_filters "R_*")
 		(path "/2f0b3193-43e3-4558-a8f2-66f2e0840be2")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -24620,7 +24620,7 @@
 		(property ki_fp_filters "C_*")
 		(path "/520d530f-1f5c-4364-ae1e-615840ee4bd4")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -24826,7 +24826,7 @@
 		(property ki_fp_filters "Connector*:*_1x??_*")
 		(path "/0155fc3b-af1d-4822-bb18-76b0ff4fbbd9")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")
@@ -25207,7 +25207,7 @@
 		)
 		(path "/721efd05-8f7f-4e1e-9e65-143611941b6e")
 		(sheetname "/")
-		(sheetfile "meshtastic.kicad_sch")
+		(sheetfile "parsnip.kicad_sch")
 		(units
 			(unit
 				(name "A")

@@ -503,7 +503,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "meshtastic.kicad_pro",
+    "filename": "parsnip.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -763,12 +763,22 @@
     "subpart_id_separator": 0,
     "top_level_sheets": [
       {
-        "filename": "meshtastic.kicad_sch",
+        "filename": "parsnip.kicad_sch",
         "name": "Root",
         "uuid": "fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
+      },
+      {
+        "filename": "battery.kicad_sch",
+        "name": "Charger",
+        "uuid": "e1574ea0-8ae2-4d84-94ff-d2e325da206a"
+      },
+      {
+        "filename": "rails.kicad_sch",
+        "name": "Rails",
+        "uuid": "d6234e85-43d0-45a0-a015-7fe7290a693b"
       }
     ],
-    "used_designators": "D1,D6-17,U4-12,C12-13,C15-24,C26,C28-110,JP4,JP6-10,R18-20,R22-24,R29-73,TP1,TP3-8,J5-6,J8,FL1-2,#PWR16-17,#PWR22,#PWR24,#PWR27,#PWR31-32,#PWR34-37,#PWR43-49,#PWR52-54,#PWR56-105,FB1-3,L2-3,TH1-3,SW3,BT1-3,F1-6,Q1-5",
+    "used_designators": "FL1-2,#PWR16-17,#PWR22,#PWR24,#PWR27,#PWR31-32,#PWR34-37,#PWR43-54,#PWR56-117,J5-6,J8,FB1-3,L2-5,TH1-3,SW3,BT1-3,F1-6,Q1-5,C1-4,C12-13,C15-26,C28-134,U1,U4-13,D1,D6-17,TP1,TP3-12,R1-6,R18-20,R22-26,R29-85,JP4,JP6-10",
     "variants": []
   },
   "sheets": [
@@ -777,16 +787,20 @@
       "Root"
     ],
     [
-      "394887e0-c5eb-45fe-a43b-ed65e2bd0661",
-      "Power_Management"
-    ],
-    [
       "5443eb24-9bcb-4330-89ee-947146bd4a27",
       "GNSS"
     ],
     [
       "a8463f07-c31a-442f-966c-3f51ff19a9b1",
-      "LORA"
+      "LoRa"
+    ],
+    [
+      "e1574ea0-8ae2-4d84-94ff-d2e325da206a",
+      "Charger"
+    ],
+    [
+      "d6234e85-43d0-45a0-a015-7fe7290a693b",
+      "Rails"
     ]
   ],
   "text_variables": {},
