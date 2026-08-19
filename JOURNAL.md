@@ -72,3 +72,5 @@ Lastly, I need a 5 V rail to run off the outputted `SYS` from the charge control
 * Double checked capacitor voltage ratings are correct for the net
 
 For the antenna detection, I didn't think it was possible to implement without something like an expensive VNA. But apparently, since most LoRa antennas are DC-shorted, you can put a small amount of current on the antenna trace and check and see if it's still there with a FET. If the antenna is installed correctly, there should be no DC voltage on the antenna net, but if it wasn't, it would show 3V3 and the LoRA module would automatically stop transmitting.
+
+![5v rail](/docs/img/5v-rail.png)
