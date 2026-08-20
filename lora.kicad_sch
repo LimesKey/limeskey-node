@@ -4,6 +4,9 @@
 	(generator_version "10.0")
 	(uuid "dbc45095-f990-4683-8737-569b6208fa4a")
 	(paper "A4")
+	(title_block
+		(date "2026-05-14")
+	)
 	(lib_symbols
 		(symbol "Connector:Conn_Coaxial"
 			(pin_names
