@@ -90,3 +90,5 @@ Additionally I added some optional protection components to the USB-C port, a su
 ![USB Interface](/docs/img/usb-pd.png)
 
 Next steps would probably be to double check I wired everything right, then move onto wiring the ESP32-S3 which hopefully won't be very difficult.
+
+##  - 6 hours (2026-08-21)

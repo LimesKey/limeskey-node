@@ -5,7 +5,9 @@
 	(uuid "18deedea-c7c9-4de5-a763-4d652b8b1916")
 	(paper "A4")
 	(title_block
+		(title "GNSS Module / Active RF Antenna")
 		(date "2026-05-14")
+		(company "Ryan Di Lorenzo")
 	)
 	(lib_symbols
 		(symbol "Connector:Conn_Coaxial"
@@ -2044,7 +2046,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Diode:ESD9B3.3ST5G"
+		(symbol "Diode:ESD9B5.0ST5G"
 			(pin_numbers
 				(hide yes)
 			)
@@ -2067,7 +2069,7 @@
 					)
 				)
 			)
-			(property "Value" "ESD9B3.3ST5G"
+			(property "Value" "ESD9B5.0ST5G"
 				(at 0 -2.54 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -2099,7 +2101,7 @@
 					)
 				)
 			)
-			(property "Description" "ESD protection diode, 3.3Vrwm, SOD-923"
+			(property "Description" "ESD protection diode, 5.0Vrwm, SOD-923"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -2132,7 +2134,7 @@
 					)
 				)
 			)
-			(symbol "ESD9B3.3ST5G_0_1"
+			(symbol "ESD9B5.0ST5G_0_1"
 				(polyline
 					(pts
 						(xy -2.54 -1.27) (xy 0 0) (xy -2.54 1.27) (xy -2.54 -1.27)
@@ -2182,7 +2184,7 @@
 					)
 				)
 			)
-			(symbol "ESD9B3.3ST5G_1_1"
+			(symbol "ESD9B5.0ST5G_1_1"
 				(pin passive line
 					(at -3.81 0 0)
 					(length 2.54)
@@ -6011,12 +6013,6 @@
 		(uuid "84d52fa3-e684-40f4-8135-425d828203a6")
 	)
 	(junction
-		(at 120.65 30.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "8b5123f6-dcd4-449c-83f7-573d5a916405")
-	)
-	(junction
 		(at 60.96 49.53)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6101,6 +6097,12 @@
 		(uuid "c5e60f31-112a-4152-b142-3f55f1aedef2")
 	)
 	(junction
+		(at 205.74 62.23)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "c9acf33f-16d5-430e-b1e0-407fe7ea479c")
+	)
+	(junction
 		(at 97.79 85.09)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6125,6 +6127,12 @@
 		(uuid "cfd26053-75d4-4699-8dd8-3fc4f1a2bee7")
 	)
 	(junction
+		(at 120.65 30.48)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d907b22a-8de5-44d4-b51b-78149c13b34d")
+	)
+	(junction
 		(at 138.43 149.86)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6141,12 +6149,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "e27db333-7a63-4c50-a1d9-0c9645698427")
-	)
-	(junction
-		(at 205.74 60.96)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "ea61a39a-8a09-49be-b76c-80cf482bff1d")
 	)
 	(junction
 		(at 204.47 38.1)
@@ -6559,16 +6561,6 @@
 			(type default)
 		)
 		(uuid "247c1cae-6623-4e66-b2f0-6479295c5a09")
-	)
-	(wire
-		(pts
-			(xy 201.93 60.96) (xy 205.74 60.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "25cc8507-ce5a-43b7-93e1-f515a6c18ed5")
 	)
 	(wire
 		(pts
@@ -7182,7 +7174,7 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 60.96) (xy 191.77 55.88)
+			(xy 191.77 62.23) (xy 191.77 55.88)
 		)
 		(stroke
 			(width 0)
@@ -7239,6 +7231,16 @@
 			(type default)
 		)
 		(uuid "69f9b3c0-8b68-49dc-bf83-b9b7fcb4481a")
+	)
+	(wire
+		(pts
+			(xy 205.74 63.5) (xy 205.74 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a30d25a-e14c-4334-918b-c3d377b1e09e")
 	)
 	(wire
 		(pts
@@ -7492,7 +7494,7 @@
 	)
 	(wire
 		(pts
-			(xy 205.74 60.96) (xy 205.74 62.23)
+			(xy 205.74 55.88) (xy 205.74 62.23)
 		)
 		(stroke
 			(width 0)
@@ -7629,16 +7631,6 @@
 			(type default)
 		)
 		(uuid "9251728e-c080-4efa-925c-d6221a402e53")
-	)
-	(wire
-		(pts
-			(xy 205.74 55.88) (xy 205.74 60.96)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "92a78afe-fc46-4fa0-b827-cb371bd11f46")
 	)
 	(wire
 		(pts
@@ -7962,7 +7954,7 @@
 	)
 	(wire
 		(pts
-			(xy 194.31 60.96) (xy 191.77 60.96)
+			(xy 194.31 62.23) (xy 191.77 62.23)
 		)
 		(stroke
 			(width 0)
@@ -8209,6 +8201,16 @@
 			(type default)
 		)
 		(uuid "defda449-9f28-4a45-ab81-5492e5023d4a")
+	)
+	(wire
+		(pts
+			(xy 201.93 62.23) (xy 205.74 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e169e727-f9c5-4c63-b5d9-48cd01f4a043")
 	)
 	(wire
 		(pts
@@ -8518,7 +8520,7 @@
 			)
 		)
 	)
-	(hierarchical_label "SDA{slash}SPI_SS"
+	(hierarchical_label "SDA{slash}SPI_CS"
 		(shape bidirectional)
 		(at 57.15 97.79 0)
 		(effects
@@ -8527,7 +8529,18 @@
 			)
 			(justify left)
 		)
-		(uuid "1590b4db-fae4-4cba-8c0c-0d26adc111bf")
+		(uuid "08a1c553-c7d1-46be-a364-c76e6b4119b4")
+	)
+	(hierarchical_label "PPS"
+		(shape output)
+		(at 26.67 59.69 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "1766baf4-1396-4857-87a3-e830a501a8a2")
 	)
 	(hierarchical_label "RXD{slash}SPI_MOSI"
 		(shape input)
@@ -8551,6 +8564,17 @@
 		)
 		(uuid "374e9e51-2e9d-437e-a6ba-04034b0822de")
 	)
+	(hierarchical_label "SCL{slash}SPI_CLK"
+		(shape input)
+		(at 57.15 100.33 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5e9d17fc-0ddf-4537-bb21-7e832927af84")
+	)
 	(hierarchical_label "PPS"
 		(shape output)
 		(at 149.86 77.47 0)
@@ -8573,29 +8597,7 @@
 		)
 		(uuid "88be995b-9fcb-42c6-9f13-813ddcf1103b")
 	)
-	(hierarchical_label "SCL{slash}SPI_CLK"
-		(shape bidirectional)
-		(at 57.15 100.33 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "94896c88-bb6f-49ab-80c8-36b5da1e09d5")
-	)
-	(hierarchical_label "PPS"
-		(shape output)
-		(at 26.67 59.69 180)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "e2f5fb10-9516-4d73-b7b1-a0ce0aa9174e")
-	)
-	(hierarchical_label "SDA{slash}SPI_SS"
+	(hierarchical_label "SDA{slash}SPI_CS"
 		(shape bidirectional)
 		(at 93.98 69.85 180)
 		(effects
@@ -8607,7 +8609,7 @@
 		(uuid "e5a8cd69-09f2-45be-9f47-be90ba4ab9ab")
 	)
 	(hierarchical_label "EXTINT"
-		(shape output)
+		(shape input)
 		(at 110.49 77.47 180)
 		(effects
 			(font
@@ -8618,7 +8620,7 @@
 		(uuid "eb5cd7e5-7f5d-4820-b137-d658dce696f0")
 	)
 	(hierarchical_label "SCL{slash}SPI_CLK"
-		(shape bidirectional)
+		(shape input)
 		(at 107.95 72.39 180)
 		(effects
 			(font
@@ -8627,85 +8629,6 @@
 			(justify right)
 		)
 		(uuid "f1753aa9-6fd7-4c78-acd5-25d9fd69be52")
-	)
-	(symbol
-		(lib_id "Diode:ESD9B3.3ST5G")
-		(at 198.12 60.96 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "0295bc54-2ec9-45e3-aa66-4e82675e0ec5")
-		(property "Reference" "D13"
-			(at 195.072 58.674 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "ESD9B3.3ST5G"
-			(at 197.104 63.5 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_SOD-923"
-			(at 198.12 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/ESD9B-D.PDF"
-			(at 198.12 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "ESD protection diode, 3.3Vrwm, SOD-923"
-			(at 198.12 60.96 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "982a4d6b-05bd-4cf7-8175-1a6972c248f7")
-		)
-		(pin "1"
-			(uuid "c1f5e625-c558-4406-93b2-5ea04fc0a3a9")
-		)
-		(instances
-			(project "parsnip"
-				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
-					(reference "D13")
-					(unit 1)
-				)
-			)
-		)
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -9131,7 +9054,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 205.74 62.23 0)
+		(at 205.74 63.5 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9141,7 +9064,7 @@
 		(dnp no)
 		(uuid "106a2dc3-eb1d-4ef1-b8cb-a51801ca0633")
 		(property "Reference" "#PWR080"
-			(at 205.74 68.58 0)
+			(at 205.74 69.85 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9152,7 +9075,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 205.74 66.802 0)
+			(at 205.74 68.072 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9162,7 +9085,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 205.74 62.23 0)
+			(at 205.74 63.5 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9173,7 +9096,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 205.74 62.23 0)
+			(at 205.74 63.5 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9184,7 +9107,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 205.74 62.23 0)
+			(at 205.74 63.5 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10258,7 +10181,7 @@
 		(dnp no)
 		(uuid "2b56c903-877c-48bf-ac1d-c550b4ce92f9")
 		(property "Reference" "D6"
-			(at 125.73 29.464 0)
+			(at 125.73 28.448 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10267,8 +10190,8 @@
 				)
 			)
 		)
-		(property "Value" "D_Schottky"
-			(at 125.984 31.242 0)
+		(property "Value" "RB531SM-30"
+			(at 128.016 30.48 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10277,7 +10200,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-523"
 			(at 125.73 34.29 0)
 			(hide yes)
 			(show_name no)
@@ -10300,6 +10223,50 @@
 			)
 		)
 		(property "Description" "Schottky diode"
+			(at 125.73 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C2766159"
+			(at 125.73 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" ""
+			(at 125.73 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 125.73 34.29 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" ""
 			(at 125.73 34.29 0)
 			(hide yes)
 			(show_name no)
@@ -12745,6 +12712,129 @@
 		)
 	)
 	(symbol
+		(lib_id "Diode:ESD9B5.0ST5G")
+		(at 198.12 62.23 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "608f4c9d-d586-45e8-80a9-1bd484a24eaa")
+		(property "Reference" "D13"
+			(at 198.12 59.944 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "TPD1E10B06"
+			(at 197.866 65.278 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Package_SON:Texas_DPY0002A_0.6x1mm_P0.65mm"
+			(at 198.12 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 198.12 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 198.12 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C48260"
+			(at 198.12 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" ""
+			(at 198.12 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 198.12 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" ""
+			(at 198.12 62.23 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "dfb2c098-ef3d-4c93-9e10-c2376efcaa1f")
+		)
+		(pin "1"
+			(uuid "0a5e0a17-67ce-42be-b1ce-ea03313a2ea0")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
+					(reference "D13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 60.96 66.04 0)
 		(unit 1)
@@ -12817,6 +12907,130 @@
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
 					(reference "#PWR019")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_TVS")
+		(at 113.03 30.48 180)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "63214b9a-2099-4b77-9b3b-2958e7c20671")
+		(property "Reference" "D11"
+			(at 113.03 24.13 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "ESD351DPYR"
+			(at 113.03 26.67 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_0402_1005Metric"
+			(at 113.03 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 113.03 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Bidirectional transient-voltage-suppression diode"
+			(at 113.03 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" "C1974929"
+			(at 113.03 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" ""
+			(at 113.03 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 113.03 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" ""
+			(at 113.03 30.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "2"
+			(uuid "3b4b1d95-4fcb-4927-af18-c7130e074547")
+		)
+		(pin "1"
+			(uuid "80c16afe-fdb7-43d4-951e-4852294ab188")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
+					(reference "D11")
 					(unit 1)
 				)
 			)
@@ -20167,85 +20381,6 @@
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
 					(reference "C39")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Diode:ESD9B3.3ST5G")
-		(at 113.03 30.48 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "f461e007-d391-4f5a-8b86-933d1b1be896")
-		(property "Reference" "D10"
-			(at 113.03 25.4 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "ESD9B3.3ST5G"
-			(at 113.03 27.686 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Diode_SMD:D_SOD-923"
-			(at 113.03 30.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" "https://www.onsemi.com/pub/Collateral/ESD9B-D.PDF"
-			(at 113.03 30.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "ESD protection diode, 3.3Vrwm, SOD-923"
-			(at 113.03 30.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "0fc3e176-dd68-4e40-bca9-11bd3b45dd03")
-		)
-		(pin "1"
-			(uuid "d55c7ad6-0c5e-43b8-bfab-ba99dfc1e886")
-		)
-		(instances
-			(project "parsnip"
-				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
-					(reference "D10")
 					(unit 1)
 				)
 			)
