@@ -59,7 +59,7 @@ Lastly, I need a 5 V rail to run off the outputted `SYS` from the charge control
 
 > The switching frequency can be set or synchronized between 200 kHz and 2.2 MHz to avoid noise sensitive frequency bands.
 
-## Reworking power rails, adding antenna detection, and organization  - 6 hours (2026-08-18)
+## Reworking power rails, adding antenna detection, and organization - 6 hours (2026-08-18)
 
 * Added the [LM61460-Q1](https://www.ti.com/product/LM61460-Q1/part-details/LM61460AASQRJRRQ1) as my 3V3 switching buck converter, which is the same as for the 5V rail.
  
@@ -74,3 +74,19 @@ Lastly, I need a 5 V rail to run off the outputted `SYS` from the charge control
 For the antenna detection, I didn't think it was possible to implement without something like an expensive VNA. But apparently, since most LoRa antennas are DC-shorted, you can put a small amount of current on the antenna trace and check and see if it's still there with a FET. If the antenna is installed correctly, there should be no DC voltage on the antenna net, but if it wasn't, it would show 3V3 and the LoRA module would automatically stop transmitting.
 
 ![5v rail](/docs/img/5v-rail.png)
+
+## USB Interface - USB-OTG at 60W! - 6 hours (2026-08-21)
+
+### USB-OTG
+I learnt what USB-OTG was and it turns out my charge controller already supports it, and for two dollars more, I could upgrade my current USB-PD IC to something that also supports USB-OTG. USB-OTG allows USB device to charge another device, acting like a power supply, with the same voltages and currents a regular wall-adapter USB-C brick would do. 
+
+The `BQ25798` can do USB-OTG at 3.32A maximum, and at up to 22V; I'll likely set it to do 20V at 3A. My 2S 21700 batteries can do approximately 10A contiously at 8V, so something around 80W total, but it's best not to push them that far. And 60W, what the maximum is for the BQ25798, is plenty. 
+
+### USB Power Delivery
+As for USB-PD, I went from the $0.50 USD `HUSB238` to the $2.50 USD `TPS25751`, specifically for the USB-OTG feature. It also turns out this new PD IC has some nice circuit protection features, like reverse current protection, undervoltage and overvoltage protection, protection against some non-compliant USB devices for the CC pins, but most importantly for me, it has liquid detection. It can detect when water gets into the USB-C port and either slow down charging, or shut off completely. You do need four FETs in order to use this feature, but they aren't very expensive or large.
+
+Additionally I added some optional protection components to the USB-C port, a surge protection device [TVS2200DRVR](https://www.ti.com/product/TVS2200/part-details/TVS2200DRVR), a TVS device [TPD4E05U06](https://www.ti.com/product/TPD4E05U06/part-details/TPD4E05U06DQAR), and an ESD protection device [TPD8S300A](https://www.ti.com/product/TPD8S300A). These were a little expensive (a few dollars), and a little large, but they're really nice to have. I want my board to withstand anthing basically lol.
+
+![USB Interface](/docs/img/usb-pd.png)
+
+Next steps would probably be to double check I wired everything right, then move onto wiring the ESP32-S3 which hopefully won't be very difficult.
