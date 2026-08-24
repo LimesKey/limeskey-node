@@ -5319,30 +5319,6 @@
 			)
 		)
 	)
-	(global_label "I2C_PMIC_IRQ"
-		(shape bidirectional)
-		(at 87.63 130.81 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "232e4e4d-c4f0-4114-a9a1-8da311719a5a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 104.5475 130.81 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-	)
 	(global_label "I2C_HOST_SDA"
 		(shape bidirectional)
 		(at 166.37 138.43 180)
@@ -5364,54 +5340,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-			)
-		)
-	)
-	(global_label "I2C_PMIC_SCL"
-		(shape bidirectional)
-		(at 87.63 133.35 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "306d3910-d254-4b86-8818-8acb379f9ee7")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 104.8498 133.35 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-	)
-	(global_label "I2C_PMIC_SDA"
-		(shape bidirectional)
-		(at 87.63 135.89 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "3d113473-5534-4176-9f4f-dcef3f10ac0b")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 104.9103 135.89 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 			)
 		)
 	)
