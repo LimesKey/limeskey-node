@@ -768,22 +768,17 @@
         "uuid": "fe9d4a31-2311-442f-997c-52ad8ca5cfe9"
       },
       {
-        "filename": "battery.kicad_sch",
-        "name": "Charger",
-        "uuid": "e1574ea0-8ae2-4d84-94ff-d2e325da206a"
-      },
-      {
-        "filename": "rails.kicad_sch",
-        "name": "Rails",
-        "uuid": "d6234e85-43d0-45a0-a015-7fe7290a693b"
-      },
-      {
         "filename": "usb_interface.kicad_sch",
         "name": "USB Interface",
         "uuid": "a9f1fdad-fb49-4185-a4ff-ad8f47273e4d"
+      },
+      {
+        "filename": "battery.kicad_sch",
+        "name": "Charger",
+        "uuid": "c8087976-4958-4446-b419-5a0b61d5634f"
       }
     ],
-    "used_designators": "SW3-5,RN1,NT1-6,Q1-10,F1-6,TH1-3,BT1-3,R1-6,R18-20,R22-26,R29-108,TP1,TP3-13,JP4,JP6-15,#PWR1-6,#PWR8-9,#PWR16-17,#PWR22,#PWR24,#PWR27,#PWR30-32,#PWR34-37,#PWR43-54,#PWR56-146,FL1-2,J5-6,J8-9,FB1-3,L2-5,C1-7,C12-13,C15-26,C28-153,D1,D6-19,U1,U4-15",
+    "used_designators": "F1-6,Q1-13,Y1,#PWR1-147,FL1-2,FB1-3,L1-7,H1-4,BT1-5,SW1-6,NT1-6,RN1,C1-199,D1-19,U1-17,R1-137,JP1-18,TP1-20,TH1-6,J1-10",
     "variants": []
   },
   "sheets": [
@@ -796,12 +791,8 @@
       "USB Interface"
     ],
     [
-      "e1574ea0-8ae2-4d84-94ff-d2e325da206a",
+      "c8087976-4958-4446-b419-5a0b61d5634f",
       "Charger"
-    ],
-    [
-      "d6234e85-43d0-45a0-a015-7fe7290a693b",
-      "Rails"
     ],
     [
       "5443eb24-9bcb-4330-89ee-947146bd4a27",
@@ -810,6 +801,10 @@
     [
       "a8463f07-c31a-442f-966c-3f51ff19a9b1",
       "LoRa"
+    ],
+    [
+      "ef3187a0-acf7-454f-a4ee-a309d9d8c27d",
+      "Rails"
     ]
   ],
   "text_variables": {},
