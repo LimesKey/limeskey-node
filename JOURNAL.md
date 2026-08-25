@@ -91,4 +91,15 @@ Additionally I added some optional protection components to the USB-C port, a su
 
 Next steps would probably be to double check I wired everything right, then move onto wiring the ESP32-S3 which hopefully won't be very difficult.
 
-##  - 6 hours (2026-08-21)
+## E-Ink Display & Schematic Cleanup - 4 hours (2026-08-24)
+
+### Cleanup
+Today I worked on making the schematic a bit easier to read and understand, as I'm having a few people review it. Additionally, I assigned communication labels to a few unused pins on my ESP32 and tidied up the connector section in the root schematic. I am thinking it would be helpful if I were to expand the size of some symbols so it's easier to see all the components in between the IC pins. I have plenty of schematic room so why not make everything a little larger and more spread out? It's what I commonly see in more professional schematics, such as my laptop's motherboard schematic.
+
+### E-Ink
+I am toying with the idea of adding a 2.9" E-Ink/E-Paper display ([AliExpress](https://www.aliexpress.com/item/1005004644515880.html)) on the back of the PCB, against where the two 21700 batteries go. I'm thinking it could be attached to long M.2 standoffs ([AliExpress](https://www.aliexpress.com/item/1005008713639234.html)), and screwed into my board's mounting holes. It would be nice then to show information about where the user is currently located and how many LoRa nodes the device currently sees. It seems like non-tech people that I show my prototype/v1 device to, they are offput by the idea of having to use a phone. Perhaps they feel like it defeats the purpose of my device. To me, it doesn't impact the device much at all, since I'm only simply using the display and touchscreen of the phone and that's all. The phone doesn't have to have any sort of GNSS/Wifi/Cellular Internet for it to work, but non-techy people don't really understand that.
+
+However, if I were to add a display, it would be intuitive for the user to also interact with the display. I would almost have to add a button of some sorts. I was considering adding a [capacitive sensor](https://hackaday.io/project/202684-io-touch-every-io-pin-is-a-capacitive-sensor) to my PCB, it looks pretty simple, however it requires a lot of space, space which I don't really have. Need to think more...
+
+
+![ESP32 Wiring, root schematic](/docs/img/esp32-root.png)
