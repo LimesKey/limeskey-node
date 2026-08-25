@@ -101,5 +101,6 @@ I am toying with the idea of adding a 2.9" E-Ink/E-Paper display ([AliExpress](h
 
 However, if I were to add a display, it would be intuitive for the user to also interact with the display. I would almost have to add a button of some sorts. I was considering adding a [capacitive sensor](https://hackaday.io/project/202684-io-touch-every-io-pin-is-a-capacitive-sensor) to my PCB, it looks pretty simple, however it requires a lot of space, space which I don't really have. Need to think more...
 
+Oh, also, I changed from a `GPL-3.0` license to the `CC BY-NC-SA 4.0` license, it better aligns with my views.
 
 ![ESP32 Wiring, root schematic](/docs/img/esp32-root.png)
