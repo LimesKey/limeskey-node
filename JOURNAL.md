@@ -104,3 +104,18 @@ However, if I were to add a display, it would be intuitive for the user to also 
 Oh, also, I changed from a `GPL-3.0` license to the `CC BY-NC-SA 4.0` license, it better aligns with my views.
 
 ![ESP32 Wiring, root schematic](/docs/img/esp32-root.png)
+
+## Reducing Buck Converter EMI - 6 hours (2026-08-26)
+
+As it stands, I have two of the same low-EMI buck converter ICs for my 5V and 3.3V rail. Both of them switch at the same frequency, which should be fine, right? Wrong, both buck converters have drift and may not statup at the exact same time; and even if they were in sync/phase, you wouldn't want them to be anyways. Ideally, you'd want your buck converters to be switching at alternate times, one switches after another. Fortunately, there is a sync feature built right into the buck converters which can do exactly this. However you'd need an external clock.., well maybe two, one 0 degrees phase shifted, and another 180 degrees phase shifted.
+
+Well, you could use a [4MHz oscillator](https://www.lcsc.com/product-detail/C2901612.html), and a [flip-flop](https://www.ti.com/product/SN74LVC1G74), sounds like a plan. Until you realize the oscillator draws 10 mA!!!! I don't have anything on the board except the main buck converter itself that could provide 3V3 @ 10mA. And of course, you can't power the oscillator from the output of the very buck converter it's trying to switch on, right? Actually apparently you can. The sync pin is very much optional, and when it's absent, the buck converter relies on it's own oscillator. So basically the only downside is poor EMI for 1 second at startup, which is nothing.
+
+![Buck oscillator circuit](/docs/img/oscillator-buck.png)
+
+Also in this journal:
+* Adjustments to eFuse limits again
+* Reduce 5V buck from 5.1v to 5.02v for added safety
+* Add footprints & voltage ratngs to a lot of capacitors
+* Fix flipped FET for liquid detection
+* Add a magnometer

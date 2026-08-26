@@ -3908,6 +3908,16 @@
 	)
 	(wire
 		(pts
+			(xy 81.28 85.09) (xy 81.28 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5f36f576-bf01-4730-99a8-881a5b9cebcc")
+	)
+	(wire
+		(pts
 			(xy 195.58 86.36) (xy 195.58 83.82)
 		)
 		(stroke
@@ -4045,6 +4055,16 @@
 			(type default)
 		)
 		(uuid "7816fbb7-2288-4273-8744-e929bc0e9538")
+	)
+	(wire
+		(pts
+			(xy 81.28 69.85) (xy 81.28 80.01)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "791ad857-5872-4309-bd82-8004f7e0bae2")
 	)
 	(wire
 		(pts
@@ -4245,6 +4265,16 @@
 			(type default)
 		)
 		(uuid "99f22bb2-0ce9-4b01-bf17-19dd5747e41e")
+	)
+	(wire
+		(pts
+			(xy 81.28 88.9) (xy 76.2 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9ba44233-7646-4f94-a10b-85382dbc15dd")
 	)
 	(wire
 		(pts
@@ -4771,6 +4801,17 @@
 		)
 		(uuid "8a0c5423-6788-4eec-a357-d8c1e07fd944")
 	)
+	(hierarchical_label "CS"
+		(shape input)
+		(at 76.2 88.9 180)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "8bcf8178-b183-4ebc-a5a5-da231039130a")
+	)
 	(hierarchical_label "SCK"
 		(shape input)
 		(at 156.21 96.52 180)
@@ -4838,7 +4879,7 @@
 		(dnp no)
 		(uuid "01ebcac5-5238-4651-a98d-e3d8532b951d")
 		(property "Reference" "R79"
-			(at 189.23 86.614 90)
+			(at 189.23 87.122 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -6176,6 +6217,84 @@
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/a8463f07-c31a-442f-966c-3f51ff19a9b1"
 					(reference "#PWR0114")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3V3")
+		(at 81.28 69.85 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "40ac0bd1-5e7e-49da-8448-9d176fcbe1b4")
+		(property "Reference" "#PWR0156"
+			(at 81.28 73.66 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "+3V3"
+			(at 81.28 64.77 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 81.28 69.85 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 69.85 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3V3\""
+			(at 81.28 69.85 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "e74ecb9e-c433-4c65-a194-64bc5aa5f75d")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/a8463f07-c31a-442f-966c-3f51ff19a9b1"
+					(reference "#PWR0156")
 					(unit 1)
 				)
 			)
@@ -8618,6 +8737,164 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R_Small")
+		(at 81.28 82.55 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b413e63a-be74-4e2d-b001-9a2103511378")
+		(property "Reference" "R123"
+			(at 76.2 81.534 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "100k"
+			(at 74.93 83.312 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" ""
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" ""
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "KLC_S5.1" ""
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" ""
+			(at 81.28 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "675241bf-525b-4dba-ac29-b62cd4214939")
+		)
+		(pin "2"
+			(uuid "44b8c769-27a9-4e67-b279-38c169307b63")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/a8463f07-c31a-442f-966c-3f51ff19a9b1"
+					(reference "R123")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C_Small")
 		(at 204.47 104.14 90)
 		(unit 1)
@@ -9761,7 +10038,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C5142567"
 			(at 134.62 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -9772,7 +10049,7 @@
 				)
 			)
 		)
-		(property "Voltage Rating" ""
+		(property "Voltage Rating" "50V"
 			(at 134.62 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -9818,6 +10095,17 @@
 		)
 		(property "KLC_S5.1" ""
 			(at 134.62 91.44 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" "X7R"
+			(at 134.62 91.44 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)

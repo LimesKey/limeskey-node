@@ -6574,7 +6574,7 @@
 	)
 	(wire
 		(pts
-			(xy 101.6 62.23) (xy 102.87 62.23)
+			(xy 101.6 62.23) (xy 109.22 62.23)
 		)
 		(stroke
 			(width 0)
@@ -6601,16 +6601,6 @@
 			(type default)
 		)
 		(uuid "2a46b4ad-84d5-4d6c-bcba-f92128796ef7")
-	)
-	(wire
-		(pts
-			(xy 101.6 64.77) (xy 109.22 64.77)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2b1075c7-c945-4492-abcd-b3a0fa0daa06")
 	)
 	(wire
 		(pts
@@ -7534,6 +7524,16 @@
 	)
 	(wire
 		(pts
+			(xy 101.6 64.77) (xy 109.22 64.77)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "8878d301-9358-42e7-b976-93892a8f141e")
+	)
+	(wire
+		(pts
 			(xy 167.64 137.16) (xy 167.64 135.89)
 		)
 		(stroke
@@ -8131,16 +8131,6 @@
 			(type default)
 		)
 		(uuid "d502bb4f-dd91-46d4-a9aa-26c51db2cb03")
-	)
-	(wire
-		(pts
-			(xy 107.95 62.23) (xy 109.22 62.23)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d81b40d1-ee11-4c4b-aac5-ba2db315ac32")
 	)
 	(wire
 		(pts
@@ -11921,7 +11911,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "102k"
+		(property "Value" "113k"
 			(at 205.994 45.212 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11986,8 +11976,19 @@
 				)
 			)
 		)
-		(property "Tolerance" "0.5%"
+		(property "Tolerance" "0.1%"
 			(at 208.28 47.498 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" ""
+			(at 204.47 45.72 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -12075,7 +12076,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C5142567"
 			(at 113.03 43.18 0)
 			(hide yes)
 			(show_name no)
@@ -12086,7 +12087,7 @@
 				)
 			)
 		)
-		(property "Voltage Rating" ""
+		(property "Voltage Rating" "50V"
 			(at 113.03 43.18 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12098,6 +12099,17 @@
 		)
 		(property "Tolerance" ""
 			(at 113.03 43.18 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" "X7R"
+			(at 113.03 43.18 90)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -12142,7 +12154,7 @@
 				)
 			)
 		)
-		(property "Value" "196k"
+		(property "Value" "215k"
 			(at 197.104 40.132 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12206,8 +12218,19 @@
 				)
 			)
 		)
-		(property "Tolerance" "0.5%"
+		(property "Tolerance" "0.1%"
 			(at 197.104 41.91 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" ""
+			(at 196.85 38.1 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -13655,151 +13678,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R_Small")
-		(at 105.41 62.23 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "7684046c-dfea-4a93-9def-c39e7ae1a503")
-		(property "Reference" "R59"
-			(at 105.41 60.198 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.016 1.016)
-				)
-			)
-		)
-		(property "Value" "22"
-			(at 105.41 62.23 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
-			(at 105.41 62.23 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 105.41 62.23 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "Resistor, small symbol"
-			(at 105.41 62.23 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 105.41 62.23 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Voltage Rating" ""
-			(at 105.41 62.23 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Tolerance" ""
-			(at 105.41 62.23 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" ""
-			(at 105.41 62.23 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "KLC_S3.3" ""
-			(at 105.41 62.23 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "KLC_S5.1" ""
-			(at 105.41 62.23 90)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "2"
-			(uuid "dd05a762-41b3-40ed-b821-fbf69dba5598")
-		)
-		(pin "1"
-			(uuid "341a29a0-a039-440b-8869-764c8bf42983")
-		)
-		(instances
-			(project "parsnip"
-				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/5443eb24-9bcb-4330-89ee-947146bd4a27"
-					(reference "R59")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:C_Small")
 		(at 60.96 149.86 270)
 		(unit 1)
@@ -14883,7 +14761,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C5142567"
 			(at 196.85 55.88 0)
 			(hide yes)
 			(show_name no)
@@ -14894,7 +14772,7 @@
 				)
 			)
 		)
-		(property "Voltage Rating" ""
+		(property "Voltage Rating" "50V"
 			(at 196.85 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14906,6 +14784,17 @@
 		)
 		(property "Tolerance" ""
 			(at 196.85 55.88 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" "X7R"
+			(at 196.85 55.88 90)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -15445,7 +15334,7 @@
 				)
 			)
 		)
-		(property "Value" "6.49k"
+		(property "Value" "6.65k"
 			(at 250.952 52.832 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15511,6 +15400,17 @@
 		)
 		(property "Tolerance" "1%"
 			(at 249.682 54.61 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" ""
+			(at 246.38 53.34 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -16650,8 +16550,8 @@
 				)
 			)
 		)
-		(property "Value" "22pF C0G/NP0"
-			(at 31.75 163.322 90)
+		(property "Value" "22pF"
+			(at 32.512 158.496 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -16751,6 +16651,16 @@
 		(property "KLC_S5.1" ""
 			(at 29.21 160.02 90)
 			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" "C0G/NP0"
+			(at 29.464 162.814 90)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -18512,7 +18422,7 @@
 				)
 			)
 		)
-		(property "Value" "1uF XR7"
+		(property "Value" "1uF"
 			(at 29.21 175.514 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18612,6 +18522,17 @@
 		)
 		(property "KLC_S5.1" ""
 			(at 29.21 172.72 90)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" "X7R"
+			(at 29.21 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
