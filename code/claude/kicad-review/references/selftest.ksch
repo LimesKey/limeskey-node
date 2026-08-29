@@ -1,0 +1,42 @@
+# ksch.py self-test: exercises every symbol type, both label kinds, the router,
+# junction detection and DNP dashing. `ksch.py check` on this file must print
+# no ERROR lines and no overlap/crossing WARNs.
+title ksch self-test
+ic U1 14,2 REG p=3 L:1=EN,2=FB R:6=OUT T:5=VIN B:8=GND
+pwr +5V U1.5
+gnd U1.8
+r R1 4,3 v 100k
+r R2 4,9 v 33k
+c C1 9,3 v 1uF
+pwr +5V R1.1
+gnd R2.2
+gnd C1.2
+wire R1.2 R2.1
+wire R1.2 U1.1
+wire C1.1 9,1 U1.5
+label VOUT U1.6
+nc U1.2
+# discharge leg: FET, diode, inductor, and a DNP part
+nmos Q1 4,20 r BSS138
+r R3 2,16 v 10k
+gnd Q1.s
+gnd R3.2
+wire R3.1 Q1.g
+l L1 14,20 h 4.7uH
+d D1 20,18 vr BAT54
+c C2 24,18 v 10uF dnp
+wire Q1.d L1.1
+wire L1.2 D1.k
+wire D1.k C2.1
+gnd C2.2
+hlabel SW_OUT D1.a out
+# passives gallery, wired into one trunk so nothing is left dangling
+fb FB1 30,4 v 600R
+fuse F1 34,4 v 2A
+tvs D2 38,4 v SMAJ5.0
+sw SW1 42,4 v RESET
+xtal Y1 46,4 v 32k768
+tp TP1 50,4
+net RAIL @y=2 FB1.1 F1.1 D2.1 SW1.1 Y1.1 TP1.1
+net RTN @y=8 FB1.2 F1.2 D2.2 SW1.2 Y1.2
+note 30,12 "gallery: every two-pin symbol on one trunk"

@@ -1,0 +1,1921 @@
+#!/usr/bin/env python3
+"""
+kpcb.py v2 - placement review for a KiCad board (.kicad_pcb, KiCad 7-10).
+
+The placement-stage companion to knet.py. knet answers "what is wired to what";
+kpcb answers "where is it, and is that a sane place to put it". Nothing here
+needs routing to exist - every check runs on footprint geometry alone.
+
+Indexes built from the board file:
+  fps      ref -> footprint, layer, x/y/rot, sheet, attrs, dnp, courtyard bbox
+  pads     ref -> [(num, net, board xy, size, pinfunction, pintype)]
+  nets     net name -> [(ref, pad)]        taken from the pads, no .net needed
+  outline  Edge.Cuts segments + closed rings, for inside/outside and clearance
+
+Commands:
+  kpcb.py FILE summary                board size, stackup, what is placed, per sheet
+  kpcb.py FILE check                  rule-based placement review (see RULES)
+  kpcb.py FILE where U8 J7            position, courtyard, edge distance, neighbours
+  kpcb.py FILE where 130,60 -r 8      ...same, around a coordinate
+  kpcb.py FILE map                    ASCII occupancy map of the board
+  kpcb.py FILE sheet                  per-sheet placement cohesion + bounding box
+  kpcb.py FILE unplaced               what is still parked off the outline
+  kpcb.py FILE span                   nets ranked by how far apart their pads sit
+  kpcb.py FILE ic                     which parts `ic REF` can advise on
+  kpcb.py FILE ic U13                 WHERE to put a regulator's passives, with
+                                      an ASCII picture of the recommendation
+
+`ic` is the one command that suggests rather than judges. It reads the IC's own
+pad coordinates - there is no per-part template - classifies its pins by name,
+finds its passives, and places each one by the rule that actually governs it:
+input caps straddling the tightest VIN/PGND pad pair on the outside face of the
+package (that is the high-di/dt loop, made small), the inductor hard against the
+SW pads, output caps as a bank at the inductor's far pad, the feedback divider
+run out the far side away from SW, boot and bias caps at their own pins. With
+the IC still in the parked pile it anchors on whichever passive is already
+placed and reports where the IC itself then goes.
+
+Thresholds (mm) - defaults are conservative; override per board in kpcb.json:
+  --edge 0.5      courtyard-to-board-edge minimum
+  --hole 1.5      keepout margin beyond a mounting hole's own pad/drill radius
+  --conn 10.0     how far a connector may sit from the nearest edge
+  --rf 8.0        RF part / antenna net to switching node
+  --therm 8.0     heat source to heat-sensitive part
+  --bypass 3.0    supply pin to its nearest bypass cap
+  --clear 0.0     extra margin added to every courtyard-vs-courtyard test
+  --gap 0.25      courtyard-to-courtyard gap inside an `ic` suggestion
+  --fb 4.0        `ic`: feedback part to switching node
+  --tol 1.0       `ic`: slop before a placed part reads as OK in its slot
+  --span 0        NETSPAN threshold (0 = half the board diagonal)
+  --fanout 8      a net with more nodes than this is a rail, not a signal
+
+Project config: kpcb.json next to the board persists board defaults and mutes
+confirmed non-bugs, exactly like knet.json does for the netlist, e.g.
+  {"edge": 0.3, "bypass": 4.0, "suppress": ["CONNACC:J8", "UNPLACED"]}
+Precedence: built-in defaults < kpcb.json < command line.
+
+Output is capped on purpose. A board has hundreds of footprints and an
+uncapped pairwise check would bury the answer: findings that share a shape
+fold into one `tail [N]: refs` line, each rule stops after --max lines with a
+`+N more` tail, and neighbour lists are capped too. Counts in the tails stay
+accurate even when not every item is printed.
+
+Exit codes: 0 clean, 1 not found, 2 `check` found an ERROR, 3 bad file.
+"""
+import sys, os, re, json, math, glob, argparse
+from collections import defaultdict
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    from knet import (parse_sexp, kids, kid, val, refrange, natkey, trunc,
+                      prefix, parse_value, unesc_disp, GND_RE, rail_voltage,
+                      print_findings, suppressed)
+except ImportError:                                     # pragma: no cover
+    print("kpcb.py needs knet.py beside it (shared parser + finding formatter)",
+          file=sys.stderr)
+    raise
+
+# ---------------- part classification ----------------
+# Small and deliberately greppable: these are the knobs to turn when a check
+# misfires on a board whose parts this tool has never seen.
+
+RF_NET   = re.compile(r'(^|[/_])(ANT|RF|LNA|RFIN|RFOUT|VCC_RF)(_|$|\d)', re.I)
+RF_FP    = re.compile(r'Connector_Coaxial|RF_Module|RF_GPS|Antenna|U\.?FL|SMA_', re.I)
+RF_VAL   = re.compile(r'\b(NEO-M9|NEO-M8|SX12\d\d|E22|ESP32|BALUN|SAW)', re.I)
+SW_PIN   = re.compile(r'^(SW|LX|PH|VSW|SWITCH|VLX)\d*$', re.I)
+HOT_VAL  = re.compile(r'\b(BQ25\d|LM6146|TPS2594|TPS6\d|TPS7A|AP63\d|MP\d{4}|TPS55)', re.I)
+SENS_FP  = re.compile(r'Crystal|Oscillator|BatteryHolder|BAT-SMD', re.I)
+SENS_VAL = re.compile(r'\b(NEO-M9|NEO-M8|32\.768|TCXO)', re.I)
+CONN_FP  = re.compile(r'^Connector|PinHeader|PinSocket|JST|Molex|USB|TestPoint', re.I)
+EDGEMNT  = re.compile(r'EdgeMount|Coaxial|SMA|U\.?FL|USB_C_Receptacle|Horizontal', re.I)
+HOLE_FP  = re.compile(r'MountingHole|Mounting_Hole', re.I)
+# supply pin NAMES. Deliberately not `pintype == power_in`: easyeda2kicad types
+# almost every pin `passive`, so a type-based test would check nothing at all.
+# `VSS` must not sneak in via a `VS` prefix, hence the explicit list.
+SUP_PIN  = re.compile(r'^(VDD|VCC|AVDD|AVCC|VDDA|VDDIO|VDDL|VBAT|VBUS|VIN|VSYS|VPP?'
+                      r'|\d+V\d*)\w*$', re.I)
+
+# ---------------- geometry ----------------
+
+def xf(lx, ly, ox, oy, rot):
+    """Footprint-local (lx,ly) -> board coords. KiCad rotates CCW on a screen
+    whose +y points down, which is this sign pattern and not the textbook one."""
+    if not rot:
+        return (ox + lx, oy + ly)
+    t = math.radians(rot)
+    c, s = math.cos(t), math.sin(t)
+    return (ox + lx * c + ly * s, oy - lx * s + ly * c)
+
+def bbox(pts):
+    xs = [p[0] for p in pts]; ys = [p[1] for p in pts]
+    return (min(xs), min(ys), max(xs), max(ys))
+
+def grow(b, m):
+    return (b[0] - m, b[1] - m, b[2] + m, b[3] + m)
+
+def hit(a, b):
+    """Do two bboxes overlap? Touching exactly is not an overlap."""
+    return a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]
+
+def overlap_area(a, b):
+    w = min(a[2], b[2]) - max(a[0], b[0])
+    h = min(a[3], b[3]) - max(a[1], b[1])
+    return w * h if w > 0 and h > 0 else 0.0
+
+def ctr(b):
+    return ((b[0] + b[2]) / 2, (b[1] + b[3]) / 2)
+
+def box_dist(a, b):
+    """Gap between two bboxes; 0 if they touch or overlap."""
+    dx = max(0.0, max(a[0] - b[2], b[0] - a[2]))
+    dy = max(0.0, max(a[1] - b[3], b[1] - a[3]))
+    return math.hypot(dx, dy)
+
+def pt_box_dist(p, b):
+    dx = max(b[0] - p[0], 0.0, p[0] - b[2])
+    dy = max(b[1] - p[1], 0.0, p[1] - b[3])
+    return math.hypot(dx, dy)
+
+def pt_seg_dist(p, a, b):
+    vx, vy = b[0] - a[0], b[1] - a[1]
+    L = vx * vx + vy * vy
+    if L <= 0:
+        return math.hypot(p[0] - a[0], p[1] - a[1])
+    t = max(0.0, min(1.0, ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / L))
+    return math.hypot(p[0] - a[0] - t * vx, p[1] - a[1] - t * vy)
+
+def _ccw(a, b, c):
+    return (c[1] - a[1]) * (b[0] - a[0]) > (b[1] - a[1]) * (c[0] - a[0])
+
+def seg_cross(a, b, c, d):
+    return _ccw(a, c, d) != _ccw(b, c, d) and _ccw(a, b, c) != _ccw(a, b, d)
+
+def seg_box_dist(a, b, box):
+    """Distance from segment a-b to a bbox; 0 if the segment touches or enters it."""
+    x0, y0, x1, y1 = box
+    for p in (a, b):
+        if x0 <= p[0] <= x1 and y0 <= p[1] <= y1:
+            return 0.0
+    corners = [(x0, y0), (x1, y0), (x1, y1), (x0, y1)]
+    for i in range(4):
+        if seg_cross(a, b, corners[i], corners[(i + 1) % 4]):
+            return 0.0
+    return min([pt_box_dist(a, box), pt_box_dist(b, box)] +
+               [pt_seg_dist(c, a, b) for c in corners])
+
+def arc_pts(start, mid, end, n=8):
+    """Flatten a KiCad 3-point arc into n chords. Falls back to the three given
+    points if they are collinear (a degenerate arc KiCad still accepts)."""
+    (x1, y1), (x2, y2), (x3, y3) = start, mid, end
+    d = 2 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2))
+    if abs(d) < 1e-9:
+        return [start, mid, end]
+    ux = ((x1**2 + y1**2) * (y2 - y3) + (x2**2 + y2**2) * (y3 - y1) +
+          (x3**2 + y3**2) * (y1 - y2)) / d
+    uy = ((x1**2 + y1**2) * (x3 - x2) + (x2**2 + y2**2) * (x1 - x3) +
+          (x3**2 + y3**2) * (x2 - x1)) / d
+    r = math.hypot(x1 - ux, y1 - uy)
+    a1 = math.atan2(y1 - uy, x1 - ux)
+    a2 = math.atan2(y2 - uy, x2 - ux)
+    a3 = math.atan2(y3 - uy, x3 - ux)
+    sweep = (a3 - a1) % (2 * math.pi)
+    if not ((a2 - a1) % (2 * math.pi)) <= sweep:
+        sweep -= 2 * math.pi
+    return [(ux + r * math.cos(a1 + sweep * i / n),
+             uy + r * math.sin(a1 + sweep * i / n)) for i in range(n + 1)]
+
+def rings(segs, tol=0.02):
+    """Chain segments into closed rings. Board outlines are drawn as loose
+    lines and arcs in no particular order, so they get walked end-to-end here;
+    anything that will not close is dropped rather than guessed at."""
+    pool = [list(s) for s in segs if s and len(s) >= 2]
+    out = []
+    while pool:
+        cur = pool.pop(0)
+        moved = True
+        while moved and (abs(cur[0][0] - cur[-1][0]) > tol or abs(cur[0][1] - cur[-1][1]) > tol):
+            moved = False
+            for i, s in enumerate(pool):
+                for a, b in ((s[0], s[-1]), (s[-1], s[0])):
+                    if abs(a[0] - cur[-1][0]) <= tol and abs(a[1] - cur[-1][1]) <= tol:
+                        cur += (s if a is s[0] else s[::-1])[1:]
+                        pool.pop(i); moved = True; break
+                if moved:
+                    break
+        if len(cur) >= 4 and abs(cur[0][0] - cur[-1][0]) <= tol and abs(cur[0][1] - cur[-1][1]) <= tol:
+            out.append(cur)
+    return out
+
+def inside(p, rgs):
+    """Even-odd point-in-polygon over every ring, so a milled cutout (its own
+    ring) correctly reads as outside the board."""
+    c = False
+    for ring in rgs:
+        for i in range(len(ring) - 1):
+            (xa, ya), (xb, yb) = ring[i], ring[i + 1]
+            if (ya > p[1]) != (yb > p[1]) and \
+               p[0] < (xb - xa) * (p[1] - ya) / (yb - ya + 1e-12) + xa:
+                c = not c
+    return c
+
+# ---------------- index build ----------------
+
+class FP:
+    __slots__ = ('ref', 'value', 'fp', 'layer', 'x', 'y', 'rot', 'sheet', 'attr',
+                 'dnp', 'pads', 'crtyd', 'crtyd_real', 'body', 'placed', 'edge')
+
+    @property
+    def back(self):
+        return self.layer.startswith('B.')
+
+    @property
+    def area(self):
+        b = self.crtyd
+        return (b[2] - b[0]) * (b[3] - b[1])
+
+
+class Board:
+    def __init__(self, path):
+        if not os.path.exists(path):
+            raise FileNotFoundError(path)
+        txt = open(path, encoding='utf-8', errors='replace').read()
+        root = parse_sexp(txt)
+        if not (isinstance(root, list) and root and root[0] == 'kicad_pcb'):
+            raise ValueError(f"{path} is not a .kicad_pcb (got {root[0] if root else 'nothing'})")
+        self.path = path
+        self.gen = val(root, 'generator') + ' ' + val(root, 'generator_version')
+        lay = kids(root, 'layers')
+        self.copper = [k[1] for k in (lay[0][1:] if lay else [])
+                       if isinstance(k, list) and len(k) > 1 and str(k[1]).endswith('.Cu')]
+        self.fps, self.nets = {}, defaultdict(list)
+        self.zones = []
+        edge = []
+
+        for z in kids(root, 'zone'):
+            lays = kid(z, 'layers') or kid(z, 'layer') or []
+            self.zones.append((val(z, 'net'), [l for l in lays[1:] if isinstance(l, str)]))
+
+        edge += self._graphics(root, None, 'gr_')
+        for node in kids(root, 'footprint'):
+            f = self._footprint(node)
+            if f.ref in self.fps:                 # KiCad allows it; make it visible
+                f.ref = f"{f.ref}~dup"
+            self.fps[f.ref] = f
+            edge += self._graphics(node, f, 'fp_')
+
+        self.edge_segs = [(s[i], s[i + 1]) for s in edge for i in range(len(s) - 1)]
+        self.rings = rings(edge)
+        self.outline = bbox([p for s in edge for p in s]) if edge else None
+        for f in self.fps.values():
+            f.placed = self._placed(f)
+            f.edge = self._edge_dist(f) if self.edge_segs else None
+
+    # -- parsing helpers -------------------------------------------------
+    def _graphics(self, node, f, pfx):
+        """Edge.Cuts polylines from a container, in board coordinates. Footprint
+        graphics count too - a milled slot often lives inside a footprint."""
+        ox, oy, rot = (f.x, f.y, f.rot) if f else (0.0, 0.0, 0.0)
+        out = []
+        def T(p):
+            return xf(p[0], p[1], ox, oy, rot)
+        for tag in ('line', 'arc', 'rect', 'poly', 'circle'):
+            for g in kids(node, pfx + tag):
+                if val(g, 'layer') != 'Edge.Cuts':
+                    continue
+                if tag == 'line':
+                    out.append([T(self._xy(g, 'start')), T(self._xy(g, 'end'))])
+                elif tag == 'rect':
+                    (x0, y0), (x1, y1) = self._xy(g, 'start'), self._xy(g, 'end')
+                    r = [(x0, y0), (x1, y0), (x1, y1), (x0, y1), (x0, y0)]
+                    out.append([T(p) for p in r])
+                elif tag == 'arc':
+                    out.append([T(p) for p in arc_pts(self._xy(g, 'start'),
+                                                      self._xy(g, 'mid'),
+                                                      self._xy(g, 'end'))])
+                elif tag == 'circle':
+                    c, e = self._xy(g, 'center'), self._xy(g, 'end')
+                    r = math.hypot(e[0] - c[0], e[1] - c[1])
+                    out.append([T((c[0] + r * math.cos(a * math.pi / 8),
+                                   c[1] + r * math.sin(a * math.pi / 8))) for a in range(17)])
+                elif tag == 'poly':
+                    pts = self._pts(g)
+                    if pts:
+                        out.append([T(p) for p in pts + [pts[0]]])
+        return out
+
+    @staticmethod
+    def _xy(node, tag):
+        k = kid(node, tag)
+        return (float(k[1]), float(k[2])) if k and len(k) >= 3 else (0.0, 0.0)
+
+    @staticmethod
+    def _pts(node):
+        p = kid(node, 'pts')
+        return [(float(c[1]), float(c[2])) for c in kids(p, 'xy')] if p else []
+
+    def _footprint(self, node):
+        f = FP()
+        f.fp = node[1] if len(node) > 1 and isinstance(node[1], str) else '?'
+        at = kid(node, 'at')
+        f.x, f.y = (float(at[1]), float(at[2])) if at else (0.0, 0.0)
+        f.rot = float(at[3]) if at and len(at) > 3 else 0.0
+        f.layer = val(node, 'layer', 'F.Cu')
+        f.sheet = val(node, 'sheetname', '')
+        a = kid(node, 'attr') or []
+        f.attr = set(x for x in a[1:] if isinstance(x, str))
+        f.dnp = 'dnp' in f.attr
+        f.ref, f.value = '?', ''
+        for p in kids(node, 'property'):
+            if len(p) > 2 and p[1] == 'Reference':
+                f.ref = p[2]
+            elif len(p) > 2 and p[1] == 'Value':
+                f.value = p[2]
+
+        f.pads = []
+        pad_pts, all_pts, crt_pts = [], [], []
+        for p in kids(node, 'pad'):
+            num = p[1] if len(p) > 1 else '?'
+            pat = kid(p, 'at')
+            lx, ly = (float(pat[1]), float(pat[2])) if pat else (0.0, 0.0)
+            prot = float(pat[3]) if pat and len(pat) > 3 else 0.0
+            sz = kid(p, 'size')
+            sx, sy = (float(sz[1]), float(sz[2])) if sz and len(sz) > 2 else (0.0, 0.0)
+            # pad half-extent rotated into the footprint frame, then the whole
+            # thing into board coords: a rotated pad is enveloped, never clipped
+            t = math.radians(prot)
+            hx = abs(sx / 2 * math.cos(t)) + abs(sy / 2 * math.sin(t))
+            hy = abs(sx / 2 * math.sin(t)) + abs(sy / 2 * math.cos(t))
+            for c in ((lx - hx, ly - hy), (lx + hx, ly - hy),
+                      (lx + hx, ly + hy), (lx - hx, ly + hy)):
+                pad_pts.append(xf(c[0], c[1], f.x, f.y, f.rot))
+            bx, by = xf(lx, ly, f.x, f.y, f.rot)
+            fn = re.sub(r'_\d+$', '', val(p, 'pinfunction'))
+            net = val(p, 'net')
+            lays = kid(p, 'layers') or []
+            d = kid(p, 'drill') or []
+            # (drill 0.8) or (drill oval 1.0 2.0) - take the widest number given
+            dn = [float(t) for t in d[1:] if isinstance(t, str)
+                  and re.match(r'^[\d.]+$', t)]
+            f.pads.append({'num': num, 'net': net, 'x': bx, 'y': by, 'fn': fn,
+                           'type': val(p, 'pintype'), 'w': max(sx, sy),
+                           'kind': p[2] if len(p) > 2 else '',
+                           'drill': max(dn) if dn else 0.0,
+                           'layers': [l for l in lays[1:] if isinstance(l, str)]})
+            if net:
+                self.nets[net].append((f.ref, num))
+        # courtyard: the only outline KiCad guarantees is a keepout envelope
+        for tag in ('fp_line', 'fp_rect', 'fp_arc', 'fp_poly', 'fp_circle'):
+            for g in kids(node, tag):
+                lay = val(g, 'layer')
+                pts = []
+                if lay.endswith('.CrtYd') or lay.endswith('.Fab'):
+                    if tag in ('fp_line', 'fp_rect'):
+                        pts = [self._xy(g, 'start'), self._xy(g, 'end')]
+                    elif tag == 'fp_arc':
+                        pts = [self._xy(g, 'start'), self._xy(g, 'mid'), self._xy(g, 'end')]
+                    elif tag == 'fp_poly':
+                        pts = self._pts(g)
+                    elif tag == 'fp_circle':
+                        c, e = self._xy(g, 'center'), self._xy(g, 'end')
+                        r = math.hypot(e[0] - c[0], e[1] - c[1])
+                        pts = [(c[0] - r, c[1] - r), (c[0] + r, c[1] + r)]
+                pts = [xf(p[0], p[1], f.x, f.y, f.rot) for p in pts]
+                all_pts += pts
+                if lay.endswith('.CrtYd'):
+                    crt_pts += pts
+        f.body = bbox(pad_pts + all_pts) if (pad_pts or all_pts) else (f.x, f.y, f.x, f.y)
+        f.crtyd = bbox(crt_pts) if crt_pts else f.body
+        f.crtyd_real = bool(crt_pts)
+        return f
+
+    # -- derived ---------------------------------------------------------
+    def _placed(self, f):
+        """A part is placed if its centre is inside the outline. At the placement
+        stage most of the BOM is still parked in a pile beside the board, and
+        every other check has to ignore that pile or it drowns the real
+        findings."""
+        if not self.rings:
+            return True if not self.outline else \
+                self.outline[0] <= f.x <= self.outline[2] and self.outline[1] <= f.y <= self.outline[3]
+        return inside((f.x, f.y), self.rings)
+
+    def _edge_dist(self, f):
+        """Signed-ish: distance from the courtyard to the outline. 0.0 means the
+        courtyard is sitting on the edge or straddling it."""
+        return min(seg_box_dist(a, b, f.crtyd) for a, b in self.edge_segs)
+
+    def placed(self):
+        return [f for f in self.fps.values() if f.placed]
+
+    def net_fps(self, net):
+        return [self.fps[r] for r, _ in self.nets.get(net, []) if r in self.fps]
+
+    def is_hole(self, f):
+        return bool(HOLE_FP.search(f.fp)) or \
+               (f.pads and all(p['kind'] == 'np_thru_hole' for p in f.pads))
+
+    def is_conn(self, f):
+        return prefix(f.ref) in ('J', 'P', 'CN', 'X') or bool(CONN_FP.match(f.fp.split(':')[0]))
+
+    def is_rf(self, f):
+        if RF_FP.search(f.fp) or RF_VAL.search(f.value):
+            return True
+        return any(RF_NET.search(p['net'].split('/')[-1]) for p in f.pads if p['net'])
+
+    @staticmethod
+    def is_power_l(f):
+        """A buck inductor, not an RF matching inductor. Both are `L`, so value
+        alone is not enough: a 470nH 0603 in an antenna match is not a switching
+        node. Size is what actually separates them."""
+        return (prefix(f.ref) == 'L' and (parse_value(f.value, 'L') or 0) >= 1e-6
+                and f.area >= 6.0)
+
+    def sw_nets(self):
+        """Switching nodes: any pad whose function names one, plus both ends of
+        a power inductor. Name-matched, not type-matched - most of this board's
+        symbols type every pin `passive`. Named power rails are excluded: the
+        quiet side of a buck inductor is the output rail, not a switching node,
+        and leaving it in makes every part on +3V3 look noisy."""
+        out = set()
+        for f in self.fps.values():
+            for p in f.pads:
+                if SW_PIN.match(p['fn'] or '') and p['net']:
+                    out.add(p['net'])
+        for f in self.fps.values():
+            # Fallback for a switcher whose SW pin is not named: take the power
+            # inductor's own nets. Skipped when one end is already a known SW
+            # node, because then the other end is the quiet output rail and
+            # adding it makes every load on that rail look noisy.
+            if self.is_power_l(f) and not any(p['net'] in out for p in f.pads):
+                out.update(p['net'] for p in f.pads if p['net'])
+        return {n for n in out if rail_voltage(n.split('/')[-1]) is None}
+
+    def is_hot(self, f):
+        if HOT_VAL.search(f.value):
+            return True
+        if self.is_power_l(f):
+            return True
+        return any(SW_PIN.match(p['fn'] or '') for p in f.pads)
+
+    def is_sens(self, f):
+        # a thermistor near a hot thing is the point of the thermistor
+        if prefix(f.ref) in ('TH', 'NTC', 'RT'):
+            return False
+        return bool(SENS_FP.search(f.fp) or SENS_VAL.search(f.value))
+
+
+# ---------------- commands ----------------
+
+def sheet_of(f):
+    return f.sheet or '/'
+
+def c_summary(b, a):
+    P = b.placed()
+    un = [f for f in b.fps.values() if not f.placed]
+    o = b.outline
+    w, h = (o[2] - o[0], o[3] - o[1]) if o else (0, 0)
+    used = {s: sum(f.area for f in P if f.back == s) for s in (False, True)}
+    if a.json:
+        print(json.dumps({'path': b.path, 'outline': o, 'w': w, 'h': h,
+                          'copper': b.copper, 'footprints': len(b.fps),
+                          'placed': len(P), 'unplaced': len(un),
+                          'courtyard_mm2': {'front': round(used[False], 1),
+                                            'back': round(used[True], 1)},
+                          'zones': [{'net': n, 'layers': l} for n, l in b.zones]}, indent=1))
+        return
+    print(f"board  : {b.path}")
+    print(f"gen    : {b.gen.strip()}")
+    if o:
+        print(f"outline: {w:.2f} x {h:.2f} mm   x {o[0]:.2f}..{o[2]:.2f}  y {o[1]:.2f}..{o[3]:.2f}"
+              f"   {len(b.rings)} ring(s), {len(b.edge_segs)} segs")
+    else:
+        print("outline: NONE on Edge.Cuts - every placement check is disabled")
+    print(f"copper : {len(b.copper)} layers  {' '.join(b.copper)}")
+    for n, l in b.zones:
+        print(f"zone   : {n:<10} {' '.join(l)}")
+    front = sum(1 for f in P if not f.back)
+    print(f"\nfootprints: {len(b.fps)}   placed {len(P)} ({front} front / {len(P)-front} back)"
+          f"   unplaced {len(un)}")
+    if o and w * h:
+        print(f"courtyard used: front {used[False]:.0f} mm2 ({100*used[False]/(w*h):.0f}%), "
+              f"back {used[True]:.0f} mm2 ({100*used[True]/(w*h):.0f}%) "
+              f"of the {w*h:.0f} mm2 outline bbox   [sum of courtyards, so >100% "
+              f"means they overlap]")
+    if o and w * h:
+        left = sum(f.area for f in un)
+        free = 2 * w * h - used[False] - used[True]      # two sides, not one
+        print(f"still to place: {left:.0f} mm2 of courtyard across {len(un)} part(s) "
+              f"vs {free:.0f} mm2 free over two sides "
+              f"[{'fits with room' if free > left * 2 else 'tight' if free > left else 'DOES NOT FIT as-is'};"
+              f" crude - ignores routing space, keepouts and part height]")
+    bys = defaultdict(lambda: [0, 0])
+    for f in b.fps.values():
+        bys[sheet_of(f)][0 if f.placed else 1] += 1
+    print(f"\n{'sheet':<20} {'placed':>6} {'left':>6}")
+    for s in sorted(bys, key=natkey):
+        p, u = bys[s]
+        print(f"{trunc(s,20):<20} {p:>6} {u:>6}")
+    dnp = sorted([f.ref for f in b.fps.values() if f.dnp], key=natkey)
+    print(f"\nDNP ({len(dnp)}): {refrange(dnp) or 'none'}")
+    holes = sorted([f.ref for f in b.fps.values() if b.is_hole(f)], key=natkey)
+    print(f"mounting holes ({len(holes)}): {refrange(holes) or 'none'}")
+    print("\nlargest placed parts:")
+    for f in sorted(P, key=lambda f: -f.area)[:8]:
+        print(f"  {f.area:>7.1f} mm2  {f.ref:<6} {trunc(f.value,22):<22} "
+              f"{f.x:>7.2f},{f.y:<7.2f} {'B' if f.back else 'F'}")
+
+def c_unplaced(b, a):
+    un = [f for f in b.fps.values() if not f.placed]
+    if not un:
+        print("everything is inside the outline"); return
+    bys = defaultdict(list)
+    for f in un:
+        bys[sheet_of(f)].append(f.ref)
+    print(f"{len(un)} footprint(s) still parked off the board:\n")
+    for s in sorted(bys, key=natkey):
+        print(f"  {trunc(s,20):<20} {len(bys[s]):>3}  {refrange(bys[s])}")
+    big = sorted([f for f in un if f.area > 8], key=lambda f: -f.area)[:10]
+    if big:
+        print("\nlargest still unplaced (place these first - they set the floorplan):")
+        for f in big:
+            print(f"  {f.area:>7.1f} mm2  {f.ref:<6} {trunc(f.value,26):<26} {trunc(f.fp,34)}")
+
+def c_sheet(b, a):
+    """Placement cohesion per schematic sheet. A sheet whose parts are scattered
+    across the board is usually a floorplan mistake, not a routing one."""
+    want = a.args[0] if a.args else None
+    bys = defaultdict(list)
+    for f in b.fps.values():
+        if want and not sheet_of(f).lower().startswith(want.lower()):
+            continue
+        bys[sheet_of(f)].append(f)
+    if not bys:
+        print(f"no sheet matches {want!r}"); return 1
+    print(f"{'sheet':<18} {'plc':>4} {'left':>4} {'bbox (x0,y0 x1,y1)':<30} {'spread':>7}  outliers")
+    for s in sorted(bys, key=natkey):
+        fl = bys[s]
+        P = [f for f in fl if f.placed]
+        if not P:
+            print(f"{trunc(s,18):<18} {0:>4} {len(fl):>4} {'-':<30} {'-':>7}")
+            continue
+        bb = bbox([(f.x, f.y) for f in P])
+        c = ctr(bb)
+        # keyed: two parts at the same distance used to fall through to
+        # comparing the FP objects themselves and crash the whole command
+        d = sorted(((math.hypot(f.x - c[0], f.y - c[1]), f) for f in P),
+                   key=lambda t: (t[0], natkey(t[1].ref)), reverse=True)
+        med = d[len(d) // 2][0]
+        out = [f.ref for dist, f in d[:3] if dist > max(3 * med, 15)]
+        print(f"{trunc(s,18):<18} {len(P):>4} {len(fl)-len(P):>4} "
+              f"{f'{bb[0]:.0f},{bb[1]:.0f} {bb[2]:.0f},{bb[3]:.0f}':<30} "
+              f"{max(bb[2]-bb[0], bb[3]-bb[1]):>6.0f}m  {' '.join(out) or '-'}")
+    print("\nspread = longer side of the placed bbox; outliers are >3x the median "
+          "distance from\nthat sheet's centroid - a part that drifted away from its block.")
+
+def c_where(b, a):
+    if not a.args:
+        print("where needs a ref or an x,y coordinate", file=sys.stderr); return 1
+    miss = False
+    for spec in a.args:
+        m = re.match(r'^(-?[\d.]+)\s*,\s*(-?[\d.]+)$', spec)
+        if m:
+            p = (float(m.group(1)), float(m.group(2)))
+            box = (p[0], p[1], p[0], p[1])
+            if b.edge_segs:
+                where = 'inside' if inside(p, b.rings) else 'OUTSIDE'
+                d = f"   edge {min(pt_seg_dist(p, u, v) for u, v in b.edge_segs):.2f} mm"
+            else:
+                where, d = 'no Edge.Cuts, so inside/outside is', ''
+            print(f"\n=== {p[0]:.2f},{p[1]:.2f}   {where} the outline{d}")
+            _neigh(b, box, None, a)
+            continue
+        f = b.fps.get(spec)
+        if not f:
+            near = [r for r in b.fps if r.upper().startswith(spec.upper())][:6]
+            print(f"{spec}: NOT FOUND" + (f"; did you mean {' '.join(near)}" if near else ""))
+            miss = True; continue
+        c = f.crtyd
+        print(f"\n=== {f.ref}  {f.value}{'   [DNP]' if f.dnp else ''}"
+              f"{'' if f.placed else '   [UNPLACED - parked off the outline]'}")
+        print(f"  footprint : {f.fp}")
+        print(f"  sheet     : {f.sheet}")
+        print(f"  at        : {f.x:.3f}, {f.y:.3f}  rot {f.rot:g}  layer {f.layer}")
+        print(f"  courtyard : {c[0]:.2f},{c[1]:.2f} .. {c[2]:.2f},{c[3]:.2f}  "
+              f"({c[2]-c[0]:.2f} x {c[3]-c[1]:.2f} mm){'' if f.crtyd_real else '  [NO CrtYd - pads+fab bbox]'}")
+        if f.edge is not None:
+            print(f"  edge dist : {f.edge:.2f} mm" + ("   <-- ON/ACROSS THE EDGE" if f.edge <= 0.001 else ""))
+        tags = [t for t, ok in (('RF', b.is_rf(f)), ('hot', b.is_hot(f)),
+                                ('heat-sensitive', b.is_sens(f)), ('connector', b.is_conn(f)),
+                                ('mounting hole', b.is_hole(f))) if ok]
+        if tags:
+            print(f"  class     : {', '.join(tags)}")
+        nets = sorted({p['net'] for p in f.pads if p['net']}, key=natkey)
+        print(f"  nets ({len(nets)}) : {trunc(' '.join(unesc_disp(n) for n in nets), 300)}")
+        _neigh(b, c, f, a)
+    return 1 if miss else 0
+
+def _neigh(b, box, self_fp, a):
+    """Neighbour list, capped. The whole point of this tool is to answer a
+    placement question in a few lines; dumping every part within a radius on a
+    440-footprint board would defeat that."""
+    r = a.radius
+    rows = []
+    for g in b.fps.values():
+        if g is self_fp or not g.placed:
+            continue
+        d = box_dist(box, g.crtyd)
+        if d <= r:
+            rows.append((d, g))
+    rows.sort(key=lambda t: (t[0], natkey(t[1].ref)))
+    print(f"  neighbours within {r:g} mm ({len(rows)}):")
+    for d, g in rows[:a.max]:
+        side = 'B' if g.back else 'F'
+        # same-side contact is what `check` calls OVERLAP; a cross-side one is
+        # just a projection, so label it differently and do not cry wolf
+        flag = ''
+        if d <= 0 and hit(box, g.crtyd):
+            flag = '  OVERLAP' if (self_fp is None or g.back == self_fp.back) \
+                   else '  (overlaps, opposite side)'
+        print(f"    {d:>6.2f} mm  {g.ref:<6} {side} {trunc(g.value,20):<20} {trunc(g.fp,30)}{flag}")
+    if len(rows) > a.max:
+        print(f"    ... +{len(rows)-a.max} more within {r:g} mm ({len(rows)} total) "
+              f"- raise --max or lower -r")
+
+def c_map(b, a):
+    """ASCII occupancy. Cheap floorplan overview: which block owns which corner
+    and where the free space is, in ~40 lines instead of a 400-row table.
+
+    One side at a time on purpose. Painting both onto one grid turned most of
+    this board into `*` - the back-side cells sit under the front-side module -
+    which is exactly the kind of output that looks informative and says
+    nothing."""
+    if not b.outline:
+        print("no board outline"); return 1
+    o = b.outline
+    cols = max(20, a.cols)
+    cw = (o[2] - o[0]) / cols
+    ch = cw * 2.0                      # terminal cells are about twice as tall
+    nrows = max(4, int(math.ceil((o[3] - o[1]) / ch)))
+    want = (a.side or 'f').lower()[0]
+    if want not in ('f', 'b'):
+        print("--side takes f or b", file=sys.stderr); return 1
+    P = [f for f in b.placed() if f.back == (want == 'b')]
+    other = len(b.placed()) - len(P)
+    keys, used = {}, set()
+    for sh in sorted({sheet_of(f) for f in P}, key=natkey):
+        stem = sh.split('/')[-2] if sh.count('/') > 1 else sh
+        for c in re.sub(r'[^A-Za-z]', '', stem) + 'abcdefghijklmnop':
+            if c.upper() not in used:
+                keys[sh] = c.upper(); used.add(c.upper()); break
+    grid = [[' '] * cols for _ in range(nrows)]
+    for f in P:
+        k = keys.get(sheet_of(f), '?')
+        c = f.crtyd
+        for gy in range(max(0, int((c[1] - o[1]) / ch)),
+                        min(nrows, int((c[3] - o[1]) / ch) + 1)):
+            for gx in range(max(0, int((c[0] - o[0]) / cw)),
+                            min(cols, int((c[2] - o[0]) / cw) + 1)):
+                cur = grid[gy][gx]
+                grid[gy][gx] = k if cur == ' ' else ('*' if cur != k else k)
+    for gy in range(nrows):
+        for gx in range(cols):
+            if grid[gy][gx] == ' ':
+                p = (o[0] + (gx + .5) * cw, o[1] + (gy + .5) * ch)
+                grid[gy][gx] = '.' if inside(p, b.rings) else ' '
+    print(f"{b.path}  {'FRONT' if want == 'f' else 'BACK'} side  "
+          f"{o[2]-o[0]:.1f} x {o[3]-o[1]:.1f} mm   1 cell = {cw:.2f} x {ch:.2f} mm   "
+          f"x+ right, y+ down")
+    print("      +" + "-" * cols + "+")
+    for gy, row in enumerate(grid):
+        print(f"{o[1]+gy*ch:>6.0f}|" + ''.join(row) + "|")
+    print("      +" + "-" * cols + "+")
+    print(f"      {o[0]:<.0f}" + " " * max(0, cols - 8) + f"{o[2]:.0f}")
+    print("\nkey: " + '  '.join(f"{v}={trunc(k,18)}" for k, v in
+                                sorted(keys.items(), key=lambda kv: kv[1])))
+    print("     . = inside the outline, free    * = two sheets share the cell    "
+          "(blank) = outside")
+    print(f"     {other} placed part(s) on the other side are not shown "
+          f"(`map --side {'b' if want == 'f' else 'f'}`); "
+          f"{len(b.fps)-len(b.placed())} unplaced (`unplaced`)")
+
+# ---------------- IC placement helper ----------------
+# `ic REF` answers "where do this part's passives go", not just "what is wrong".
+# Everything below is computed from the real pad coordinates in the board file -
+# there is no per-part template, so a part this tool has never seen still works
+# as long as its pins are named.
+
+ROLE_PAT = (
+    ('SW',   r'SW|LX|PH|VSW|SWITCH|VLX'),        # before VIN: VSW is not an input
+    ('BOOT', r'C?BOOT|BST|BTST|VBOOT|RBOOT'),
+    ('VIN',  r'VIN|PVIN|VBUS|VCCIN|IN|AVIN|VDDIN'),
+    ('OUT',  r'VOUT|OUT|SYS|VSYS'),
+    ('FB',   r'FB|VFB|FBK|VSENSE|ADJ'),
+    ('GND',  r'PGND|GND|AGND|DGND|VSS|EP|EPAD|PAD|THERMAL'),
+    ('BIAS', r'VCC|BIAS|VDD|VREG|REGN|VDDA|AVDD'),
+)
+# anchored, so `~{INT}` never matches IN and PGOOD never matches GND
+ROLE_RE = [(r, re.compile(r'^(' + p + r')\d*$', re.I)) for r, p in ROLE_PAT]
+PASSIVE_PFX = ('C', 'R', 'L', 'FB', 'D')
+
+def unit(v):
+    n = math.hypot(v[0], v[1])
+    return (v[0] / n, v[1] / n) if n > 1e-9 else (1.0, 0.0)
+
+def ray_exit(p, d, box):
+    """How far along +d from p until we leave `box`. 0 if p is already out."""
+    t = 0.0
+    for i in (0, 1):
+        if abs(d[i]) < 1e-9:
+            continue
+        lim = box[i + 2] if d[i] > 0 else box[i]
+        t = max(t, (lim - p[i]) / d[i])
+    return max(0.0, t)
+
+def axis_snap(v):
+    """Snap a direction to the nearest axis. Placement is orthogonal in practice
+    and a 3-degree tilt in a recommendation is noise, not information."""
+    return (math.copysign(1.0, v[0]), 0.0) if abs(v[0]) >= abs(v[1]) else (0.0, math.copysign(1.0, v[1]))
+
+def fp_axis(f):
+    """(pad1->pad2 board angle, length, width) for a two-pad part, else None.
+    The angle is what a recommended rotation is computed against, so it comes
+    from the pads themselves and never from an assumed footprint convention."""
+    ps = [p for p in f.pads if p['num'] in ('1', '2')] or f.pads[:2]
+    if len(ps) < 2:
+        return None
+    a, bp = ps[0], ps[1]
+    ang = math.degrees(math.atan2(-(bp['y'] - a['y']), bp['x'] - a['x'])) % 360
+    c = f.crtyd
+    w, h = c[2] - c[0], c[3] - c[1]
+    return (ang, max(w, h), min(w, h))
+
+def want_rot(f, target_deg):
+    """Rotation that turns f's pad1->pad2 axis to `target_deg` (board frame,
+    +y down). Derived from where the pads actually sit now plus the footprint's
+    current rotation, so it is right for any footprint orientation convention."""
+    ax = fp_axis(f)
+    if not ax:
+        return round(f.rot, 1)
+    # Snapped to 90 deg: a pin pair on a diagonal would otherwise ask for a
+    # 165.3 deg part. The loop cost of the few degrees is nil, and nobody
+    # hand-places at 165.3 deg.
+    return round((ax[0] + f.rot - target_deg) / 90.0) % 4 * 90.0
+
+def role_pads(f):
+    by = defaultdict(list)
+    for p in f.pads:
+        fn = p['fn'] or ''
+        for role, rx in ROLE_RE:
+            if rx.match(fn):
+                by[role].append(p); break
+        else:
+            # easyeda2kicad leaves pinfunction blank on plenty of parts; a blank
+            # pin sitting on GND is still a ground pin
+            if not fn and p['net'] and GND_RE.match(p['net'].split('/')[-1]):
+                by['GND'].append(p)
+    return by
+
+def two_pin_on(b, net, other=None, pfx=PASSIVE_PFX):
+    """Two-pin parts bridging `net` and (optionally) a net matching `other`."""
+    out = []
+    for r, _ in b.nets.get(net, []):
+        f = b.fps.get(r)
+        if not f or f in out or prefix(f.ref) not in pfx:
+            continue
+        nets = [p['net'] for p in f.pads if p['net']]
+        if len(set(nets)) != 2:
+            continue
+        far = [n for n in nets if n != net]
+        if not far:
+            continue
+        if other == 'GND' and not GND_RE.match(far[0].split('/')[-1]):
+            continue
+        if other not in (None, 'GND') and far[0] != other:
+            continue
+        out.append(f)
+    return out
+
+def rail_pick(b, ic, cands, want, kind):
+    """Pick which of a rail's many caps belong to THIS regulator.
+
+    A rail net carries every bypass cap on the board - VSYS here has 20 - so
+    taking them all would be the `walk`-dumps-the-whole-rail mistake. Rank by
+    the two cues a board file actually carries (same schematic sheet, refdes
+    close to this IC's own private-net parts) and say out loud that the choice
+    is a guess, because nothing in a .kicad_pcb proves which cap the schematic
+    drew next to which pin."""
+    if not cands:
+        return [], ''
+    hint = [int(re.sub(r'\D', '', r) or 0) for r in ic['own_refs'] if prefix(r) == 'C']
+    mid = sorted(hint)[len(hint) // 2] if hint else None
+    def key(f):
+        n = int(re.sub(r'\D', '', f.ref) or 0)
+        return (f.sheet != ic['fp'].sheet, abs(n - mid) if mid else 0, natkey(f.ref))
+    ranked = sorted(cands, key=key)
+    # one of each value first. "Smallest cap closest to the pin" only means
+    # anything if the set actually holds a 100n, a 1u and a 10u rather than
+    # three 1u that happened to sit next to each other in the refdes run.
+    first, extra = {}, []
+    for g in ranked:
+        v = parse_value(g.value, 'C')
+        extra.append(g) if v in first else first.setdefault(v, g)
+    ranked = list(first.values()) + extra
+    note = ''
+    if len(cands) > want:
+        note = (f"{len(cands)} caps sit on this rail; the {min(want,len(ranked))} ranked "
+                f"closest to {ic['fp'].ref}'s own parts were taken as {kind}. "
+                f"Override with --{kind.lower()} REF,REF if the schematic says otherwise.")
+    return ranked[:want], note
+
+def ic_context(b, f, a):
+    """Everything the recommendation needs, gathered once."""
+    ic = {'fp': f, 'pads': role_pads(f), 'warn': [], 'own_refs': [], 'assoc': {}}
+    R = ic['pads']
+    nets_of = lambda role: [p['net'] for p in R.get(role, []) if p['net']]
+
+    # parts on this IC's own private nets: unambiguous, no rail guessing needed
+    for p in f.pads:
+        n = p['net']
+        if not n or len(b.nets.get(n, [])) > a.assoc:
+            continue
+        if GND_RE.match(n.split('/')[-1]) or rail_voltage(n.split('/')[-1]) is not None:
+            continue
+        for g in two_pin_on(b, n):
+            if g.ref != f.ref:
+                ic['own_refs'].append(g.ref)
+    ic['own_refs'] = sorted(set(ic['own_refs']), key=natkey)
+
+    sw = set(nets_of('SW')) or {p['net'] for p in f.pads if p['net'] in b.sw_nets()}
+    ic['sw_nets'] = sorted(sw)
+    if not R.get('VIN'):
+        # a plain IC names its supply +3V3 or VDD_IO, not VIN. Falling back to
+        # the same SUP_PIN table the BYPASS rule uses turns `ic` into a bypass
+        # placer for any part, which is the same loop rule at a smaller scale.
+        R['VIN'] = [p for p in f.pads if p['net'] and SUP_PIN.match(p['fn'] or '')
+                    and not GND_RE.match(p['net'].split('/')[-1])]
+    ic['vin_nets'] = sorted(set(nets_of('VIN')))
+    ic['out_nets'] = sorted(set(nets_of('OUT')))
+
+    # the inductor decides the topology, so find it before naming anything
+    ind = [g for n in sw for g in two_pin_on(b, n, pfx=('L',))]
+    ind = sorted({g.ref: g for g in ind}.values(), key=lambda g: natkey(g.ref))
+    ic['L'] = ind[0] if ind else None
+    vout = None
+    if ic['L']:
+        far = [p['net'] for p in ic['L'].pads if p['net'] and p['net'] not in sw]
+        if far:
+            vout = far[0]
+        else:
+            # both ends switch: a 4-switch buck-boost. The output is the OUT pin.
+            ic['topo'] = 'buck-boost (inductor between two switching nodes)'
+            vout = ic['out_nets'][0] if ic['out_nets'] else None
+    ic['vout'] = vout or (ic['out_nets'][0] if ic['out_nets'] else None)
+
+    vin_v = next((rail_voltage(n.split('/')[-1]) for n in ic['vin_nets']), None)
+    out_v = rail_voltage(ic['vout'].split('/')[-1]) if ic['vout'] else None
+    if 'topo' not in ic:
+        if not sw:
+            ic['topo'] = 'linear / load switch (no switching node)' if ic['out_nets'] \
+                         else 'not a regulator shape - generic bypass placement only'
+        elif vin_v and out_v:
+            ic['topo'] = 'buck' if out_v < vin_v else 'boost'
+        else:
+            ic['topo'] = 'switching (buck assumed; rail voltages unknown)'
+
+    ov = {k: [x.strip() for x in v.split(',') if x.strip()]
+          for k, v in (('CIN', a.cin), ('COUT', a.cout)) if v}
+    def take(kind, net, want):
+        if kind in ov:
+            got = [b.fps[r] for r in ov[kind] if r in b.fps]
+            miss = [r for r in ov[kind] if r not in b.fps]
+            if miss:
+                ic['warn'].append(f"--{kind.lower()}: no such footprint: {' '.join(miss)}")
+            return got, ''
+        if not net:
+            return [], ''
+        c = two_pin_on(b, net, 'GND', pfx=('C',))
+        if len(b.nets.get(net, [])) <= a.assoc:
+            return c, ''
+        return rail_pick(b, ic, c, want, kind)
+
+    ic['CIN'], n1 = take('CIN', ic['vin_nets'][0] if ic['vin_nets'] else None, a.ncin)
+    ic['COUT'], n2 = take('COUT', ic['vout'], a.ncout)
+    ic['notes'] = [n for n in (n1, n2) if n]
+    ic['CBOOT'] = [g for n in nets_of('BOOT') for g in two_pin_on(b, n, pfx=('C',))]
+    ic['CBIAS'] = [g for n in nets_of('BIAS') for g in two_pin_on(b, n, 'GND', pfx=('C',))]
+    ic['FBparts'] = [g for n in nets_of('FB') for g in two_pin_on(b, n)]
+    named = {g.ref for k in ('CIN', 'COUT', 'CBOOT', 'CBIAS', 'FBparts') for g in ic[k]}
+    if ic['L']:
+        named.add(ic['L'].ref)
+    ic['misc'] = [r for r in ic['own_refs'] if r not in named]
+    return ic
+
+def _slot(ref, role, pos, rot, why, n=(0.0, 0.0)):
+    return {'ref': ref, 'role': role, 'x': pos[0], 'y': pos[1], 'rot': rot,
+            'why': why, 'n': n}
+
+# who gets to keep its ideal spot when two slots collide. The loop parts come
+# first because their whole reason for being there is the loop; a bias cap
+# 2 mm further out costs nothing.
+# The inductor keeps its spot ahead of everything: SW-pad-to-inductor is the
+# shortest and most critical edge of the loop, and it is also the part with no
+# room to spare. A third stacked input cap is what should move instead.
+SLOT_PRIO = {'L': 0, 'CIN': 1, 'COUT': 2, 'CBOOT': 3, 'CBIAS': 4, 'FB': 5}
+
+def resolve_slots(b, slots):
+    """Push lower-priority slots outward until they stop overlapping.
+
+    On a package that puts VIN, PGND, SW and BOOT on one corner - which is most
+    of them, because that is what makes the loop small - the ideal spots
+    genuinely collide. Reporting a pile of overlaps would be true and useless;
+    the answer a person wants is the next-best spot, so take it."""
+    done = []
+    for s in sorted(slots, key=lambda s: (SLOT_PRIO.get(s['role'], 9), natkey(s['ref']))):
+        n, moved = s['n'], 0.0
+        while n != (0.0, 0.0) and moved < 12.0:
+            box = slot_box(b, s)
+            if not any(overlap_area(box, slot_box(b, d)) > 0.01 for d in done):
+                break
+            s['x'] += n[0] * 0.2; s['y'] += n[1] * 0.2
+            moved += 0.2
+        if moved:
+            s['why'] += f" [pushed {moved:.1f} mm further out to clear another slot]"
+        done.append(s)
+    return slots
+
+def ic_plan(b, ic, a):
+    """Recommended position + rotation for every passive we could name.
+
+    The one rule underneath all of it: a high-di/dt loop is made small by
+    putting the cap across the pin pair that carries the loop, on the outside
+    face of the package, with nothing between them."""
+    f, R, out = ic['fp'], ic['pads'], []
+    C = ctr(f.crtyd)
+    gnd = R.get('GND', [])
+
+    def straddle(hot, caps, role, label):
+        """Caps placed across a (supply pin, return pin) pair, on the outside
+        face of the package, smallest innermost. This is the whole loop-area
+        rule, and it is the same rule for a buck's VIN/PGND pair and for a
+        plain IC's VDD/GND bypass - so there is one implementation."""
+        pairs = []
+        for vp in hot:
+            if not gnd:
+                break
+            gp = min(gnd, key=lambda g: math.hypot(g['x'] - vp['x'], g['y'] - vp['y']))
+            pairs.append((math.hypot(gp['x'] - vp['x'], gp['y'] - vp['y']), vp, gp))
+        pairs.sort(key=lambda t: t[0])
+        seen, uniq = set(), []
+        for d, vp, gp in pairs:
+            k = (round(vp['x'], 2), round(vp['y'], 2))
+            if k not in seen:
+                seen.add(k); uniq.append((d, vp, gp))
+        rows = defaultdict(float)
+        for i, g in enumerate(sorted(caps, key=lambda g: parse_value(g.value, 'C') or 9e9)):
+            if not uniq:
+                break
+            d, vp, gp = uniq[i % len(uniq)]
+            ax = fp_axis(g)
+            if not ax:
+                continue
+            u = unit((gp['x'] - vp['x'], gp['y'] - vp['y']))
+            m = ((vp['x'] + gp['x']) / 2, (vp['y'] + gp['y']) / 2)
+            n = axis_snap((-u[1], u[0]))
+            if (m[0] - C[0]) * n[0] + (m[1] - C[1]) * n[1] < 0:
+                n = (-n[0], -n[1])
+            k = (round(n[0], 1), round(n[1], 1))
+            off = ray_exit(m, n, f.crtyd) + a.gap + ax[2] / 2 + rows[k]
+            rows[k] += ax[2] + a.gap
+            p1 = next((p['net'] for p in g.pads if p['num'] == '1'), '')
+            tgt = math.degrees(math.atan2(-u[1], u[0])) % 360
+            if p1 and GND_RE.match(p1.split('/')[-1]):
+                tgt = (tgt + 180) % 360
+            out.append(_slot(g.ref, role, (m[0] + off * n[0], m[1] + off * n[1]),
+                             want_rot(g, tgt),
+                             f"across {label}.{vp['num']}/GND.{gp['num']} "
+                             f"({d:.2f} mm apart), smallest value innermost", n))
+
+    straddle(R.get('VIN', []), ic['CIN'], 'CIN', 'VIN')
+    # -- inductor: outboard of the switch pads, body pointing away ---------
+    swp = [p for p in f.pads if p['net'] in ic['sw_nets']]
+    L = ic['L']
+    Ldir = Lout = None
+    if L and swp and fp_axis(L):
+        ax = fp_axis(L)
+        groups = defaultdict(list)
+        for p in swp:
+            groups[p['net']].append(p)
+        cs = [((sum(q['x'] for q in v) / len(v)), (sum(q['y'] for q in v) / len(v)))
+              for v in groups.values()]
+        if len(cs) >= 2:                       # buck-boost: bridge the two nodes
+            axis = unit((cs[1][0] - cs[0][0], cs[1][1] - cs[0][1]))
+            m = ((cs[0][0] + cs[1][0]) / 2, (cs[0][1] + cs[1][1]) / 2)
+            n = axis_snap((-axis[1], axis[0]))
+            why = "bridges both switch nodes, just outboard of the SW pads"
+        else:
+            m = cs[0]
+            n = axis_snap((m[0] - C[0], m[1] - C[1])) if (m != C) else (1.0, 0.0)
+            axis = n
+            why = "SW pad to inductor is the shortest edge of the switching loop"
+        if (m[0] - C[0]) * n[0] + (m[1] - C[1]) * n[1] < 0:
+            n = (-n[0], -n[1])
+        off = ray_exit(m, n, f.crtyd) + a.gap + (ax[2] if len(cs) >= 2 else ax[1]) / 2
+        pos = (m[0] + off * n[0], m[1] + off * n[1])
+        tgt = math.degrees(math.atan2(-axis[1], axis[0])) % 360
+        p1 = next((p['net'] for p in L.pads if p['num'] == '1'), '')
+        if len(cs) < 2 and p1 and p1 not in ic['sw_nets']:
+            tgt = (tgt + 180) % 360
+        out.append(_slot(L.ref, 'L', pos, want_rot(L, tgt), why, n))
+        Ldir, Lout = n, (pos[0] + n[0] * ax[1] / 2, pos[1] + n[1] * ax[1] / 2)
+
+    # -- output caps: immediately after the inductor, in the current path ---
+    if Lout:
+        # side by side across the output node, not end to end: three caps in a
+        # line would put the last one 25 mm downstream of the first
+        side = (-Ldir[1], Ldir[0])
+        cs = sorted(ic['COUT'], key=lambda g: -(parse_value(g.value, 'C') or 0))
+        wid = [fp_axis(g)[2] + a.gap for g in cs if fp_axis(g)]
+        run = -sum(wid) / 2
+        for g in cs:
+            ax = fp_axis(g)
+            if not ax:
+                continue
+            off = a.gap + ax[1] / 2
+            lat = run + ax[2] / 2
+            run += ax[2] + a.gap
+            tgt = math.degrees(math.atan2(-Ldir[1], Ldir[0])) % 360
+            p1 = next((p['net'] for p in g.pads if p['num'] == '1'), '')
+            if p1 and GND_RE.match(p1.split('/')[-1]):
+                tgt = (tgt + 180) % 360
+            out.append(_slot(g.ref, 'COUT',
+                             (Lout[0] + off * Ldir[0] + lat * side[0],
+                              Lout[1] + off * Ldir[1] + lat * side[1]),
+                             want_rot(g, tgt),
+                             "a bank across the output node right at the "
+                             "inductor's output pad, largest first", Ldir))
+
+    if not Lout and ic['COUT']:
+        # linear regulator or load switch: no inductor, so the output cap sits
+        # across OUT/GND exactly the way the input cap sits across IN/GND
+        straddle(R.get('OUT', []), ic['COUT'], 'COUT', 'OUT')
+
+    # -- boot / bias caps: at their own pins, they are small loops too ------
+    used = defaultdict(float)          # one stack per face, shared by both kinds
+    for kind, role in (('CBOOT', 'BOOT'), ('CBIAS', 'BIAS')):
+        for g in ic[kind]:
+            ps = [p for p in f.pads if p['net'] in {q['net'] for q in g.pads}]
+            ax = fp_axis(g)
+            if not ps or not ax:
+                continue
+            m = (sum(p['x'] for p in ps) / len(ps), sum(p['y'] for p in ps) / len(ps))
+            n = axis_snap((m[0] - C[0], m[1] - C[1]))
+            k = (round(n[0], 1), round(n[1], 1))
+            off = ray_exit(m, n, f.crtyd) + a.gap + ax[2] / 2 + used[k]
+            used[k] += ax[2] + a.gap
+            out.append(_slot(g.ref, kind, (m[0] + off * n[0], m[1] + off * n[1]),
+                             want_rot(g, 90 if abs(n[0]) < 0.5 else 0),
+                             f"hard against the {role} pin(s) it serves", n))
+
+    # -- feedback divider: outboard of FB, away from SW ---------------------
+    fbp = R.get('FB', [])
+    if fbp and ic['FBparts']:
+        m = (sum(p['x'] for p in fbp) / len(fbp), sum(p['y'] for p in fbp) / len(fbp))
+        n = axis_snap((m[0] - C[0], m[1] - C[1]))
+        along = (-n[1], n[0])
+        run = 0.0
+        for g in sorted(ic['FBparts'], key=lambda g: natkey(g.ref)):
+            ax = fp_axis(g)
+            if not ax:
+                continue
+            off = ray_exit(m, n, f.crtyd) + a.gap + ax[1] / 2
+            lat = run + ax[2] / 2
+            run += ax[2] + a.gap
+            pos = (m[0] + off * n[0] + along[0] * lat, m[1] + off * n[1] + along[1] * lat)
+            tgt = math.degrees(math.atan2(-n[1], n[0])) % 360
+            out.append(_slot(g.ref, 'FB', pos, want_rot(g, tgt),
+                             "FB node kept short and pointed away from SW; "
+                             "route FB on a layer with GND under it", n))
+    return resolve_slots(b, out)
+
+# uppercase = an IC pin, lowercase = a recommended slot; they must not collide
+ROLE_MARK = {'VIN': 'V', 'GND': 'G', 'SW': 'S', 'FB': 'F', 'BOOT': 'B',
+             'OUT': 'O', 'BIAS': 'X'}
+
+def slot_box(b, s):
+    ax = fp_axis(b.fps[s['ref']])
+    if not ax:
+        return (s['x'] - .5, s['y'] - .5, s['x'] + .5, s['y'] + .5)
+    horiz = min(s['rot'] % 180, 180 - s['rot'] % 180) < 45
+    w, h = (ax[1], ax[2]) if horiz else (ax[2], ax[1])
+    return (s['x'] - w / 2, s['y'] - h / 2, s['x'] + w / 2, s['y'] + h / 2)
+
+def ic_diagram(b, ic, slots, cols):
+    """A picture of the recommendation, to glance at. Same ASCII-grid trick as
+    `map`, but scoped to one IC so a cell is a few tenths of a millimetre.
+
+    ic['off'] is the anchor shift: the slots are already in board coordinates
+    but the IC's own pads are still where it is parked, so its geometry moves
+    here too or the frame stretches across the whole pile."""
+    f = ic['fp']
+    ox, oy = ic.get('off', (0.0, 0.0))
+    crtyd = (f.crtyd[0] + ox, f.crtyd[1] + oy, f.crtyd[2] + ox, f.crtyd[3] + oy)
+    boxes = [slot_box(b, s) for s in slots]
+    r = bbox([(v[i], v[j]) for v in [crtyd] + boxes for i, j in ((0, 1), (2, 3))])
+    r = grow(r, 0.6)
+    cw = max((r[2] - r[0]) / cols, 0.05)
+    ch = cw * 2.0
+    nr = max(3, int(math.ceil((r[3] - r[1]) / ch)))
+    g = [[' '] * cols for _ in range(nr)]
+
+    def stamp(box, ch_, over=True):
+        for gy in range(max(0, int((box[1] - r[1]) / ch)),
+                        min(nr, int((box[3] - r[1]) / ch) + 1)):
+            for gx in range(max(0, int((box[0] - r[0]) / cw)),
+                            min(cols, int((box[2] - r[0]) / cw) + 1)):
+                # first writer wins: a cell straddling two boxes that merely
+                # sit next to each other is not a clash, and painting it '*'
+                # made a correct layout look broken
+                if g[gy][gx] in (' ', '.') or (over and g[gy][gx] == '.'):
+                    g[gy][gx] = ch_
+
+    stamp(crtyd, '.', over=False)
+    keys = {}
+    for i, (s, box) in enumerate(zip(slots, boxes)):
+        k = chr(ord('a') + i) if i < 26 else '?'
+        keys[k] = s
+        stamp(box, k)
+    # a placed part standing in a slot, clipped to the clash itself: stamping
+    # its whole courtyard once painted the entire frame '!' and said nothing
+    for gname, gfp in b.fps.items():
+        if gfp is f or not gfp.placed or gfp.back != f.back or b.is_hole(gfp) \
+           or gname in {s['ref'] for s in slots}:
+            continue
+        for box in boxes:
+            if hit(box, gfp.crtyd):
+                stamp((max(box[0], gfp.crtyd[0]), max(box[1], gfp.crtyd[1]),
+                       min(box[2], gfp.crtyd[2]), min(box[3], gfp.crtyd[3])), '!')
+    # pins last and one cell each, so they always survive and never fight
+    R = role_pads(f)
+    for role, ps in R.items():
+        if role not in ROLE_MARK:
+            continue
+        for p in ps:
+            gx, gy = int((p['x'] + ox - r[0]) / cw), int((p['y'] + oy - r[1]) / ch)
+            if 0 <= gx < cols and 0 <= gy < nr:
+                g[gy][gx] = ROLE_MARK[role]
+    out = [f"  recommended layout, 1 cell = {cw:.2f} x {ch:.2f} mm, x+ right / y+ down",
+           "  +" + "-" * cols + "+"]
+    out += ["  |" + ''.join(row) + "|" for row in g]
+    out.append("  +" + "-" * cols + "+")
+    out.append("  IC body '.'   pins " + ' '.join(f"{v}={k}" for k, v in ROLE_MARK.items())
+               + "   '!' = a placed part is standing in that slot")
+    out.append(f"  cells are {cw:.2f} mm wide, so two slots can share one - the table "
+               f"above has the real numbers")
+    out.append("  " + '   '.join(f"{k}={keys[k]['ref']}" for k in sorted(keys)))
+    return out
+
+ANCHOR_ORDER = {'L': 0, 'COUT': 1, 'CIN': 2, 'CBOOT': 3, 'CBIAS': 4, 'FB': 5}
+
+def ic_anchor(b, ic, slots, a):
+    """Re-hang the whole recommendation off a part that is already placed.
+
+    Mid-placement the big parts land first: on this board the inductors are
+    down and the regulators are still in the parked pile. Without this the
+    tool reports 'L4 is 90 mm from its slot', which is true and useless - the
+    inductor is not the thing that should move. Anchoring instead answers the
+    question actually being asked: given L4 where it is, where does U13 go.
+
+    Translation only. If the anchor also needs turning, that is said out loud
+    rather than guessed at, because rotating the IC changes every pad position
+    and the honest fix is to rotate it in KiCad and re-run."""
+    if a.anchor.lower() in ('none', '-'):
+        return None
+    cands = [s for s in slots if b.fps[s['ref']].placed]
+    if a.anchor:
+        cands = [s for s in cands if s['ref'].upper() == a.anchor.upper()]
+        if not cands:
+            ic['warn'].append(f"--anchor {a.anchor}: not one of this IC's placed "
+                              f"passives, ignored")
+            return None
+    elif ic['fp'].placed:
+        return None                       # the IC itself is the anchor already
+    if not cands:
+        return None
+    s = min(cands, key=lambda s: (ANCHOR_ORDER.get(s['role'], 9), natkey(s['ref'])))
+    g = b.fps[s['ref']]
+    dx, dy = g.x - s['x'], g.y - s['y']
+    dr = (g.rot - s['rot']) % 360
+    for t in slots:
+        t['x'] += dx; t['y'] += dy
+    ic['off'] = (dx, dy)
+    return {'ref': s['ref'], 'dx': dx, 'dy': dy, 'dr': dr if dr <= 180 else dr - 360}
+
+def c_ic(b, a):
+    """Recommended placement for a regulator's supporting passives."""
+    if not a.args:
+        cands = [f for f in b.fps.values()
+                 if prefix(f.ref) == 'U' and (role_pads(f).get('SW') or
+                    role_pads(f).get('OUT')) and len(f.pads) >= 5]
+        if not cands:
+            print("no regulator-shaped part found (needs a pin named SW/LX/OUT). "
+                  "`ic REF` works on any IC.")
+            return 1
+        print("`ic REF` gives a placement recommendation for an IC's passives. "
+              "Candidates on this board:\n")
+        for f in sorted(cands, key=lambda f: natkey(f.ref)):
+            R = role_pads(f)
+            print(f"  {f.ref:<5} {trunc(f.value,22):<22} "
+                  f"{'placed' if f.placed else 'UNPLACED':<8} "
+                  f"{'switching' if R.get('SW') else 'linear'}")
+        return 0
+    rc = 0
+    for ref in a.args:
+        f = b.fps.get(ref)
+        if not f:
+            print(f"{ref}: NOT FOUND"); rc = 1; continue
+        ic = ic_context(b, f, a)
+        slots = ic_plan(b, ic, a)
+        anc = ic_anchor(b, ic, slots, a)
+        print(f"\n=== {f.ref}  {f.value}   {ic['topo']}")
+        if anc:
+            print(f"  {f.ref} is NOT PLACED. Anchored on {anc['ref']}, which is: "
+                  f"put {f.ref} at {f.x+anc['dx']:.2f},{f.y+anc['dy']:.2f} "
+                  f"rot {f.rot:g} {f.layer} and the rows below follow.")
+            if abs(anc['dr']) > 5:
+                print(f"  {anc['ref']} is rotated {anc['dr']:+.0f} deg from the slot it "
+                      f"wants. Turn {f.ref} by {anc['dr']:+.0f} deg in KiCad and re-run - "
+                      f"rotating it moves every pad, so these numbers assume you have.")
+        else:
+            print(f"  {'placed at' if f.placed else 'NOT PLACED, parked at'} "
+                  f"{f.x:.2f},{f.y:.2f} rot {f.rot:g} {f.layer}"
+                  + ("" if f.placed else "  - the coordinates below are relative to "
+                                         "the parked IC, so place it (or `--anchor` "
+                                         "one of its placed passives) and re-run"))
+        print(f"  VIN {', '.join(unesc_disp(n) for n in ic['vin_nets']) or '?'}"
+              f"   SW {', '.join(unesc_disp(n) for n in ic['sw_nets']) or 'none'}"
+              f"   VOUT {unesc_disp(ic['vout']) if ic['vout'] else '?'}")
+        got = {s['ref'] for s in slots}
+        named = [(k, [g.ref for g in ic[k]]) for k in ('CIN', 'COUT', 'CBOOT', 'CBIAS')]
+        named.append(('L', [ic['L'].ref] if ic['L'] else []))
+        named.append(('FB', [g.ref for g in ic['FBparts']]))
+        if any(v for _, v in named):
+            print("  parts     : " + '  '.join(f"{k}={' '.join(v)}" for k, v in named if v))
+        if ic['misc']:
+            print(f"  also on its own nets (not positioned): {' '.join(ic['misc'])}")
+
+        if not slots:
+            print("  nothing positionable found - no VIN/GND pin pair, no inductor on "
+                  "the SW net, and no caps on its private nets.")
+            for w in ic['warn'] + ic['notes']:
+                print(f"  note: {w}")
+            continue
+
+        print(f"\n  {'ref':<6} {'role':<6} {'suggest x,y':<18} {'rot':>5}  "
+              f"{'now':<20} why")
+        for s in sorted(slots, key=lambda s: (s['role'], natkey(s['ref']))):
+            g = b.fps[s['ref']]
+            d = math.hypot(g.x - s['x'], g.y - s['y'])
+            dr = min((g.rot - s['rot']) % 180, (s['rot'] - g.rot) % 180)
+            now = 'unplaced' if not g.placed else (
+                'OK' if d <= a.tol and dr <= 5 else f"{d:.1f} mm / {dr:.0f} deg off")
+            print(f"  {s['ref']:<6} {s['role']:<6} "
+                  f"{f'{s['x']:.2f},{s['y']:.2f}':<18} {s['rot']:>5.1f}  "
+                  f"{now:<20} {s['why']}")
+
+        print()
+        for line in ic_diagram(b, ic, slots, min(a.cols, 64)):
+            print(line)
+
+        # -- the checks that only make sense once a target exists ----------
+        msgs = list(ic['warn'])
+        # two slots wanting the same space is a real outcome, not a bug: on a
+        # package whose VIN, PGND and SW pins all sit on one corner the input
+        # caps and the inductor both want to go there. Say so - the diagram
+        # paints first-writer-wins and would hide it.
+        boxes = [(t, slot_box(b, t)) for t in slots]
+        for i, (t, bx) in enumerate(boxes):
+            for u, by in boxes[i + 1:]:
+                A = overlap_area(bx, by)
+                if A > 0.01:
+                    msgs.append(f"the slots for {t['ref']} ({t['role']}) and "
+                                f"{u['ref']} ({u['role']}) overlap by {A:.2f} mm2 - "
+                                f"both want the same face of the package; move one "
+                                f"out and accept the longer loop on that one")
+        blockers = defaultdict(list)
+        for s in slots:
+            box = slot_box(b, s)
+            for g in b.fps.values():
+                if g is f or g.ref in got or not g.placed or b.is_hole(g):
+                    continue
+                if g.back == f.back and hit(box, g.crtyd):
+                    blockers[g.ref].append(s['ref'])
+        for r, who in sorted(blockers.items(), key=lambda kv: natkey(kv[0]))[:a.max]:
+            msgs.append(f"{r} is already placed inside the slot suggested for "
+                        f"{' '.join(who)} - move one of them")
+        swset = set(ic['sw_nets'])
+        noisy = [g for g in b.fps.values()
+                 if g.placed and any(p['net'] in swset for p in g.pads)]
+        for g in ic['FBparts']:
+            if not g.placed:
+                continue
+            for h in noisy:
+                d = box_dist(g.crtyd, h.crtyd)
+                if d < a.fb:
+                    msgs.append(f"{g.ref} (feedback) is {d:.1f} mm from switching-node "
+                                f"part {h.ref} - want >= {a.fb:g} mm, and never under "
+                                f"the inductor")
+        if ic['CIN'] and ic['pads'].get('VIN') and f.placed:
+            # same measure on both sides - cap centre to the VIN pad - or the
+            # comparison flatters whichever one is measured pad-to-pad
+            vp = ic['pads']['VIN'][0]
+            for g in ic['CIN'][:1]:
+                t = next((s for s in slots if s['ref'] == g.ref), None)
+                if g.placed and t:
+                    now = math.hypot(g.x - vp['x'], g.y - vp['y'])
+                    new = math.hypot(t['x'] - vp['x'], t['y'] - vp['y'])
+                    verdict = (f"{now-new:.1f} mm shorter" if new < now - 0.2
+                               else "no better - this package's VIN and GND pins are "
+                                    "too far apart for the cap that has to bridge them")
+                    msgs.append(f"input loop, {g.ref} centre to VIN.{vp['num']}: "
+                                f"{now:.1f} mm now, {new:.1f} mm in the slot above "
+                                f"({verdict})")
+        if ic['pads'].get('FB') and ic['pads'].get('SW'):
+            fx = ctr(f.crtyd)
+            same = all((p['x'] - fx[0]) * (q['x'] - fx[0]) +
+                       (p['y'] - fx[1]) * (q['y'] - fx[1]) > 0
+                       for p in ic['pads']['FB'] for q in ic['pads']['SW'])
+            if same:
+                msgs.append("FB and SW pins are on the same face of the package - "
+                            "run the FB trace out and around, never past the SW pad")
+        for m in msgs[:a.max] + ic['notes']:
+            print(f"  note: {m}")
+        if len(msgs) > a.max:
+            print(f"  ... +{len(msgs)-a.max} more note(s)")
+        print("  Positions are geometric suggestions from pad coordinates and the "
+              "loop rules, not\n  a datasheet layout. Check them against the "
+              "datasheet's own layout example.")
+    return rc
+
+# ---------------- net span ----------------
+
+def net_spans(b, a):
+    """Bounding-box diagonal of every net's placed pads.
+
+    The one routing-quality number that exists before any routing does: a
+    three-node signal net whose parts are 100 mm apart is a floorplan problem,
+    and it is visible now, not after the autorouter fails. Rails are excluded
+    by node count rather than listed - dumping GND's 245 nodes is exactly the
+    failure this tool exists to avoid."""
+    rows = []
+    for n, nodes in b.nets.items():
+        base = n.split('/')[-1]
+        # by node count AND by name: a two-node board can still have a +3V3 net,
+        # and a rail's span is the board no matter how few things sit on it
+        if len(nodes) > a.fanout or n.startswith('unconnected-') \
+           or GND_RE.match(base) or rail_voltage(base) is not None:
+            continue
+        pts, refs = [], set()
+        for r, num in nodes:
+            f = b.fps.get(r)
+            if not f or not f.placed:
+                continue
+            refs.add(r)
+            pts += [(p['x'], p['y']) for p in f.pads if p['num'] == num]
+        if len(pts) < 2:
+            continue
+        bb = bbox(pts)
+        rows.append({'net': n, 'span': math.hypot(bb[2] - bb[0], bb[3] - bb[1]),
+                     'placed': len(refs), 'nodes': len({r for r, _ in nodes}),
+                     'refs': sorted(refs, key=natkey)})
+    rows.sort(key=lambda r: -r['span'])
+    return rows
+
+def c_span(b, a):
+    rows = net_spans(b, a)
+    if a.json:
+        print(json.dumps(rows[:a.max], indent=1)); return 0
+    if not rows:
+        print("no net has two or more placed pads yet"); return 0
+    diag = math.hypot(b.outline[2] - b.outline[0], b.outline[3] - b.outline[1]) \
+        if b.outline else 0.0
+    print(f"{b.path}: {len(rows)} net(s) with 2+ placed pads, longest first"
+          + (f"   board diagonal {diag:.0f} mm" if diag else ""))
+    print(f"\n{'span':>7}  {'net':<34} {'plc/tot':>8}  parts")
+    for r in rows[:a.max]:
+        mark = ' ' if r['placed'] == r['nodes'] else '+'
+        print(f"{r['span']:>6.1f}m  {trunc(unesc_disp(r['net']),34):<34} "
+              f"{r['placed']:>3}/{r['nodes']:<4}{mark} {trunc(' '.join(r['refs']), 40)}")
+    if len(rows) > a.max:
+        print(f"  ... +{len(rows)-a.max} shorter net(s) ({len(rows)} total)")
+    print(f"\nNets above --fanout {a.fanout:g} nodes (GND, +3V3, ...) are left out on "
+          f"purpose - a rail's\nspan is the board, and listing its nodes would bury "
+          f"everything else. '+' = not every\nnode is placed yet, so the span will "
+          f"only grow. Span is pad bbox diagonal, not trace\nlength; a long span is "
+          f"a floorplan question, not yet a routing error.")
+    return 0
+
+# ---------------- rules ----------------
+
+RULES = {
+    'OVERLAP':  'courtyards of two placed parts intersect',
+    'EDGECLR':  'courtyard crosses the board edge or sits closer than --edge',
+    'HOLECLR':  'part inside a mounting hole keepout, or a hole off the board',
+    'CONNACC':  'connector buried away from an edge, or its cable exit blocked',
+    'RFNOISE':  'RF part / antenna net within --rf of a switching node',
+    'THERMAL':  'heat source within --therm of a heat-sensitive part',
+    'BYPASS':   'supply pin further than --bypass from its nearest bypass cap',
+    'NOCRTYD':  'footprint has no courtyard - overlap was checked on pads+fab instead',
+    'NETSPAN':  'a fully placed non-rail net whose pads are more than --span apart',
+    'UNPLACED': 'footprint still parked off the board outline',
+}
+
+def _drill_in(f, g):
+    """Does either part's through-hole barrel land inside the other's courtyard?"""
+    for a, b in ((f, g), (g, f)):
+        for p in a.pads:
+            if p['drill'] and pt_box_dist((p['x'], p['y']), b.crtyd) < p['drill'] / 2:
+                return True
+    return False
+
+def gen_findings(b, a):
+    only = {s.strip().upper() for s in a.only.split(',')} if a.only else None
+    skip = {s.strip().upper() for s in a.skip.split(',')} if a.skip else set()
+    F = []
+    def add(sev, rule, msg, refs=()):
+        if (only and rule not in only) or rule in skip:
+            return
+        F.append({'severity': sev, 'rule': rule, 'msg': msg, 'refs': list(refs)})
+
+    P = b.placed()
+    holes = [f for f in b.fps.values() if b.is_hole(f)]
+
+    # --- UNPLACED: one folded line per sheet, never one per part -------
+    bys = defaultdict(list)
+    for f in b.fps.values():
+        if not f.placed:
+            bys[sheet_of(f)].append(f.ref)
+    for s in sorted(bys, key=natkey):
+        add('INFO', 'UNPLACED', f"{trunc(s,24)}: {len(bys[s])} off the board - "
+                                f"{trunc(refrange(bys[s]), 90)}")
+
+    # --- NOCRTYD -------------------------------------------------------
+    for f in P:
+        if not f.crtyd_real:
+            add('INFO', 'NOCRTYD', f"{f.ref} has no F/B.CrtYd geometry; "
+                                   f"overlap tested on its pad+fab extent instead", [f.ref])
+
+    # --- OVERLAP: pairwise, but only among placed parts ----------------
+    # O(n^2) on the placed set only. 400 unplaced parts stacked in a pile would
+    # otherwise produce thousands of meaningless pair findings.
+    if not b.rings:
+        add('WARN', 'EDGECLR', "no closed Edge.Cuts ring: cannot tell inside from "
+                               "outside, so placement checks fell back to the outline bbox")
+    S = sorted(P, key=lambda f: f.crtyd[0])
+    for i, f in enumerate(S):
+        for g in S[i + 1:]:
+            if g.crtyd[0] > f.crtyd[2] + a.clear:      # sweep line: no further overlap possible
+                break
+            # Opposite sides do not clash just by projecting onto each other -
+            # a back-side battery holder over front-side 0402s is fine. The only
+            # real cross-side clash is a drilled barrel landing in the other
+            # part's area, so test the drills, not the bounding boxes.
+            if f.back != g.back and not _drill_in(f, g):
+                continue
+            if b.is_hole(f) or b.is_hole(g):
+                continue                               # HOLECLR owns this pair
+            A = overlap_area(grow(f.crtyd, a.clear / 2), grow(g.crtyd, a.clear / 2))
+            if A > 1e-6:
+                add('ERROR', 'OVERLAP', f"{f.ref} and {g.ref} courtyards overlap by "
+                                        f"{A:.2f} mm2 ({'same' if f.back == g.back else 'opposite'} side)",
+                    [f.ref, g.ref])
+
+    # --- EDGECLR -------------------------------------------------------
+    for f in P:
+        if f.edge is None:
+            continue
+        if f.edge <= 0.001:
+            # a coax/USB/edge-mount part is SUPPOSED to sit on the edge
+            why = ''
+            if EDGEMNT.search(f.fp):
+                sev, why = 'INFO', ' (edge-mount part, expected)'
+            elif RF_VAL.search(f.value) or RF_FP.search(f.fp):
+                # a WROOM/E22-style module is placed with its antenna over the
+                # edge on purpose; the thing to verify is the keepout, not this
+                sev, why = 'INFO', (' (RF module - the antenna end is meant to overhang; '
+                                    'confirm the keepout under it)')
+            else:
+                sev = 'ERROR'
+            add(sev, 'EDGECLR', f"{f.ref} courtyard touches or crosses the board edge{why}",
+                [f.ref])
+        elif f.edge < a.edge:
+            add('WARN', 'EDGECLR', f"{f.ref} courtyard is {f.edge:.2f} mm from the edge "
+                                   f"(want >= {a.edge:g})", [f.ref])
+
+    # --- HOLECLR -------------------------------------------------------
+    for h in holes:
+        r = max([max(p['w'], p['drill']) / 2 for p in h.pads] or [1.1]) + a.hole
+        if not h.placed:
+            # Mid-placement the whole BOM sits in a pile beside the board and a
+            # hole parked in that pile is simply not placed yet. Only call it an
+            # error when it is out there on its own, which is the real bug.
+            pile = sum(1 for g in b.fps.values() if not g.placed and g is not h
+                       and math.hypot(g.x - h.x, g.y - h.y) < 25.0)
+            add('ERROR' if pile < 3 else 'INFO', 'HOLECLR',
+                f"{h.ref} mounting hole is outside the board outline at "
+                f"{h.x:.1f},{h.y:.1f}" + (f" (in the parked pile with {pile} other "
+                f"unplaced parts - not placed yet, rather than misplaced)" if pile >= 3 else ""),
+                [h.ref])
+            continue
+        keep = (h.x - r, h.y - r, h.x + r, h.y + r)
+        for f in P:
+            if f is h or b.is_hole(f):
+                continue
+            if hit(keep, f.crtyd):
+                add('ERROR', 'HOLECLR', f"{f.ref} is inside {h.ref}'s {r:.1f} mm screw "
+                                        f"keepout", [f.ref, h.ref])
+
+    # --- CONNACC -------------------------------------------------------
+    for f in P:
+        if not b.is_conn(f) or prefix(f.ref) == 'TP' or f.edge is None:
+            continue
+        if EDGEMNT.search(f.fp) and f.edge > 1.0:
+            add('WARN', 'CONNACC', f"{f.ref} ({trunc(f.fp.split(':')[-1],28)}) is an "
+                                   f"edge/side-entry part but sits {f.edge:.1f} mm in from "
+                                   f"the edge", [f.ref])
+        elif f.edge > a.conn:
+            add('WARN', 'CONNACC', f"{f.ref} is {f.edge:.1f} mm from the nearest edge "
+                                   f"(want <= {a.conn:g} so a cable can reach it)", [f.ref])
+            continue
+        # cable exit: sweep the courtyard straight out to the nearest edge and
+        # see what is standing in the corridor. Axis-aligned only, which is the
+        # honest limit - a diagonal exit is not modelled.
+        for blk in _corridor(b, f):
+            add('WARN', 'CONNACC', f"{f.ref}'s cable exit corridor is blocked by "
+                                   f"{blk.ref} ({trunc(blk.value,18)})", [f.ref, blk.ref])
+
+    # --- RFNOISE -------------------------------------------------------
+    sw = b.sw_nets()
+    noisy = [f for f in P if any(p['net'] in sw for p in f.pads)]
+    for f in P:
+        if not b.is_rf(f):
+            continue
+        for g in noisy:
+            if g is f:
+                continue
+            d = box_dist(f.crtyd, g.crtyd)
+            if d < a.rf:
+                add('WARN', 'RFNOISE', f"{f.ref} ({trunc(f.value,18)}) is {d:.1f} mm from "
+                                       f"switching node part {g.ref}"
+                                       f"{'' if f.back == g.back else ' (opposite side)'} "
+                                       f"(want >= {a.rf:g})",
+                    [f.ref, g.ref])
+
+    # --- THERMAL -------------------------------------------------------
+    hot = [f for f in P if b.is_hot(f)]
+    for f in P:
+        if not b.is_sens(f):
+            continue
+        for g in hot:
+            if g is f:
+                continue
+            d = box_dist(f.crtyd, g.crtyd)
+            if d < a.therm:
+                add('WARN', 'THERMAL', f"{f.ref} ({trunc(f.value,18)}) is heat-sensitive and "
+                                       f"{d:.1f} mm from {g.ref} ({trunc(g.value,18)})"
+                                       + ('' if f.back == g.back else
+                                          ' (opposite side, coupled through the board)'),
+                    [f.ref, g.ref])
+
+    # --- NETSPAN -------------------------------------------------------
+    # Fully placed only: a net still waiting on parts will move, and flagging it
+    # now would just be noise that clears itself.
+    for r in net_spans(b, a):
+        if r['placed'] == r['nodes'] and r['span'] > a.span:
+            add('WARN', 'NETSPAN', f"{unesc_disp(r['net'])} spans {r['span']:.0f} mm "
+                                   f"between {len(r['refs'])} placed parts "
+                                   f"({trunc(' '.join(r['refs']), 40)}) - want <= {a.span:.0f}",
+                r['refs'])
+
+    # --- BYPASS --------------------------------------------------------
+    caps = defaultdict(list)
+    for f in P:
+        if prefix(f.ref) == 'C':
+            for p in f.pads:
+                if p['net']:
+                    caps[p['net']].append(f)
+    for f in P:
+        if prefix(f.ref) != 'U' or len(f.pads) < 4:
+            continue
+        seen = set()
+        for p in f.pads:
+            if not p['net'] or not SUP_PIN.match(p['fn'] or ''):
+                continue
+            if GND_RE.match(p['net'].split('/')[-1]):
+                continue      # e.g. NEO-M9N VDD_USB strapped to GND when USB is unused
+            cl = [c for c in caps.get(p['net'], []) if c is not f]
+            if not cl or p['net'] in seen:
+                continue                    # no cap placed yet: not a placement fault
+            seen.add(p['net'])
+            d = min(pt_box_dist((p['x'], p['y']), c.crtyd) for c in cl)
+            best = min(cl, key=lambda c: pt_box_dist((p['x'], p['y']), c.crtyd))
+            if d > a.bypass:
+                add('WARN', 'BYPASS', f"{f.ref}.{p['num']} ({p['fn']}, {unesc_disp(p['net'])}) "
+                                      f"nearest placed bypass cap is {best.ref} at {d:.1f} mm "
+                                      f"(want <= {a.bypass:g})", [f.ref, best.ref])
+
+    n = len(F)
+    F = [f for f in F if not suppressed(f, a.suppress)]
+    return F, n - len(F)
+
+def _corridor(b, f):
+    """Parts standing between a connector and the nearest board edge."""
+    c, o = f.crtyd, b.outline
+    if not o:
+        return []
+    gaps = {'-x': c[0] - o[0], '+x': o[2] - c[2], '-y': c[1] - o[1], '+y': o[3] - c[3]}
+    d = min(gaps, key=lambda k: gaps[k])
+    if gaps[d] <= 0.5:
+        return []
+    lane = {'-x': (o[0], c[1], c[0], c[3]), '+x': (c[2], c[1], o[2], c[3]),
+            '-y': (c[0], o[1], c[2], c[1]), '+y': (c[0], c[3], c[2], o[3])}[d]
+    return [g for g in b.placed()
+            if g is not f and g.back == f.back and not b.is_hole(g) and hit(lane, g.crtyd)]
+
+def c_check(b, a):
+    F, supp = gen_findings(b, a)
+    if a.json:
+        print(json.dumps(F, indent=1)); return 2 if any(x['severity'] == 'ERROR' for x in F) else 0
+    n = defaultdict(int)
+    for f in F:
+        n[f['severity']] += 1
+    print_findings(F, f"{b.path}: {n['ERROR']} error, {n['WARN']} warn, {n['INFO']} info "
+                      f"({len(b.placed())} of {len(b.fps)} footprints placed)\n",
+                   rules=RULES, cap=a.max)
+    if not F:
+        print("no findings")
+    if supp:
+        print(f"\n({supp} finding(s) suppressed via kpcb.json `suppress` list - "
+              f"`--no-suppress` to see them)")
+    if a.rules or not F:
+        print("\nrules: " + ', '.join(f"{k}={v}" for k, v in sorted(RULES.items())))
+    print("\nThese are geometric heuristics on placement only - no routing, no DRC, no "
+          "3D bodies.\nConfirm anything that matters against the mechanical drawing or "
+          "KiCad's own DRC.")
+    return 2 if n['ERROR'] else 0
+
+# ---------------- board vs netlist ----------------
+
+def _canon_net(n):
+    """KiCad appends _1, _2 to `unconnected-*` pseudo-nets on the board side but
+    not in the netlist export. That is not a difference; treating it as one puts
+    a false finding in front of every real one."""
+    return re.sub(r'_\d+$', '', n) if n.startswith('unconnected-') else n
+
+def find_netlist(board_path, given):
+    """The .net that goes with this board. Same stem first, then any .net in the
+    directory - and it says which one it took when there was a choice, because
+    silently reviewing against the wrong export is worse than not finding one."""
+    if given:
+        return (rel(given), 1) if os.path.exists(given) else (None, 0)
+    stem = os.path.splitext(os.path.abspath(board_path))[0]
+    for c in (stem + '.net', os.path.join(os.path.dirname(stem), '*.net')):
+        hits = sorted(glob.glob(c))
+        if hits:
+            return rel(hits[0]), len(hits)
+    return None, 0
+
+def rel(p):
+    r = os.path.relpath(p)
+    return r if not r.startswith('..') else p
+
+def sync_findings(b, netpath, a):
+    """Every difference between what the schematic says and what the board has.
+
+    This runs before anything else is worth reading. A placement review of a
+    board that was never re-synced is a review of the wrong circuit, and the
+    board file gives no hint that it is stale - its pads carry net names that
+    look perfectly valid."""
+    from knet import Netlist
+    n = Netlist(netpath)
+    F, add = [], None
+    def add(sev, rule, msg, refs=()):
+        F.append({'severity': sev, 'rule': rule, 'msg': msg, 'refs': list(refs)})
+
+    bf, nf = set(b.fps), set(n.comps)
+    if bf - nf:
+        add('ERROR', 'SYNCPART', f"on the board but not in the netlist "
+            f"({len(bf-nf)}): {trunc(refrange(sorted(bf-nf, key=natkey)), 90)}")
+    if nf - bf:
+        add('ERROR', 'SYNCPART', f"in the netlist but not on the board "
+            f"({len(nf-bf)}): {trunc(refrange(sorted(nf-bf, key=natkey)), 90)}")
+
+    for r in sorted(bf & nf, key=natkey):
+        f, c = b.fps[r], n.comps[r]
+        if c['footprint'] and f.fp != c['footprint']:
+            add('ERROR', 'SYNCFP', f"{r} footprint differs: board {trunc(f.fp,34)} / "
+                                   f"netlist {trunc(c['footprint'],34)}", [r])
+        if f.value != c['value']:
+            add('WARN', 'SYNCVAL', f"{r} value differs: board {trunc(f.value,20)} / "
+                                   f"netlist {trunc(c['value'],20)}", [r])
+        if f.dnp != c['dnp']:
+            add('WARN', 'SYNCDNP', f"{r} is DNP {'on the board' if f.dnp else 'in the '
+                                   'netlist'} only", [r])
+
+    nmis = 0
+    for r in sorted(bf & nf, key=natkey):
+        for p in b.fps[r].pads:
+            want = n.pinnet.get((r, p['num']))
+            if want is None:
+                if p['net']:
+                    add('WARN', 'SYNCNET', f"{r} pad {p['num']} carries "
+                        f"{unesc_disp(p['net'])} but the netlist has no such pin", [r])
+                continue
+            if _canon_net(p['net'] or '') != _canon_net(want):
+                nmis += 1
+                add('ERROR', 'SYNCNET', f"{r}.{p['num']} is on "
+                    f"{unesc_disp(p['net']) or '(no net)'} on the board but "
+                    f"{unesc_disp(want)} in the netlist", [r])
+    return F, n
+
+def c_sync(b, a):
+    netpath, cands = find_netlist(b.path, a.args[0] if a.args else None)
+    if not netpath:
+        print("sync needs the .net export: `kpcb.py board.kicad_pcb sync board.net`\n"
+              "(a *.net beside the board is found automatically)", file=sys.stderr)
+        return 1
+    try:
+        F, n = sync_findings(b, netpath, a)
+    except Exception as e:
+        print(f"could not read {netpath}: {e}", file=sys.stderr); return 3
+    if a.json:
+        print(json.dumps(F, indent=1))
+        return 2 if any(x['severity'] == 'ERROR' for x in F) else 0
+    ne = sum(1 for x in F if x['severity'] == 'ERROR')
+    print(f"board   : {b.path}   {len(b.fps)} footprints")
+    print(f"netlist : {netpath}   {len(n.comps)} components   exported {n.date}"
+          + (f"   [{cands} .net files here; name one to be sure]" if cands > 1 else ""))
+    if not F:
+        print("\nIN SYNC - same parts, same footprints, same values, same net on every "
+              "pad.\nPlacement findings can be trusted to be about the current circuit.")
+        return 0
+    print_findings(F, f"\n{ne} error, {len(F)-ne} warn\n", rules=SYNC_RULES, cap=a.max)
+    if ne:
+        print("\nThe board has not been re-synced from the schematic. Run KiCad's "
+              "'Update PCB from\nSchematic' first - until then every other finding "
+              "here may be about a stale circuit.")
+    else:
+        print("\nConnectivity matches; only the annotations above differ. Worth "
+              "reconciling, but\nplacement findings are still about the right "
+              "circuit.")
+    return 2 if ne else 0
+
+SYNC_RULES = {
+    'SYNCPART': 'component in one file and not the other',
+    'SYNCFP':   'footprint assignment differs between board and netlist',
+    'SYNCVAL':  'value differs between board and netlist',
+    'SYNCDNP':  'DNP flag differs between board and netlist',
+    'SYNCNET':  'a pad sits on a different net than the netlist says',
+}
+
+# ---------------- one-call review ----------------
+
+def c_review(b, a):
+    """Everything a fresh session needs before it can say anything useful, in one
+    call, ending with the specific next calls worth making.
+
+    The point is not to save printing - it is to save the caller working out
+    what to run next from a summary it has not seen yet."""
+    netpath, _ = find_netlist(b.path, a.args[0] if a.args else None)
+    if netpath:
+        try:
+            F, n = sync_findings(b, netpath, a)
+            ne = sum(1 for x in F if x['severity'] == 'ERROR')
+            if ne:
+                print(f"### STOP: board vs {os.path.basename(netpath)} - {ne} error(s)\n")
+                print_findings(F, '', rules=SYNC_RULES, cap=5)
+                print("\nThe board is stale. `sync` for the full list, then re-sync in "
+                      "KiCad.\nEverything below is about the circuit the BOARD has, "
+                      "which is not the one you drew.\n")
+            else:
+                print(f"### in sync with {os.path.basename(netpath)}"
+                      f"{f' ({len(F)} non-blocking difference(s), `sync` for detail)' if F else ''}\n")
+        except Exception as e:
+            print(f"### could not read {netpath}: {e}\n")
+    else:
+        print("### no .net beside the board - cannot tell whether the board is stale. "
+              "Pass one:\n### `kpcb.py board.kicad_pcb review board.net`\n")
+
+    print("### placement"); c_summary(b, a)
+    print("\n### findings"); rc = c_check(b, a)
+    print("\n### longest nets"); old, a.max = a.max, min(a.max, 6); c_span(b, a); a.max = old
+
+    # what to do next, worked out from the findings rather than left to the reader
+    F, _ = gen_findings(b, a)
+    hot = defaultdict(int)
+    for x in F:
+        if x['severity'] == 'ERROR':
+            for r in x['refs']:
+                hot[r] += 1
+    nxt = []
+    regs = [f.ref for f in b.fps.values() if prefix(f.ref) == 'U' and not f.placed
+            and (role_pads(f).get('SW') or role_pads(f).get('OUT')) and len(f.pads) >= 5]
+    if regs:
+        nxt.append(f"kpcb.py {b.path} ic {' '.join(sorted(regs, key=natkey)[:4])}"
+                   f"   # unplaced regulator(s): where their passives go")
+    busy = [r for r, c in sorted(hot.items(), key=lambda kv: (-kv[1], natkey(kv[0])))[:4]]
+    if busy:
+        nxt.append(f"kpcb.py {b.path} where {' '.join(busy)}"
+                   f"   # in the most ERROR findings")
+    if sum(1 for f in b.fps.values() if not f.placed) > 20:
+        nxt.append(f"kpcb.py {b.path} map   # where the free space is, before placing more")
+    if netpath:
+        nxt.append(f"knet.py {netpath} check   # the electrical half; placement cannot see it")
+    nxt.append(f"kpcb.py {b.path} sync   # re-run after any schematic change")
+    print("\n### next\n" + '\n'.join('  ' + x for x in nxt))
+    return rc
+
+CMDS = {'summary': c_summary, 'check': c_check, 'where': c_where, 'map': c_map,
+        'sheet': c_sheet, 'unplaced': c_unplaced, 'ic': c_ic, 'span': c_span,
+        'sync': c_sync, 'review': c_review}
+
+def main():
+    ap = argparse.ArgumentParser(add_help=False)
+    ap.add_argument('file')
+    ap.add_argument('cmd', choices=list(CMDS))
+    ap.add_argument('args', nargs='*')
+    ap.add_argument('-r', '--radius', type=float, default=5.0,
+                    help='for `where`: neighbour search radius in mm (5)')
+    ap.add_argument('--max', type=int, default=12,
+                    help='max lines per rule / per neighbour list before a +N tail (12)')
+    ap.add_argument('--cols', type=int, default=48, help='for `map`: grid width (48)')
+    ap.add_argument('--side', default='f', help='for `map`: f (front, default) or b (back)')
+    for name, dflt, hlp in (('edge', 0.5, 'courtyard-to-board-edge minimum, mm'),
+                            ('hole', 1.5, 'keepout beyond a mounting hole pad radius, mm'),
+                            ('conn', 10.0, 'max connector distance from an edge, mm'),
+                            ('rf', 8.0, 'RF part to switching node, mm'),
+                            ('therm', 8.0, 'heat source to heat-sensitive part, mm'),
+                            ('bypass', 3.0, 'supply pin to its bypass cap, mm'),
+                            ('clear', 0.0, 'extra margin on every courtyard test, mm'),
+                            ('gap', 0.25, 'for `ic`: courtyard gap in a suggestion, mm'),
+                            ('fb', 4.0, 'for `ic`: feedback part to switching node, mm'),
+                            ('tol', 1.0, 'for `ic`: slop allowed before a placed part '
+                                         'stops reading OK, mm'),
+                            ('span', 0.0, 'NETSPAN threshold, mm (0 = half the board diagonal)'),
+                            ('fanout', 8.0, 'a net with more nodes than this is a rail')):
+        ap.add_argument('--' + name, type=float, default=None, help=hlp + f' ({dflt:g})')
+    ap.add_argument('--anchor', default='',
+                    help="for `ic`: hang the layout off this already-placed part "
+                         "instead of the IC ('none' to disable the automatic choice)")
+    ap.add_argument('--cin', default='', help="for `ic`: force the input caps, e.g. --cin C122,C124")
+    ap.add_argument('--cout', default='', help="for `ic`: force the output caps")
+    ap.add_argument('--ncin', type=int, default=3, help='for `ic`: how many input caps to place off a rail (3)')
+    ap.add_argument('--ncout', type=int, default=3, help='for `ic`: how many output caps to place off a rail (3)')
+    ap.add_argument('--assoc', type=int, default=6, help="for `ic`: a net with more nodes than this is a rail, not the IC's own net (6)")
+    ap.add_argument('--only', default='')
+    ap.add_argument('--skip', default='')
+    ap.add_argument('--json', action='store_true')
+    ap.add_argument('--rules', action='store_true', help='print the check rule legend')
+    ap.add_argument('--no-suppress', action='store_true',
+                    help="for `check`: ignore kpcb.json's suppress list")
+    ap.add_argument('-h', '--help', action='store_true')
+    a = ap.parse_args()
+    if a.help:
+        print(__doc__); return
+    cfg = {}
+    try:
+        cp = os.path.join(os.path.dirname(os.path.abspath(a.file)), 'kpcb.json')
+        if os.path.exists(cp):
+            cfg = json.load(open(cp))
+    except Exception as e:
+        print(f"(ignoring malformed kpcb.json: {e})", file=sys.stderr)
+    for name, dflt in (('edge', 0.5), ('hole', 1.5), ('conn', 10.0), ('rf', 8.0),
+                       ('therm', 8.0), ('bypass', 3.0), ('clear', 0.0), ('gap', 0.25),
+                       ('fb', 4.0), ('tol', 1.0), ('span', 0.0), ('fanout', 8.0)):
+        if getattr(a, name) is None:
+            try:
+                setattr(a, name, float(cfg.get(name, dflt)))
+            except (TypeError, ValueError):
+                setattr(a, name, dflt)
+    a.suppress = {}
+    if not a.no_suppress:
+        for entry in cfg.get('suppress') or []:
+            rule, _, tok = str(entry).partition(':')
+            a.suppress.setdefault(rule.strip().upper(), set()).add(tok.strip())
+    try:
+        b = Board(a.file)
+    except FileNotFoundError:
+        print(f"no such board: {a.file}", file=sys.stderr); return 3
+    except ValueError as e:
+        print(str(e), file=sys.stderr); return 3
+    if not a.span and b.outline:
+        a.span = 0.5 * math.hypot(b.outline[2] - b.outline[0], b.outline[3] - b.outline[1])
+    return CMDS[a.cmd](b, a) or 0
+
+try:
+    import signal
+    signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+except Exception:
+    pass
+
+if __name__ == '__main__':
+    sys.exit(main() or 0)

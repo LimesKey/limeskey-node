@@ -3765,6 +3765,121 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "power:PWR_FLAG"
+			(power global)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "#FLG"
+				(at 0 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "PWR_FLAG"
+				(at 0 3.81 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "Special symbol for telling ERC where power comes from"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "flag power"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_0"
+				(pin power_out line
+					(at 0 0 90)
+					(length 0)
+					(name ""
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(symbol "PWR_FLAG_0_1"
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 1.27) (xy -1.016 1.905) (xy 0 2.54) (xy 1.016 1.905) (xy 0 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "power:VBUS"
 			(power global)
 			(pin_numbers
@@ -4100,6 +4215,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "11828f03-93a1-475a-afa4-6781a0446ec5")
+	)
+	(junction
+		(at 179.07 60.96)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "13800847-c4d2-482a-acbf-9281f6a51fe5")
 	)
 	(junction
 		(at 240.03 95.25)
@@ -5737,6 +5858,16 @@
 	)
 	(wire
 		(pts
+			(xy 179.07 57.15) (xy 179.07 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4201a801-2bcc-414b-8280-2cfaa5a61fc4")
+	)
+	(wire
+		(pts
 			(xy 167.64 58.42) (xy 167.64 67.31)
 		)
 		(stroke
@@ -6037,6 +6168,16 @@
 	)
 	(wire
 		(pts
+			(xy 158.75 157.48) (xy 158.75 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5c5357e3-c559-45f3-b1fd-4463eb0bc85b")
+	)
+	(wire
+		(pts
 			(xy 107.95 99.06) (xy 132.08 99.06)
 		)
 		(stroke
@@ -6164,6 +6305,16 @@
 			(type default)
 		)
 		(uuid "68158814-e623-4c46-a878-4a8a8d507f3c")
+	)
+	(wire
+		(pts
+			(xy 158.75 161.29) (xy 152.4 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6937fbc1-9519-461a-a174-6488d57d9487")
 	)
 	(wire
 		(pts
@@ -7337,6 +7488,16 @@
 	)
 	(wire
 		(pts
+			(xy 179.07 60.96) (xy 172.72 60.96)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c8ec8ab3-152b-4e51-806b-e60f91b8853f")
+	)
+	(wire
+		(pts
 			(xy 127 161.29) (xy 127 166.37)
 		)
 		(stroke
@@ -7457,7 +7618,7 @@
 	)
 	(wire
 		(pts
-			(xy 181.61 60.96) (xy 172.72 60.96)
+			(xy 181.61 60.96) (xy 179.07 60.96)
 		)
 		(stroke
 			(width 0)
@@ -8205,7 +8366,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0519be26-2565-4981-9786-322404d18b1c")
-		(property "Reference" "R98"
+		(property "Reference" "R117"
 			(at 123.952 84.582 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8260,7 +8421,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C55174701"
 			(at 128.27 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -8302,7 +8463,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R98")
+					(reference "R117")
 					(unit 1)
 				)
 			)
@@ -8319,7 +8480,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "060bc16b-e051-441e-ae9e-02390c38aa8f")
-		(property "Reference" "C149"
+		(property "Reference" "C170"
 			(at 240.538 59.69 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8374,7 +8535,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48579675"
 			(at 241.3 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -8427,7 +8588,85 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C149")
+					(reference "C170")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 179.07 57.15 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "079582ed-febe-4e31-ba80-f0a83dbae544")
+		(property "Reference" "#FLG07"
+			(at 179.07 55.245 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 179.07 52.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 179.07 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 179.07 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 179.07 57.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "d78b7147-0edf-4cb5-a3f3-0e382fc34f37")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
+					(reference "#FLG07")
 					(unit 1)
 				)
 			)
@@ -8444,7 +8683,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "07e45c81-44b6-425a-9dfe-cddd88b7ae53")
-		(property "Reference" "C120"
+		(property "Reference" "C134"
 			(at 129.794 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8499,7 +8738,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C5142567"
+		(property "LCSC Part" "C5272680"
 			(at 127 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -8552,7 +8791,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C120")
+					(reference "C134")
 					(unit 1)
 				)
 			)
@@ -8570,7 +8809,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "0f65e06b-9aff-498d-a5d6-bf914a476063")
-		(property "Reference" "C142"
+		(property "Reference" "C158"
 			(at 170.18 88.9062 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8581,7 +8820,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "5.6pF C0G"
+		(property "Value" "5.6pF"
 			(at 170.18 91.4462 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8625,7 +8864,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C525219"
 			(at 167.64 90.17 0)
 			(hide yes)
 			(show_name no)
@@ -8658,6 +8897,17 @@
 				)
 			)
 		)
+		(property "Capacitor Rating" "C0G"
+			(at 167.64 90.17 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "b395bfc1-b596-40af-b42b-bd68e7e23270")
 		)
@@ -8667,7 +8917,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C142")
+					(reference "C158")
 					(unit 1)
 				)
 			)
@@ -8684,7 +8934,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0f7ccbe7-7066-49ff-9557-0c1515049314")
-		(property "Reference" "#PWR0117"
+		(property "Reference" "#PWR0136"
 			(at 43.18 83.82 0)
 			(hide yes)
 			(show_name no)
@@ -8744,7 +8994,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0117")
+					(reference "#PWR0136")
 					(unit 1)
 				)
 			)
@@ -8761,7 +9011,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1062f078-6ad6-4aec-a372-c4935b380d53")
-		(property "Reference" "#PWR0143"
+		(property "Reference" "#PWR0167"
 			(at 251.46 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -8821,7 +9071,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0143")
+					(reference "#PWR0167")
 					(unit 1)
 				)
 			)
@@ -8838,7 +9088,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "13ed094e-2d8f-4e9f-a75c-17cef4e8b771")
-		(property "Reference" "#PWR0136"
+		(property "Reference" "#PWR0156"
 			(at 209.55 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -8898,7 +9148,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0136")
+					(reference "#PWR0156")
 					(unit 1)
 				)
 			)
@@ -8915,7 +9165,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "18175c7a-2bb0-431c-8470-54492cfc1cae")
-		(property "Reference" "#PWR0120"
+		(property "Reference" "#PWR0139"
 			(at 66.04 158.75 0)
 			(hide yes)
 			(show_name no)
@@ -8975,7 +9225,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0120")
+					(reference "#PWR0139")
 					(unit 1)
 				)
 			)
@@ -8993,7 +9243,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "18416b87-a597-4bfb-80a7-79674e9a8b3e")
-		(property "Reference" "R109"
+		(property "Reference" "R128"
 			(at 222.25 86.3599 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9004,7 +9254,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "556"
+		(property "Value" "750"
 			(at 222.25 88.8999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9101,7 +9351,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R109")
+					(reference "R128")
 					(unit 1)
 				)
 			)
@@ -9119,7 +9369,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "19b62ace-ee25-4b8f-a73b-a3275f567077")
-		(property "Reference" "#PWR0126"
+		(property "Reference" "#PWR0145"
 			(at 114.3 138.43 0)
 			(hide yes)
 			(show_name no)
@@ -9212,7 +9462,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0126")
+					(reference "#PWR0145")
 					(unit 1)
 				)
 			)
@@ -9229,7 +9479,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1c6f8462-0876-4e7e-abc8-813afd584fba")
-		(property "Reference" "C128"
+		(property "Reference" "C142"
 			(at 138.43 162.5662 0)
 			(hide yes)
 			(show_name no)
@@ -9253,7 +9503,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 135.89 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -9286,7 +9536,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C22392391"
 			(at 135.89 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -9328,7 +9578,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C128")
+					(reference "C142")
 					(unit 1)
 				)
 			)
@@ -9346,7 +9596,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "209900e7-d10a-4b9a-a14e-f4b4b09dc980")
-		(property "Reference" "#PWR0142"
+		(property "Reference" "#PWR0166"
 			(at 246.38 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -9406,7 +9656,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0142")
+					(reference "#PWR0166")
 					(unit 1)
 				)
 			)
@@ -9535,7 +9785,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "25a930e0-1be4-4518-941f-544debce7f72")
-		(property "Reference" "#PWR0119"
+		(property "Reference" "#PWR0138"
 			(at 52.07 177.8 0)
 			(hide yes)
 			(show_name no)
@@ -9595,7 +9845,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0119")
+					(reference "#PWR0138")
 					(unit 1)
 				)
 			)
@@ -9612,7 +9862,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "25df871d-cbb3-4b83-bd61-89109315b30c")
-		(property "Reference" "C168"
+		(property "Reference" "C169"
 			(at 240.538 57.15 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9667,7 +9917,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48579675"
 			(at 241.3 58.42 0)
 			(hide yes)
 			(show_name no)
@@ -9720,7 +9970,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C168")
+					(reference "C169")
 					(unit 1)
 				)
 			)
@@ -9737,7 +9987,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "263dbb8e-f996-4619-8cb9-b55cd265709b")
-		(property "Reference" "U14"
+		(property "Reference" "U15"
 			(at 184.912 57.15 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9878,7 +10128,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "U14")
+					(reference "U15")
 					(unit 1)
 				)
 			)
@@ -9896,7 +10146,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "29ff57e5-8527-455b-b0b4-11d065fa7f9d")
-		(property "Reference" "#PWR0130"
+		(property "Reference" "#PWR0149"
 			(at 138.43 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -9956,7 +10206,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0130")
+					(reference "#PWR0149")
 					(unit 1)
 				)
 			)
@@ -9973,7 +10223,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2aac6a79-0651-44d8-96d8-b2bdaef49f0f")
-		(property "Reference" "C140"
+		(property "Reference" "C155"
 			(at 157.48 78.7462 0)
 			(hide yes)
 			(show_name no)
@@ -10029,7 +10279,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48579675"
 			(at 154.94 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -10071,7 +10321,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C140")
+					(reference "C155")
 					(unit 1)
 				)
 			)
@@ -10201,7 +10451,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2e40684e-e890-4762-a4d2-978e2e8e9b9b")
-		(property "Reference" "C129"
+		(property "Reference" "C143"
 			(at 136.652 150.114 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10224,7 +10474,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 138.43 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -10257,7 +10507,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C7472976"
+		(property "LCSC Part" "C49326770"
 			(at 138.43 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -10298,7 +10548,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C129")
+					(reference "C143")
 					(unit 1)
 				)
 			)
@@ -10316,7 +10566,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2f0905ec-5ee8-4760-bf71-a899feed3f20")
-		(property "Reference" "U12"
+		(property "Reference" "U13"
 			(at 92.456 134.366 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10469,7 +10719,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "U12")
+					(reference "U13")
 					(unit 1)
 				)
 			)
@@ -10486,7 +10736,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2f1f0fc6-87ee-43f2-9200-7e3ed0bdb6f9")
-		(property "Reference" "D16"
+		(property "Reference" "D20"
 			(at 223.774 52.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10506,7 +10756,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Diode_SMD:D_SOD-123"
+		(property "Footprint" "Diode_SMD:D_SOD-123F"
 			(at 227.33 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -10539,7 +10789,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2758490"
 			(at 227.33 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -10572,6 +10822,17 @@
 				)
 			)
 		)
+		(property "Capacitor Rating" ""
+			(at 227.33 53.34 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "aa3f0cc1-c3d7-4c99-90ef-ecbd9219fbe5")
 		)
@@ -10581,7 +10842,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "D16")
+					(reference "D20")
 					(unit 1)
 				)
 			)
@@ -10598,7 +10859,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2fbb5afd-9425-4c25-9c3c-7ae0a4dccd87")
-		(property "Reference" "#PWR0131"
+		(property "Reference" "#PWR0150"
 			(at 144.78 158.75 0)
 			(hide yes)
 			(show_name no)
@@ -10658,7 +10919,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0131")
+					(reference "#PWR0150")
 					(unit 1)
 				)
 			)
@@ -10675,7 +10936,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3075360c-f3a9-469f-ad65-ee1587eb1c3b")
-		(property "Reference" "C151"
+		(property "Reference" "C173"
 			(at 245.618 93.726 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10698,7 +10959,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 247.65 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -10731,7 +10992,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C2918511"
+		(property "LCSC Part" "C48579675"
 			(at 247.65 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -10784,7 +11045,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C151")
+					(reference "C173")
 					(unit 1)
 				)
 			)
@@ -10914,7 +11175,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3c42aea8-b769-4a73-b67e-b21a411d6439")
-		(property "Reference" "R90"
+		(property "Reference" "R109"
 			(at 68.072 165.354 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10969,7 +11230,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C852895"
 			(at 69.85 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -11011,7 +11272,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R90")
+					(reference "R109")
 					(unit 1)
 				)
 			)
@@ -11029,7 +11290,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3d9061d6-9779-40ee-8aca-a0438eb6d2da")
-		(property "Reference" "#PWR0121"
+		(property "Reference" "#PWR0140"
 			(at 67.31 58.42 0)
 			(hide yes)
 			(show_name no)
@@ -11122,7 +11383,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0121")
+					(reference "#PWR0140")
 					(unit 1)
 				)
 			)
@@ -11139,7 +11400,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3e14ba17-366e-425d-98bd-9e9b91645965")
-		(property "Reference" "C109"
+		(property "Reference" "C123"
 			(at 72.136 139.7 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11235,7 +11496,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C109")
+					(reference "C123")
 					(unit 1)
 				)
 			)
@@ -11252,7 +11513,7 @@
 		(in_pos_files yes)
 		(dnp yes)
 		(uuid "3e5291a1-151c-410e-a9c9-a1bae2a08196")
-		(property "Reference" "R93"
+		(property "Reference" "R112"
 			(at 118.364 164.338 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11263,7 +11524,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2.2 0.25W"
+		(property "Value" "2.2"
 			(at 114.808 168.91 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11274,7 +11535,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 116.84 165.1 0)
 			(hide yes)
 			(show_name no)
@@ -11307,7 +11568,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C5925229"
 			(at 116.84 165.1 0)
 			(hide yes)
 			(show_name no)
@@ -11351,6 +11612,17 @@
 				)
 			)
 		)
+		(property "Power Rating" "250mW"
+			(at 116.84 165.1 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "7a7ee7f6-081f-4ca0-9ad5-29602d4344b4")
 		)
@@ -11360,7 +11632,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R93")
+					(reference "R112")
 					(unit 1)
 				)
 			)
@@ -11378,7 +11650,7 @@
 		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "4106a10d-7984-4f19-8921-8b59e400d401")
-		(property "Reference" "C125"
+		(property "Reference" "C139"
 			(at 134.62 87.6362 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11486,7 +11758,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C125")
+					(reference "C139")
 					(unit 1)
 				)
 			)
@@ -11503,7 +11775,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "418c86b1-ee6d-4d97-9b02-604783b2de2b")
-		(property "Reference" "#PWR0141"
+		(property "Reference" "#PWR0163"
 			(at 236.22 110.49 0)
 			(hide yes)
 			(show_name no)
@@ -11563,7 +11835,85 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0141")
+					(reference "#PWR0163")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:PWR_FLAG")
+		(at 158.75 157.48 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "47354e93-da6c-4a94-9998-af82c68fa0ff")
+		(property "Reference" "#FLG06"
+			(at 158.75 155.575 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "PWR_FLAG"
+			(at 158.75 152.4 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 158.75 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 158.75 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" "Special symbol for telling ERC where power comes from"
+			(at 158.75 157.48 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "987089fd-63f5-4f12-969a-5d5178afd846")
+		)
+		(instances
+			(project "parsnip"
+				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
+					(reference "#FLG06")
 					(unit 1)
 				)
 			)
@@ -11580,7 +11930,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "473afca7-b2a8-4cce-b5b7-15c060906375")
-		(property "Reference" "R100"
+		(property "Reference" "R119"
 			(at 139.954 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11602,7 +11952,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 138.43 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -11635,7 +11985,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2902636"
 			(at 138.43 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -11688,7 +12038,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R100")
+					(reference "R119")
 					(unit 1)
 				)
 			)
@@ -11705,7 +12055,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4ad67f7a-b941-421c-802a-c59cb714f2eb")
-		(property "Reference" "#PWR0149"
+		(property "Reference" "#PWR0165"
 			(at 242.57 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -11765,7 +12115,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0149")
+					(reference "#PWR0165")
 					(unit 1)
 				)
 			)
@@ -11782,7 +12132,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4b487112-f92d-4eb4-b0ff-12f3d1e7c474")
-		(property "Reference" "C158"
+		(property "Reference" "C157"
 			(at 163.83 64.77 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11835,7 +12185,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 163.83 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -11877,7 +12227,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C158")
+					(reference "C157")
 					(unit 1)
 				)
 			)
@@ -11894,7 +12244,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4b51864e-7bbc-4f56-957a-297d628d8e2e")
-		(property "Reference" "#PWR0132"
+		(property "Reference" "#PWR0151"
 			(at 151.13 91.44 0)
 			(hide yes)
 			(show_name no)
@@ -11954,7 +12304,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0132")
+					(reference "#PWR0151")
 					(unit 1)
 				)
 			)
@@ -11972,7 +12322,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4b6059ea-5786-4b27-917c-d1a7410cd34d")
-		(property "Reference" "#PWR0140"
+		(property "Reference" "#PWR0162"
 			(at 236.22 97.79 0)
 			(hide yes)
 			(show_name no)
@@ -12032,7 +12382,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0140")
+					(reference "#PWR0162")
 					(unit 1)
 				)
 			)
@@ -12049,7 +12399,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4bfb540d-2f25-40cf-8864-c47ce51b6ae1")
-		(property "Reference" "D3"
+		(property "Reference" "D22"
 			(at 271.272 139.954 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12104,6 +12454,17 @@
 				)
 			)
 		)
+		(property "LCSC Part" "C5186013"
+			(at 270.51 142.24 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "443f0175-8e00-4cde-a548-1ba085ece16d")
 		)
@@ -12116,7 +12477,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "D3")
+					(reference "D22")
 					(unit 1)
 				)
 			)
@@ -12133,7 +12494,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4cd6363d-f8ef-487c-a1d0-26fe1f648487")
-		(property "Reference" "C123"
+		(property "Reference" "C137"
 			(at 128.27 133.35 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12186,7 +12547,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C7472948"
 			(at 128.27 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -12228,7 +12589,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C123")
+					(reference "C137")
 					(unit 1)
 				)
 			)
@@ -12245,7 +12606,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "4da0be6d-4d88-49cc-9a96-2498bbff95b0")
-		(property "Reference" "R92"
+		(property "Reference" "R111"
 			(at 108.712 168.402 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12300,7 +12661,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C55174701"
 			(at 113.03 168.91 0)
 			(hide yes)
 			(show_name no)
@@ -12342,7 +12703,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R92")
+					(reference "R111")
 					(unit 1)
 				)
 			)
@@ -12359,7 +12720,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "50528050-ce94-49ea-9f1c-a58bb7813f7c")
-		(property "Reference" "C141"
+		(property "Reference" "C156"
 			(at 163.83 55.88 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12412,7 +12773,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 163.83 58.42 0)
 			(hide yes)
 			(show_name no)
@@ -12454,7 +12815,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C141")
+					(reference "C156")
 					(unit 1)
 				)
 			)
@@ -12471,7 +12832,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "524b1480-90b0-489c-8da9-874723083ded")
-		(property "Reference" "C110"
+		(property "Reference" "C124"
 			(at 73.152 139.7 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12526,7 +12887,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C5142567"
+		(property "LCSC Part" "C5272680"
 			(at 74.93 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -12579,7 +12940,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C110")
+					(reference "C124")
 					(unit 1)
 				)
 			)
@@ -12617,7 +12978,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
 			(at 41.91 154.94 0)
 			(hide yes)
 			(show_name no)
@@ -12640,6 +13001,50 @@
 			)
 		)
 		(property "Description" "test point (alternative probe-style design)"
+			(at 41.91 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC Part" ""
+			(at 41.91 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Voltage Rating" ""
+			(at 41.91 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Tolerance" ""
+			(at 41.91 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Capacitor Rating" ""
 			(at 41.91 160.02 0)
 			(hide yes)
 			(show_name no)
@@ -12673,7 +13078,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "54209d56-f364-4a84-8699-a07a23467993")
-		(property "Reference" "C130"
+		(property "Reference" "C144"
 			(at 142.24 162.5662 0)
 			(hide yes)
 			(show_name no)
@@ -12729,7 +13134,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48579675"
 			(at 139.7 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -12771,7 +13176,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C130")
+					(reference "C144")
 					(unit 1)
 				)
 			)
@@ -12788,7 +13193,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5441f627-d893-41ca-b84c-02bb189bcb6d")
-		(property "Reference" "C122"
+		(property "Reference" "C136"
 			(at 125.73 74.168 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -12843,7 +13248,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C5142567"
+		(property "LCSC Part" "C5272680"
 			(at 128.27 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -12896,7 +13301,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C122")
+					(reference "C136")
 					(unit 1)
 				)
 			)
@@ -12913,7 +13318,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "54ff7898-a70f-4409-a844-db118179dca4")
-		(property "Reference" "#PWR0137"
+		(property "Reference" "#PWR0158"
 			(at 219.71 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -12973,7 +13378,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0137")
+					(reference "#PWR0158")
 					(unit 1)
 				)
 			)
@@ -12990,7 +13395,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "55afe610-4256-4c97-bd9c-07323e3a68be")
-		(property "Reference" "#PWR0129"
+		(property "Reference" "#PWR0148"
 			(at 135.89 175.26 0)
 			(hide yes)
 			(show_name no)
@@ -13050,7 +13455,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0129")
+					(reference "#PWR0148")
 					(unit 1)
 				)
 			)
@@ -13067,7 +13472,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "5703fcb1-6e1b-444c-bff7-b93b0d62906e")
-		(property "Reference" "R85"
+		(property "Reference" "R104"
 			(at 53.594 151.384 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13089,7 +13494,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 52.07 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -13122,7 +13527,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C29269954"
 			(at 52.07 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -13164,7 +13569,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R85")
+					(reference "R104")
 					(unit 1)
 				)
 			)
@@ -13181,7 +13586,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "57287d12-8756-4554-902d-75f1919601d1")
-		(property "Reference" "C127"
+		(property "Reference" "C141"
 			(at 129.286 142.494 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13204,7 +13609,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 134.62 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -13237,7 +13642,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C7472976"
+		(property "LCSC Part" "C49326770"
 			(at 134.62 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -13278,7 +13683,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C127")
+					(reference "C141")
 					(unit 1)
 				)
 			)
@@ -13295,7 +13700,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "596af223-75bc-4d6a-a2cf-1c78b6141c5f")
-		(property "Reference" "C148"
+		(property "Reference" "C168"
 			(at 237.744 54.61 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13315,7 +13720,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 241.3 55.88 0)
 			(hide yes)
 			(show_name no)
@@ -13348,7 +13753,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C22392391"
 			(at 241.3 55.88 0)
 			(hide yes)
 			(show_name no)
@@ -13390,7 +13795,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C148")
+					(reference "C168")
 					(unit 1)
 				)
 			)
@@ -13408,7 +13813,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5b09d29c-e691-45ac-bc29-b1d1726101ef")
-		(property "Reference" "#PWR0133"
+		(property "Reference" "#PWR0152"
 			(at 152.4 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -13468,7 +13873,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0133")
+					(reference "#PWR0152")
 					(unit 1)
 				)
 			)
@@ -13486,7 +13891,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5bfbdeb3-6ea9-4148-8ed8-9177aa655013")
-		(property "Reference" "#PWR0139"
+		(property "Reference" "#PWR0161"
 			(at 233.68 49.53 0)
 			(hide yes)
 			(show_name no)
@@ -13546,7 +13951,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0139")
+					(reference "#PWR0161")
 					(unit 1)
 				)
 			)
@@ -13564,7 +13969,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5dc67581-f2da-42b4-956f-e9a4c3d6687d")
-		(property "Reference" "#PWR0148"
+		(property "Reference" "#PWR0164"
 			(at 242.57 129.54 0)
 			(hide yes)
 			(show_name no)
@@ -13624,7 +14029,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0148")
+					(reference "#PWR0164")
 					(unit 1)
 				)
 			)
@@ -13641,7 +14046,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "64887a4d-2b4d-4477-a0d9-347046c37ac9")
-		(property "Reference" "C167"
+		(property "Reference" "C148"
 			(at 150.876 132.842 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13696,7 +14101,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48579675"
 			(at 148.59 135.89 0)
 			(hide yes)
 			(show_name no)
@@ -13749,7 +14154,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C167")
+					(reference "C148")
 					(unit 1)
 				)
 			)
@@ -13766,7 +14171,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6700e059-9e1e-4d88-ac0a-c9811b953032")
-		(property "Reference" "R89"
+		(property "Reference" "R108"
 			(at 69.088 78.74 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -13788,7 +14193,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 67.31 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -13821,7 +14226,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2984406"
 			(at 67.31 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -13863,7 +14268,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R89")
+					(reference "R108")
 					(unit 1)
 				)
 			)
@@ -13880,7 +14285,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "67601f66-cc88-471e-b0d2-01b31bfb3897")
-		(property "Reference" "#PWR0138"
+		(property "Reference" "#PWR0159"
 			(at 220.98 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -13940,7 +14345,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0138")
+					(reference "#PWR0159")
 					(unit 1)
 				)
 			)
@@ -13957,7 +14362,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "69762c35-a29d-4793-9eca-7ec07ab530d1")
-		(property "Reference" "U15"
+		(property "Reference" "U16"
 			(at 199.136 130.302 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14083,7 +14488,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "U15")
+					(reference "U16")
 					(unit 1)
 				)
 			)
@@ -14100,7 +14505,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6a99fa1c-23a3-429f-b767-f075617a839f")
-		(property "Reference" "C159"
+		(property "Reference" "C164"
 			(at 229.362 130.81 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14155,7 +14560,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 228.6 133.35 0)
 			(hide yes)
 			(show_name no)
@@ -14230,7 +14635,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C159")
+					(reference "C164")
 					(unit 1)
 				)
 			)
@@ -14247,7 +14652,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6aa65a8b-5488-4341-b1ac-a07f05a5fb41")
-		(property "Reference" "C126"
+		(property "Reference" "C140"
 			(at 133.35 171.958 0)
 			(hide yes)
 			(show_name no)
@@ -14303,7 +14708,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 132.08 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -14345,7 +14750,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C126")
+					(reference "C140")
 					(unit 1)
 				)
 			)
@@ -14362,7 +14767,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "6e11ce45-db99-46fd-b663-e54f04714b47")
-		(property "Reference" "R112"
+		(property "Reference" "R130"
 			(at 232.156 77.47 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14382,7 +14787,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 236.22 78.74 0)
 			(hide yes)
 			(show_name no)
@@ -14415,7 +14820,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2984406"
 			(at 236.22 78.74 0)
 			(hide yes)
 			(show_name no)
@@ -14457,7 +14862,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R112")
+					(reference "R130")
 					(unit 1)
 				)
 			)
@@ -14598,7 +15003,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "739c8b28-63c0-4a3e-9873-d894d8dfb6ad")
-		(property "Reference" "C146"
+		(property "Reference" "C166"
 			(at 237.998 93.726 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14621,7 +15026,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 240.03 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -14654,7 +15059,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C2918511"
+		(property "LCSC Part" "C48579675"
 			(at 240.03 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -14707,7 +15112,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C146")
+					(reference "C166")
 					(unit 1)
 				)
 			)
@@ -14724,7 +15129,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "769601fd-1829-4549-9dc4-82b4b694100c")
-		(property "Reference" "JP15"
+		(property "Reference" "JP16"
 			(at 52.07 162.814 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -14823,7 +15228,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "JP15")
+					(reference "JP16")
 					(unit 1)
 				)
 			)
@@ -14840,7 +15245,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7713abdc-6e84-4499-ba72-27e6d56a89a1")
-		(property "Reference" "C135"
+		(property "Reference" "C150"
 			(at 147.3262 146.05 0)
 			(hide yes)
 			(show_name no)
@@ -14896,7 +15301,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48579675"
 			(at 148.59 148.59 0)
 			(hide yes)
 			(show_name no)
@@ -14938,7 +15343,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C135")
+					(reference "C150")
 					(unit 1)
 				)
 			)
@@ -15010,7 +15415,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48579675"
 			(at 241.3 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -15080,7 +15485,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "7eb582a0-127e-4b88-840d-affd35610eee")
-		(property "Reference" "C114"
+		(property "Reference" "C128"
 			(at 88.392 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15135,7 +15540,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C5142567"
+		(property "LCSC Part" "C5272680"
 			(at 90.17 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -15188,7 +15593,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C114")
+					(reference "C128")
 					(unit 1)
 				)
 			)
@@ -15207,7 +15612,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "806a0f57-6055-47dc-85d5-0fdaacba3104")
-		(property "Reference" "Q11"
+		(property "Reference" "Q15"
 			(at 55.88 69.85 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15263,7 +15668,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C5331134"
 			(at 55.88 78.74 0)
 			(hide yes)
 			(show_name no)
@@ -15319,7 +15724,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "Q11")
+					(reference "Q15")
 					(unit 1)
 				)
 			)
@@ -15336,7 +15741,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "830042e0-5f8b-4da6-a178-9a53f99b7ac7")
-		(property "Reference" "C143"
+		(property "Reference" "C161"
 			(at 189.23 87.122 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15347,7 +15752,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2.2nF C0G"
+		(property "Value" "2.2nF"
 			(at 194.564 94.234 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15391,7 +15796,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2987940"
 			(at 190.5 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -15422,6 +15827,17 @@
 				)
 			)
 		)
+		(property "Capacitor Rating" "C0G"
+			(at 190.5 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "20d60bdb-b4c9-49ac-a6b3-e4ddfbee4f0a")
 		)
@@ -15431,7 +15847,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C143")
+					(reference "C161")
 					(unit 1)
 				)
 			)
@@ -15448,7 +15864,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8311afed-a438-4ed5-9759-41761195996b")
-		(property "Reference" "#PWR0150"
+		(property "Reference" "#PWR0160"
 			(at 228.6 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -15508,7 +15924,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0150")
+					(reference "#PWR0160")
 					(unit 1)
 				)
 			)
@@ -15525,7 +15941,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "85e5799a-b335-4435-ae0d-dff33a48e340")
-		(property "Reference" "#PWR0122"
+		(property "Reference" "#PWR0141"
 			(at 67.31 96.52 0)
 			(hide yes)
 			(show_name no)
@@ -15585,7 +16001,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0122")
+					(reference "#PWR0141")
 					(unit 1)
 				)
 			)
@@ -15602,7 +16018,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8688abbd-a020-44be-b2eb-d194886160ad")
-		(property "Reference" "C144"
+		(property "Reference" "C162"
 			(at 198.12 87.122 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15613,7 +16029,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2.2nF C0G"
+		(property "Value" "2.2nF"
 			(at 207.01 94.234 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15657,7 +16073,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2987940"
 			(at 199.39 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -15688,6 +16104,17 @@
 				)
 			)
 		)
+		(property "Capacitor Rating" "C0G"
+			(at 199.39 88.9 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "ad21c029-f55b-46b4-abcd-43f860937e62")
 		)
@@ -15697,7 +16124,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C144")
+					(reference "C162")
 					(unit 1)
 				)
 			)
@@ -15714,7 +16141,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "873aff7e-b3e1-4911-a811-9927739ab811")
-		(property "Reference" "R119"
+		(property "Reference" "R132"
 			(at 256.794 130.81 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15736,7 +16163,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 255.27 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -15769,7 +16196,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2902636"
 			(at 255.27 132.08 0)
 			(hide yes)
 			(show_name no)
@@ -15822,7 +16249,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R119")
+					(reference "R132")
 					(unit 1)
 				)
 			)
@@ -15840,7 +16267,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "87d8dd82-8f01-47e8-a5d1-3a5874790f6c")
-		(property "Reference" "C160"
+		(property "Reference" "C159"
 			(at 186.6963 128.27 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15893,7 +16320,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C54916656"
 			(at 186.69 134.62 0)
 			(hide yes)
 			(show_name no)
@@ -15946,7 +16373,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C160")
+					(reference "C159")
 					(unit 1)
 				)
 			)
@@ -15963,7 +16390,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8adc5707-6e6b-45a5-be55-acd31bbc651f")
-		(property "Reference" "R111"
+		(property "Reference" "R131"
 			(at 237.49 70.104 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -15983,7 +16410,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 241.3 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -16016,7 +16443,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2984406"
 			(at 241.3 71.12 0)
 			(hide yes)
 			(show_name no)
@@ -16058,7 +16485,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R111")
+					(reference "R131")
 					(unit 1)
 				)
 			)
@@ -16075,7 +16502,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8eae463b-fd8b-41a9-b955-40717690076f")
-		(property "Reference" "R106"
+		(property "Reference" "R125"
 			(at 171.704 59.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16097,7 +16524,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 172.72 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -16130,7 +16557,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C852935"
 			(at 172.72 63.5 0)
 			(hide yes)
 			(show_name no)
@@ -16182,7 +16609,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R106")
+					(reference "R125")
 					(unit 1)
 				)
 			)
@@ -16200,7 +16627,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "915f7ff5-6995-419d-9925-377f85bfab52")
-		(property "Reference" "D19"
+		(property "Reference" "D21"
 			(at 264.16 118.11 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16310,7 +16737,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "D19")
+					(reference "D21")
 					(unit 1)
 				)
 			)
@@ -16327,7 +16754,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "93466783-5e44-41e2-bd08-f41b841975f8")
-		(property "Reference" "R108"
+		(property "Reference" "R127"
 			(at 174.244 75.184 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16349,7 +16776,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 172.72 77.47 0)
 			(hide yes)
 			(show_name no)
@@ -16382,7 +16809,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C852679"
 			(at 172.72 77.47 0)
 			(hide yes)
 			(show_name no)
@@ -16423,7 +16850,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R108")
+					(reference "R127")
 					(unit 1)
 				)
 			)
@@ -16440,7 +16867,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "9433383e-b130-4d23-b79e-f92bdf24551c")
-		(property "Reference" "R110"
+		(property "Reference" "R129"
 			(at 231.14 64.008 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16460,7 +16887,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 231.14 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -16493,7 +16920,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C861797"
 			(at 231.14 66.04 0)
 			(hide yes)
 			(show_name no)
@@ -16535,7 +16962,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R110")
+					(reference "R129")
 					(unit 1)
 				)
 			)
@@ -16552,7 +16979,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "95f82d17-f257-4259-bbc5-d9b69fb33ae6")
-		(property "Reference" "R96"
+		(property "Reference" "R115"
 			(at 128.524 167.64 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16574,7 +17001,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 127 168.91 0)
 			(hide yes)
 			(show_name no)
@@ -16607,7 +17034,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C29269954"
 			(at 127 168.91 0)
 			(hide yes)
 			(show_name no)
@@ -16648,7 +17075,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R96")
+					(reference "R115")
 					(unit 1)
 				)
 			)
@@ -16665,7 +17092,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "983436ba-a8fe-46d3-bbc3-24d85cf0a3ea")
-		(property "Reference" "C136"
+		(property "Reference" "C151"
 			(at 144.526 58.674 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16688,7 +17115,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 149.86 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -16721,7 +17148,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C7472976"
+		(property "LCSC Part" "C49326770"
 			(at 149.86 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -16762,7 +17189,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C136")
+					(reference "C151")
 					(unit 1)
 				)
 			)
@@ -16779,7 +17206,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "9f08f09a-9223-41a8-9207-dac49ddb4b86")
-		(property "Reference" "C111"
+		(property "Reference" "C125"
 			(at 67.564 176.276 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16834,7 +17261,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C7432769"
 			(at 74.93 177.8 0)
 			(hide yes)
 			(show_name no)
@@ -16876,7 +17303,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C111")
+					(reference "C125")
 					(unit 1)
 				)
 			)
@@ -16893,7 +17320,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a02f1af3-1149-4c17-b502-4b3381bc82c0")
-		(property "Reference" "#PWR0151"
+		(property "Reference" "#PWR0155"
 			(at 207.01 162.56 0)
 			(hide yes)
 			(show_name no)
@@ -16953,7 +17380,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0151")
+					(reference "#PWR0155")
 					(unit 1)
 				)
 			)
@@ -16970,7 +17397,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a31576ec-05a9-4677-995b-671951085dac")
-		(property "Reference" "C108"
+		(property "Reference" "C122"
 			(at 66.548 139.7 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -16992,7 +17419,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 66.04 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -17025,7 +17452,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C7472976"
+		(property "LCSC Part" "C49326770"
 			(at 66.04 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -17066,7 +17493,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C108")
+					(reference "C122")
 					(unit 1)
 				)
 			)
@@ -17083,7 +17510,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a58ec93b-ad4d-43f3-b96c-11e044de37b7")
-		(property "Reference" "C137"
+		(property "Reference" "C152"
 			(at 153.67 78.7462 0)
 			(hide yes)
 			(show_name no)
@@ -17107,7 +17534,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 151.13 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -17140,7 +17567,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C22392391"
 			(at 151.13 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -17182,7 +17609,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C137")
+					(reference "C152")
 					(unit 1)
 				)
 			)
@@ -17199,7 +17626,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "a5a25eba-1815-4e71-8659-9ba40009c276")
-		(property "Reference" "C131"
+		(property "Reference" "C145"
 			(at 144.272 68.58 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17254,7 +17681,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C7432769"
 			(at 142.24 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -17296,7 +17723,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C131")
+					(reference "C145")
 					(unit 1)
 				)
 			)
@@ -17313,7 +17740,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "abbcd207-2776-49a3-bbd3-dd350524f4bf")
-		(property "Reference" "C133"
+		(property "Reference" "C147"
 			(at 148.59 88.138 0)
 			(hide yes)
 			(show_name no)
@@ -17369,7 +17796,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 147.32 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -17411,7 +17838,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C133")
+					(reference "C147")
 					(unit 1)
 				)
 			)
@@ -17428,7 +17855,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "abcba128-e029-4dbe-acd8-52a095db9269")
-		(property "Reference" "C112"
+		(property "Reference" "C126"
 			(at 79.248 59.182 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17450,7 +17877,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 81.28 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -17483,7 +17910,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C7472976"
+		(property "LCSC Part" "C49326770"
 			(at 81.28 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -17524,7 +17951,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C112")
+					(reference "C126")
 					(unit 1)
 				)
 			)
@@ -17541,7 +17968,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ae0ec8e9-04ff-473d-a21f-eedc3a599e9e")
-		(property "Reference" "C132"
+		(property "Reference" "C146"
 			(at 143.51 49.53 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17594,7 +18021,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C7472948"
 			(at 143.51 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -17636,7 +18063,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C132")
+					(reference "C146")
 					(unit 1)
 				)
 			)
@@ -17653,7 +18080,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "af5a825b-b1e9-4f6c-bd10-c462d4e2554f")
-		(property "Reference" "C124"
+		(property "Reference" "C138"
 			(at 131.064 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -17675,7 +18102,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 132.08 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -17708,7 +18135,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 132.08 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -17750,7 +18177,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C124")
+					(reference "C138")
 					(unit 1)
 				)
 			)
@@ -17767,7 +18194,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "af741c50-1c7f-490f-9f36-345504fcb805")
-		(property "Reference" "#PWR0123"
+		(property "Reference" "#PWR0142"
 			(at 80.01 74.93 0)
 			(hide yes)
 			(show_name no)
@@ -17827,7 +18254,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0123")
+					(reference "#PWR0142")
 					(unit 1)
 				)
 			)
@@ -17967,7 +18394,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b2535717-2628-4714-971b-6faa719bd1fb")
-		(property "Reference" "C134"
+		(property "Reference" "C149"
 			(at 147.3262 139.7 0)
 			(hide yes)
 			(show_name no)
@@ -18023,7 +18450,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48579675"
 			(at 148.59 142.24 0)
 			(hide yes)
 			(show_name no)
@@ -18065,7 +18492,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C134")
+					(reference "C149")
 					(unit 1)
 				)
 			)
@@ -18083,7 +18510,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b4403d08-2a8e-463c-813d-4fe3bf9c2655")
-		(property "Reference" "R105"
+		(property "Reference" "R124"
 			(at 170.18 83.8199 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18138,7 +18565,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48533754"
 			(at 167.64 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -18180,7 +18607,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R105")
+					(reference "R124")
 					(unit 1)
 				)
 			)
@@ -18197,7 +18624,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b5d9379c-4962-4ff9-ab8c-c41bca0ac359")
-		(property "Reference" "C115"
+		(property "Reference" "C129"
 			(at 82.804 92.456 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18252,7 +18679,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C7432769"
 			(at 90.17 93.98 0)
 			(hide yes)
 			(show_name no)
@@ -18294,7 +18721,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C115")
+					(reference "C129")
 					(unit 1)
 				)
 			)
@@ -18311,7 +18738,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b6419c80-4c6f-4330-ad6a-0d5906d7415f")
-		(property "Reference" "R103"
+		(property "Reference" "R122"
 			(at 144.78 93.9799 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18333,7 +18760,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 142.24 95.25 0)
 			(hide yes)
 			(show_name no)
@@ -18366,7 +18793,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C7302896"
 			(at 142.24 95.25 0)
 			(hide yes)
 			(show_name no)
@@ -18418,7 +18845,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R103")
+					(reference "R122")
 					(unit 1)
 				)
 			)
@@ -18435,7 +18862,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b8379e6c-4069-405a-bef3-33accb8743b6")
-		(property "Reference" "C161"
+		(property "Reference" "C160"
 			(at 186.69 141.986 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18488,7 +18915,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C54916656"
 			(at 186.69 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -18541,7 +18968,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C161")
+					(reference "C160")
 					(unit 1)
 				)
 			)
@@ -18558,7 +18985,7 @@
 		(in_pos_files yes)
 		(dnp yes)
 		(uuid "b893aa63-82ae-4cf0-96bf-a461c4aa97c5")
-		(property "Reference" "R99"
+		(property "Reference" "R118"
 			(at 134.112 81.534 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18569,7 +18996,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "2.2 0.25W"
+		(property "Value" "2.2"
 			(at 129.54 85.852 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18580,7 +19007,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric_Pad0.72x0.64mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 132.08 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -18613,7 +19040,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C5925229"
 			(at 132.08 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -18657,6 +19084,17 @@
 				)
 			)
 		)
+		(property "Power Rating" "250mW"
+			(at 132.08 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "3ea6c9f2-2fc8-4c2b-9a33-73a272f67f8b")
 		)
@@ -18666,7 +19104,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R99")
+					(reference "R118")
 					(unit 1)
 				)
 			)
@@ -18684,7 +19122,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b9fcf48c-c90e-4bd2-86d5-d856d138c3d6")
-		(property "Reference" "R84"
+		(property "Reference" "R103"
 			(at 50.8 80.01 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18704,7 +19142,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 50.8 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -18737,7 +19175,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C55174701"
 			(at 50.8 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -18790,7 +19228,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R84")
+					(reference "R103")
 					(unit 1)
 				)
 			)
@@ -18808,7 +19246,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bba47eac-baa2-414d-832d-d140b41f704d")
-		(property "Reference" "C138"
+		(property "Reference" "C153"
 			(at 154.94 172.7262 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18819,7 +19257,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "5.6pF C0G"
+		(property "Value" "5.6pF"
 			(at 154.94 175.2662 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18863,7 +19301,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C525219"
 			(at 152.4 173.99 0)
 			(hide yes)
 			(show_name no)
@@ -18896,6 +19334,17 @@
 				)
 			)
 		)
+		(property "Capacitor Rating" "C0G"
+			(at 152.4 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "6b8e25b7-b8c9-4e98-a674-1f71dd3a3db3")
 		)
@@ -18905,7 +19354,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C138")
+					(reference "C153")
 					(unit 1)
 				)
 			)
@@ -18922,7 +19371,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "bda1308b-706c-4b1c-bad1-c2e719204ddf")
-		(property "Reference" "C121"
+		(property "Reference" "C135"
 			(at 129.032 152.4 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -18977,7 +19426,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C7432769"
 			(at 127 152.4 0)
 			(hide yes)
 			(show_name no)
@@ -19019,7 +19468,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C121")
+					(reference "C135")
 					(unit 1)
 				)
 			)
@@ -19037,7 +19486,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "bea2ca5a-d52d-4750-bea5-8b4f89d75ce7")
-		(property "Reference" "#PWR0152"
+		(property "Reference" "#PWR0157"
 			(at 217.17 129.54 0)
 			(hide yes)
 			(show_name no)
@@ -19097,7 +19546,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0152")
+					(reference "#PWR0157")
 					(unit 1)
 				)
 			)
@@ -19114,7 +19563,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "bfca3395-4cb8-42f3-bce1-1380ecaea2c5")
-		(property "Reference" "C162"
+		(property "Reference" "C163"
 			(at 217.932 147.828 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19169,7 +19618,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 223.52 149.86 0)
 			(hide yes)
 			(show_name no)
@@ -19244,7 +19693,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C162")
+					(reference "C163")
 					(unit 1)
 				)
 			)
@@ -19261,7 +19710,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c11c429c-f7ac-4ff4-9838-ab70627f2168")
-		(property "Reference" "C150"
+		(property "Reference" "C172"
 			(at 241.554 104.394 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19284,7 +19733,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 243.84 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -19317,7 +19766,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C2918511"
+		(property "LCSC Part" "C48579675"
 			(at 243.84 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -19370,7 +19819,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C150")
+					(reference "C172")
 					(unit 1)
 				)
 			)
@@ -19387,7 +19836,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c1a43c52-d3bc-4095-afbe-b687c2655df4")
-		(property "Reference" "#PWR0125"
+		(property "Reference" "#PWR0144"
 			(at 107.95 107.95 0)
 			(hide yes)
 			(show_name no)
@@ -19447,7 +19896,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0125")
+					(reference "#PWR0144")
 					(unit 1)
 				)
 			)
@@ -19577,7 +20026,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c62c19a4-cf23-4d01-ae79-41ac866ea5b7")
-		(property "Reference" "R88"
+		(property "Reference" "R107"
 			(at 68.834 67.564 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19599,7 +20048,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 67.31 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -19632,7 +20081,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C29269954"
 			(at 67.31 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -19674,7 +20123,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R88")
+					(reference "R107")
 					(unit 1)
 				)
 			)
@@ -19691,7 +20140,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c6cee2b1-dbab-49cd-ae15-af3ae19becf3")
-		(property "Reference" "C139"
+		(property "Reference" "C154"
 			(at 156.21 60.96 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19714,7 +20163,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 153.67 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -19747,7 +20196,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C7472976"
+		(property "LCSC Part" "C49326770"
 			(at 153.67 60.96 0)
 			(hide yes)
 			(show_name no)
@@ -19788,7 +20237,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C139")
+					(reference "C154")
 					(unit 1)
 				)
 			)
@@ -19805,7 +20254,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "c6e5928c-42e7-441b-9fa5-7316260a9a07")
-		(property "Reference" "C147"
+		(property "Reference" "C167"
 			(at 241.3 48.514 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19858,7 +20307,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 241.3 53.34 0)
 			(hide yes)
 			(show_name no)
@@ -19900,7 +20349,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C147")
+					(reference "C167")
 					(unit 1)
 				)
 			)
@@ -19917,7 +20366,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "cae1cdf6-54d4-4eda-b4ee-49fff8b54d30")
-		(property "Reference" "JP16"
+		(property "Reference" "JP17"
 			(at 201.93 100.076 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -19937,7 +20386,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm"
 			(at 201.93 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -20003,6 +20452,17 @@
 				)
 			)
 		)
+		(property "Capacitor Rating" ""
+			(at 201.93 102.87 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "2"
 			(uuid "34602acf-95fc-46fc-bb28-33d3a2a2da7f")
 		)
@@ -20012,7 +20472,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "JP16")
+					(reference "JP17")
 					(unit 1)
 				)
 			)
@@ -20029,7 +20489,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "cb31225f-79c6-42a4-9bff-fe169bc5cbd0")
-		(property "Reference" "R94"
+		(property "Reference" "R113"
 			(at 124.714 143.51 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20051,7 +20511,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 123.19 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -20084,7 +20544,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2902636"
 			(at 123.19 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -20137,7 +20597,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R94")
+					(reference "R113")
 					(unit 1)
 				)
 			)
@@ -20154,7 +20614,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "cb3ebe30-5e7a-4d1d-9763-c2d5a95a1567")
-		(property "Reference" "R86"
+		(property "Reference" "R105"
 			(at 61.468 162.56 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20176,7 +20636,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 59.69 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -20209,7 +20669,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2984406"
 			(at 59.69 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -20251,7 +20711,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R86")
+					(reference "R105")
 					(unit 1)
 				)
 			)
@@ -20269,7 +20729,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ce30c0fb-4b3a-4844-83a6-84447c11b1a6")
-		(property "Reference" "#PWR0128"
+		(property "Reference" "#PWR0147"
 			(at 129.54 54.61 0)
 			(hide yes)
 			(show_name no)
@@ -20362,7 +20822,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0128")
+					(reference "#PWR0147")
 					(unit 1)
 				)
 			)
@@ -20380,7 +20840,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ce42ae2c-c638-4014-89eb-f44824a474b5")
-		(property "Reference" "#PWR0118"
+		(property "Reference" "#PWR0137"
 			(at 52.07 142.24 0)
 			(hide yes)
 			(show_name no)
@@ -20473,7 +20933,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0118")
+					(reference "#PWR0137")
 					(unit 1)
 				)
 			)
@@ -20490,7 +20950,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ce6689c4-120c-4dfc-b392-ad0f7a225540")
-		(property "Reference" "R97"
+		(property "Reference" "R116"
 			(at 129.54 177.7999 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20545,7 +21005,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C852565"
 			(at 127 179.07 0)
 			(hide yes)
 			(show_name no)
@@ -20586,7 +21046,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R97")
+					(reference "R116")
 					(unit 1)
 				)
 			)
@@ -20828,7 +21288,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d24ec8df-2b9f-4fa5-8502-aa786d12da02")
-		(property "Reference" "C113"
+		(property "Reference" "C127"
 			(at 86.868 55.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20924,7 +21384,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C113")
+					(reference "C127")
 					(unit 1)
 				)
 			)
@@ -20941,7 +21401,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d419f270-bcab-4e8f-9725-dd30ec02de66")
-		(property "Reference" "R107"
+		(property "Reference" "R126"
 			(at 174.498 67.056 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -20963,7 +21423,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 172.72 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -20996,7 +21456,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2692963"
 			(at 172.72 68.58 0)
 			(hide yes)
 			(show_name no)
@@ -21048,7 +21508,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R107")
+					(reference "R126")
 					(unit 1)
 				)
 			)
@@ -21066,7 +21526,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d60c1674-f724-4c07-b830-603438764cac")
-		(property "Reference" "#PWR0127"
+		(property "Reference" "#PWR0146"
 			(at 123.19 138.43 0)
 			(hide yes)
 			(show_name no)
@@ -21126,7 +21586,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0127")
+					(reference "#PWR0146")
 					(unit 1)
 				)
 			)
@@ -21143,7 +21603,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d76a1a19-7a24-49eb-b940-b84a37111617")
-		(property "Reference" "#PWR0135"
+		(property "Reference" "#PWR0154"
 			(at 172.72 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -21203,7 +21663,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0135")
+					(reference "#PWR0154")
 					(unit 1)
 				)
 			)
@@ -21221,7 +21681,7 @@
 		(dnp yes)
 		(fields_autoplaced yes)
 		(uuid "d7ef9dfd-c501-4741-a496-70d1e9927354")
-		(property "Reference" "C119"
+		(property "Reference" "C133"
 			(at 119.38 171.4562 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21329,7 +21789,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C119")
+					(reference "C133")
 					(unit 1)
 				)
 			)
@@ -21346,7 +21806,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d8da8cc7-3036-4c5b-b248-8890b6b987f2")
-		(property "Reference" "C118"
+		(property "Reference" "C132"
 			(at 115.824 139.7 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21368,7 +21828,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
+		(property "Footprint" "Capacitor_SMD:C_0402_1005Metric"
 			(at 116.84 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -21401,7 +21861,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 116.84 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -21443,7 +21903,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C118")
+					(reference "C132")
 					(unit 1)
 				)
 			)
@@ -21460,7 +21920,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "dcc87748-f020-437f-bd07-0ca6914e6618")
-		(property "Reference" "R91"
+		(property "Reference" "R110"
 			(at 83.312 81.534 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21515,7 +21975,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C852895"
 			(at 85.09 83.82 0)
 			(hide yes)
 			(show_name no)
@@ -21557,7 +22017,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R91")
+					(reference "R110")
 					(unit 1)
 				)
 			)
@@ -21574,7 +22034,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "dd7d9be2-a66f-455e-8202-1e04f7b3d7e4")
-		(property "Reference" "#PWR0124"
+		(property "Reference" "#PWR0143"
 			(at 92.71 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -21634,7 +22094,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0124")
+					(reference "#PWR0143")
 					(unit 1)
 				)
 			)
@@ -21651,7 +22111,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "deb9a716-5469-4444-9155-fb222a32dc56")
-		(property "Reference" "C145"
+		(property "Reference" "C165"
 			(at 229.108 96.774 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21673,7 +22133,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 236.22 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -21706,7 +22166,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C2918511"
+		(property "LCSC Part" "C48579675"
 			(at 236.22 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -21759,7 +22219,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C145")
+					(reference "C165")
 					(unit 1)
 				)
 			)
@@ -21776,7 +22236,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "df59ce81-1056-4eac-b3f0-08e2b7b635c8")
-		(property "Reference" "R87"
+		(property "Reference" "R106"
 			(at 63.246 83.312 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -21798,7 +22258,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
 			(at 62.23 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -21831,7 +22291,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C2984406"
 			(at 62.23 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -21873,7 +22333,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R87")
+					(reference "R106")
 					(unit 1)
 				)
 			)
@@ -21890,7 +22350,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e1735d61-e1a3-4ff7-864b-63b8bc301663")
-		(property "Reference" "#PWR0134"
+		(property "Reference" "#PWR0153"
 			(at 160.02 74.93 0)
 			(hide yes)
 			(show_name no)
@@ -21950,7 +22410,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "#PWR0134")
+					(reference "#PWR0153")
 					(unit 1)
 				)
 			)
@@ -21967,7 +22427,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e483bc5c-d50b-4967-a2b4-52fd098a2205")
-		(property "Reference" "R95"
+		(property "Reference" "R114"
 			(at 128.27 157.226 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22022,7 +22482,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C1883546"
 			(at 127 158.75 0)
 			(hide yes)
 			(show_name no)
@@ -22064,7 +22524,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R95")
+					(reference "R114")
 					(unit 1)
 				)
 			)
@@ -22081,7 +22541,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "e63b1931-9dae-48fd-8a1d-58c674c3b0e4")
-		(property "Reference" "R102"
+		(property "Reference" "R121"
 			(at 143.764 83.82 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22103,7 +22563,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0402_1005Metric"
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 142.24 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -22136,7 +22596,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C29269954"
 			(at 142.24 85.09 0)
 			(hide yes)
 			(show_name no)
@@ -22177,7 +22637,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R102")
+					(reference "R121")
 					(unit 1)
 				)
 			)
@@ -22195,7 +22655,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ed0835ae-c022-4882-b880-c336cbdfa317")
-		(property "Reference" "R104"
+		(property "Reference" "R123"
 			(at 154.94 167.6399 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22250,7 +22710,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C48533754"
 			(at 152.4 168.91 0)
 			(hide yes)
 			(show_name no)
@@ -22292,7 +22752,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R104")
+					(reference "R123")
 					(unit 1)
 				)
 			)
@@ -22309,7 +22769,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ed12e87e-bfea-49ef-9f80-21fffd28255e")
-		(property "Reference" "C116"
+		(property "Reference" "C130"
 			(at 114.554 139.7 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22364,7 +22824,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C5142567"
+		(property "LCSC Part" "C5272680"
 			(at 111.76 144.78 0)
 			(hide yes)
 			(show_name no)
@@ -22417,7 +22877,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C116")
+					(reference "C130")
 					(unit 1)
 				)
 			)
@@ -22434,7 +22894,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f1508cc0-4af8-4fc0-9bcf-70b444edc4be")
-		(property "Reference" "C153"
+		(property "Reference" "C175"
 			(at 249.174 104.648 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22457,7 +22917,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Capacitor_SMD:C_1210_3225Metric"
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 251.46 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -22490,7 +22950,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C2918511"
+		(property "LCSC Part" "C48579675"
 			(at 251.46 99.06 0)
 			(hide yes)
 			(show_name no)
@@ -22543,7 +23003,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C153")
+					(reference "C175")
 					(unit 1)
 				)
 			)
@@ -22561,7 +23021,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f1ae9470-4e68-4f10-ab58-f60217fb99ce")
-		(property "Reference" "U13"
+		(property "Reference" "U14"
 			(at 107.696 50.546 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22714,7 +23174,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "U13")
+					(reference "U14")
 					(unit 1)
 				)
 			)
@@ -22731,7 +23191,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f70add92-9a4a-4cae-85f0-ac3af81a9b8c")
-		(property "Reference" "C117"
+		(property "Reference" "C131"
 			(at 110.49 157.988 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22786,7 +23246,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" "C5142567"
+		(property "LCSC Part" "C5272680"
 			(at 113.03 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -22839,7 +23299,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C117")
+					(reference "C131")
 					(unit 1)
 				)
 			)
@@ -22856,7 +23316,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "f8e3d03d-640d-4461-8864-82e2ed668c97")
-		(property "Reference" "R101"
+		(property "Reference" "R120"
 			(at 143.51 73.406 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -22911,7 +23371,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C1883546"
 			(at 142.24 74.93 0)
 			(hide yes)
 			(show_name no)
@@ -22953,7 +23413,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "R101")
+					(reference "R120")
 					(unit 1)
 				)
 			)
@@ -22990,7 +23450,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Inductor_SMD:L_Sunlord_MWSA1005S"
+		(property "Footprint" "Inductor_SMD:L_Sunlord_MWSA1003S"
 			(at 123.19 161.29 0)
 			(hide yes)
 			(show_name no)
@@ -23222,7 +23682,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "fc14db5e-a0e2-4677-9898-7f8ab953e278")
-		(property "Reference" "C152"
+		(property "Reference" "C174"
 			(at 248.92 47.752 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -23275,7 +23735,7 @@
 				)
 			)
 		)
-		(property "LCSC Part" ""
+		(property "LCSC Part" "C53426846"
 			(at 248.92 50.8 0)
 			(hide yes)
 			(show_name no)
@@ -23317,7 +23777,7 @@
 		(instances
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/ef3187a0-acf7-454f-a4ee-a309d9d8c27d"
-					(reference "C152")
+					(reference "C174")
 					(unit 1)
 				)
 			)

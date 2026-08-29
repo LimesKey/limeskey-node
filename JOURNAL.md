@@ -119,3 +119,9 @@ Also in this journal:
 * Add footprints & voltage ratngs to a lot of capacitors
 * Fix flipped FET for liquid detection
 * Add a magnometer
+
+## Starting PCB Layout - 4 Hours (2026-08-29)
+
+Worked today on the PCB, finally moving on from the schematic. Hopefully I can get it fully wired within the next few days. I am starting with grouping together ICs with their components as per the schematic, and thinking about where all the major components and items should go. Connectors on the bottom, battery on the backside top
+
+![PCB View](/docs/img/pcb-layout.png)

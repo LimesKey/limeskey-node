@@ -61,7 +61,7 @@
           "hatch_smoothing_value": 0.1,
           "hatch_thickness": 1.0,
           "min_clearance": 0.5,
-          "min_island_area": 0.0013161349,
+          "min_island_area": 10.0,
           "min_thickness": 0.25,
           "pad_connection": 1,
           "remove_islands": 0,
@@ -459,9 +459,9 @@
       "endpoint_off_grid": "warning",
       "extra_units": "error",
       "field_name_whitespace": "warning",
-      "footprint_filter": "ignore",
+      "footprint_filter": "warning",
       "footprint_link_issues": "warning",
-      "four_way_junction": "ignore",
+      "four_way_junction": "warning",
       "ground_pin_not_ground": "warning",
       "hier_label_mismatch": "error",
       "isolated_pin_label": "warning",
@@ -486,7 +486,7 @@
       "similar_labels": "warning",
       "similar_power": "warning",
       "simulation_model_issue": "ignore",
-      "single_global_label": "ignore",
+      "single_global_label": "warning",
       "stacked_pin_name": "warning",
       "unannotated": "error",
       "unconnected_wire_endpoint": "warning",
@@ -612,16 +612,16 @@
           "show": true
         },
         {
-          "group_by": true,
+          "group_by": false,
           "label": "DNP",
           "name": "${DNP}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
           "label": "Exclude from BOM",
           "name": "${EXCLUDE_FROM_BOM}",
-          "show": true
+          "show": false
         },
         {
           "group_by": true,
@@ -642,7 +642,7 @@
           "show": false
         },
         {
-          "group_by": false,
+          "group_by": true,
           "label": "LCSC Part",
           "name": "LCSC Part",
           "show": true
@@ -678,13 +678,13 @@
           "show": false
         },
         {
-          "group_by": false,
+          "group_by": true,
           "label": "Tolerance",
           "name": "Tolerance",
-          "show": false
+          "show": true
         },
         {
-          "group_by": false,
+          "group_by": true,
           "label": "Voltage Rating",
           "name": "Voltage Rating",
           "show": true
@@ -720,7 +720,7 @@
           "show": false
         },
         {
-          "group_by": false,
+          "group_by": true,
           "label": "Capacitor Rating",
           "name": "Capacitor Rating",
           "show": true
@@ -729,15 +729,15 @@
           "group_by": false,
           "label": "Power Rating",
           "name": "Power Rating",
-          "show": false
+          "show": true
         }
       ],
-      "filter_string": "C",
+      "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
       "name": "",
       "sort_asc": true,
-      "sort_field": "Reference"
+      "sort_field": "Value"
     },
     "bus_aliases": {},
     "connection_grid_size": 50.0,
@@ -790,7 +790,7 @@
         "uuid": "c8087976-4958-4446-b419-5a0b61d5634f"
       }
     ],
-    "used_designators": "D1-21,U1-17,C1-199,R1-137,JP1-18,TP1-20,TH1-6,J1-12,FL1-2,#PWR1-160,Y1-2,FB1-3,L1-7,F1-8,Q1-13,RN1,NT1-6,SW1-6,BT1-5,H1-4",
+    "used_designators": "Q1-16,U1-17,D1-23,C1-199,J1-14,R1-137,TP1-20,JP1-18,FL1-2,#PWR1-172,Y1-2,FB1-3,L1-7,NT1-6,RN1-2,SW1-6,F1-9,BT1-5,H1-4,#FLG1-7,TH1-6",
     "variants": []
   },
   "sheets": [
