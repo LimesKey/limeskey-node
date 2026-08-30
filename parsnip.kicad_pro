@@ -790,7 +790,7 @@
         "uuid": "c8087976-4958-4446-b419-5a0b61d5634f"
       }
     ],
-    "used_designators": "Q1-16,U1-17,D1-23,C1-199,J1-14,R1-137,TP1-20,JP1-18,FL1-2,#PWR1-172,Y1-2,FB1-3,L1-7,NT1-6,RN1-2,SW1-6,F1-9,BT1-5,H1-4,#FLG1-7,TH1-6",
+    "used_designators": "D1-23,U1-20,C1-199,J1-14,JP1-18,TP1-20,R1-137,#PWR1-178,Y1-2,FL1-2,FB1-3,L1-7,SW1-6,RN1-2,NT1-6,F1-9,Q1-16,BT1-5,H1-4,TH1-6,#FLG1-7",
     "variants": []
   },
   "sheets": [
@@ -807,6 +807,10 @@
       "Charger"
     ],
     [
+      "ef3187a0-acf7-454f-a4ee-a309d9d8c27d",
+      "Rails"
+    ],
+    [
       "5443eb24-9bcb-4330-89ee-947146bd4a27",
       "GNSS"
     ],
@@ -815,8 +819,8 @@
       "LoRa"
     ],
     [
-      "ef3187a0-acf7-454f-a4ee-a309d9d8c27d",
-      "Rails"
+      "8523a718-fda3-4580-a612-9f8de7a7dbdb",
+      "Peripherals"
     ]
   ],
   "text_variables": {},

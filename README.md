@@ -1,10 +1,10 @@
 # parsnip-node
-A battery-powered, portable Meshtastic mesh node built around a Seeed XIAO ESP32-C6, an Ebyte E22P-915M30S LoRa front end, and a u-blox NEO-M9N GNSS receiver. Designed from scratch in KiCad and fabricated at JLCPCB, it targets 915 MHz operation in Canada under ISED RSS-247.
+A battery-powered, portable Meshtastic/Meshcore node built around a Seeed XIAO ESP32-C6, an Ebyte E22P-915M30S LoRa front end, and a u-blox NEO-M9N GNSS receiver. Designed in KiCad, it targets 915 MHz operation in Canada under ISED RSS-247.
 
 ## Overview
- 
-The goal is a self-contained Meshtastic node that pairs one of the longest range, best value LoRa modules, with an accurate GNSS reciever, running off a single 18650 cell, and connecting to the Canadian Meshtastic community. 
- 
+
+The goal is a self-contained LoRa node that pairs one of the longest range, best value LoRa modules, with an accurate GNSS reciever, running off a single 18650 cell, to connect to other people on the LoRa mesh network community.
+
 <table>
   <tr>
     <td align="center" width="33%">
@@ -27,9 +27,9 @@ The goal is a self-contained Meshtastic node that pairs one of the longest range
 | Function | Part | Notes |
 | --- | --- | --- |
 | MCU / radio host | Seeed XIAO ESP32-C6 | Used as an SMD/castellated module for easy soldering|
-| LoRa | Ebyte E22P-915M30S | SX1262 + external PA, up to 30 dBm, needs 5 V for full output |
+| LoRa | Ebyte E22P-915M30S | SX1262 + external PA, up to 30 dBm |
 | GNSS | u-blox NEO-M9N | GPS / GLONASS / Galileo / BeiDou |
-| Boost | TI TPS61033 | While expensive, it's quite powerful and compact |
+| Boost | TI TPS61033 |  |
 | Power mux | TI TPS2116 | USB / battery source selection |
 | Battery protection | TI BQ29700 | Single-cell protection |
 | Reverse polarity | AO3401A P-channel MOSFET | Input protection |
