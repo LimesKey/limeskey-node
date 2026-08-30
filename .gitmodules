@@ -1,3 +1,4 @@
 [submodule "firmware"]
-	path = firmware
-	url = https://github.com/LimesKey/firmware.git
+    path = firmware
+    url = https://github.com/LimesKey/firmware.git
+	branch = limeskey-node-spi-gnss
