@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(kicad-cli *)",
+      "Bash(python3 code/claude/kicad-review/scripts/*)",
+      "Bash(python3 code/claude/part-search/scripts/*)",
+      "Bash(python3 .claude/skills/kicad-review/scripts/*)",
+      "Bash(python3 .claude/skills/part-search/scripts/*)",
+      "Bash(pdftotext *)",
+      "WebFetch(domain:academy.cba.mit.edu)",
+      "WebFetch(domain:wiki.seeedstudio.com)",
+      "Read(//home/limeskey/Desktop/Projects/parsnip-node/**)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd /home/limeskey/Desktop/Projects/parsnip-node && { [ -f parsnip-merged.net ] && [ -z \"$(find . -maxdepth 1 -name '*.kicad_sch' -newer parsnip-merged.net -print -quit)\" ]; } || python3 code/claude/kicad-review/scripts/kmerge.py parsnip-merged.net parsnip.kicad_sch Charger=battery.kicad_sch 'USB Interface=usb_interface.kicad_sch' >/dev/null 2>&1; exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}
