@@ -7,7 +7,7 @@
 	(title_block
 		(title "Battery Charger / Battery Managment System (BMS)")
 		(date "2026-08-24")
-		(company "Ryan Di Lorenzo")
+		(company "LimesKey")
 	)
 	(lib_symbols
 		(symbol "Battery_Management:BQ25798"

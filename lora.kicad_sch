@@ -7,7 +7,7 @@
 	(title_block
 		(title "LoRa Module / LoRa Antenna")
 		(date "2026-08-24")
-		(company "Ryan Di Lorenzo")
+		(company "LimesKey")
 	)
 	(lib_symbols
 		(symbol "Connector:Conn_Coaxial"
@@ -179,153 +179,6 @@
 					(at 0 -5.08 90)
 					(length 2.54)
 					(name "Ext"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "Connector:TestPoint_2Pole"
-			(pin_names
-				(offset 0.762)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(in_pos_files yes)
-			(duplicate_pin_numbers_are_jumpers no)
-			(property "Reference" "TP"
-				(at 0 1.524 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "TestPoint_2Pole"
-				(at 0 -1.778 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Datasheet" ""
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Description" "2-polar test point"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_keywords" "point tp"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "ki_fp_filters" "Pin* Test*"
-				(at 0 0 0)
-				(show_name no)
-				(do_not_autoplace no)
-				(hide yes)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(symbol "TestPoint_2Pole_0_1"
-				(circle
-					(center -1.778 0)
-					(radius 0.762)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(circle
-					(center 1.778 0)
-					(radius 0.762)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "2"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3327,22 +3180,10 @@
 		(uuid "2b28afa6-8949-4f46-a2e3-c82578d47c4d")
 	)
 	(junction
-		(at 213.36 81.28)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "2e664287-8244-4276-93f7-7cfa5767ffda")
-	)
-	(junction
 		(at 195.58 73.66)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "333198ce-8125-453d-87b9-552a9a6a1127")
-	)
-	(junction
-		(at 195.58 86.36)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "3f3556be-51e0-458e-bbe9-bc2ea0e5cf87")
 	)
 	(junction
 		(at 195.58 83.82)
@@ -4222,16 +4063,6 @@
 	)
 	(wire
 		(pts
-			(xy 213.36 81.28) (xy 213.36 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "983da6df-3e7f-4a76-9889-b9c6a5d81273")
-	)
-	(wire
-		(pts
 			(xy 116.84 163.83) (xy 116.84 162.56)
 		)
 		(stroke
@@ -4279,16 +4110,6 @@
 			(type default)
 		)
 		(uuid "9e52eed4-994d-4c1b-a331-b33dcf9013b9")
-	)
-	(wire
-		(pts
-			(xy 195.58 86.36) (xy 199.39 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a4e37306-d584-4922-bda7-eb2508daa459")
 	)
 	(wire
 		(pts
@@ -4502,7 +4323,7 @@
 	)
 	(wire
 		(pts
-			(xy 153.67 104.14) (xy 156.21 104.14)
+			(xy 147.32 104.14) (xy 156.21 104.14)
 		)
 		(stroke
 			(width 0)
@@ -4549,16 +4370,6 @@
 			(type default)
 		)
 		(uuid "d97912d7-752e-435a-b05e-a1bfc7cec2d9")
-	)
-	(wire
-		(pts
-			(xy 209.55 86.36) (xy 213.36 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dd1ee420-660d-4745-a2f0-3cdf7ea29611")
 	)
 	(wire
 		(pts
@@ -4711,7 +4522,7 @@
 		(uuid "c2ae7166-1217-4a61-9356-a0d7109459b0")
 	)
 	(label "LORA_ANT"
-		(at 153.67 104.14 180)
+		(at 147.32 104.14 180)
 		(effects
 			(font
 				(size 1.27 1.27)
@@ -7433,7 +7244,7 @@
 		(dnp no)
 		(uuid "7957c591-b1f8-4b05-906b-28cceb3beea0")
 		(property "Reference" "R101"
-			(at 194.056 97.028 0)
+			(at 192.786 97.282 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7906,119 +7717,6 @@
 			(project "parsnip"
 				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/a8463f07-c31a-442f-966c-3f51ff19a9b1"
 					(reference "R95")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:TestPoint_2Pole")
-		(at 204.47 86.36 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "88bbd037-3a08-41f6-b3eb-54d2a0bdcd08")
-		(property "Reference" "TP6"
-			(at 204.47 88.138 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "5V_LORA"
-			(at 204.216 88.392 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_2Pads_Pitch2.54mm_Drill0.8mm"
-			(at 204.47 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 204.47 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" "2-polar test point"
-			(at 204.47 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC Part" ""
-			(at 204.47 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Voltage Rating" ""
-			(at 204.47 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Tolerance" ""
-			(at 204.47 86.36 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "c64148c7-250a-4880-804c-59383e928d75")
-		)
-		(pin "2"
-			(uuid "418b35d8-1129-4f23-a3f8-2935948a0a17")
-		)
-		(instances
-			(project "parsnip"
-				(path "/fe9d4a31-2311-442f-997c-52ad8ca5cfe9/a8463f07-c31a-442f-966c-3f51ff19a9b1"
-					(reference "TP6")
 					(unit 1)
 				)
 			)
@@ -9869,7 +9567,7 @@
 			)
 		)
 		(property "Value" "100nF"
-			(at 134.62 94.488 0)
+			(at 130.302 93.98 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects

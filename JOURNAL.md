@@ -125,3 +125,6 @@ Also in this journal:
 Worked today on the PCB, finally moving on from the schematic. Hopefully I can get it fully wired within the next few days. I am starting with grouping together ICs with their components as per the schematic, and thinking about where all the major components and items should go. Connectors on the bottom, battery on the backside top, the BMS & battery circuitry middle-left, and the buck converters middle-right.
 
 ![PCB View](/docs/img/pcb-layout.png)
+
+## Layout done - working on routing - 4 hours (2026-09-01)
+
