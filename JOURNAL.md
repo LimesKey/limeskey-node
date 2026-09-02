@@ -128,3 +128,4 @@ Worked today on the PCB, finally moving on from the schematic. Hopefully I can g
 
 ## Layout done - working on routing - 4 hours (2026-09-01)
 
+Went to a local makerspace, Hacklab, to work on the PCB some more. Now that I'm on my laptop, I didn't have the 3D Models transfer over, since I was using easyeda2kicad and that put the models inside a local directory on my computer - not in the repo. I re-downloaded all the 3D Models and moved them into `lib/3d-models` and then changed the 3D model location for all missing components. Now when someone opens my PCB and checks the 3D View, all the components should show up nicely. A couple parts had incorrect footprints for the part, and I was able to fix this after seeing the 3D Model was obviously different from the footprint. That's one reason I like 3D Models so much.

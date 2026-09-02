@@ -12244,7 +12244,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Package_DFN_QFN:OnSemi_UDFN-8_1.2x1.8mm_P0.4mm"
+		(property "Footprint" "Package_DFN_QFN:DFN-8-1EP_2x3mm_P0.5mm_EP0.61x2.2mm"
 			(at 243.84 90.17 0)
 			(hide yes)
 			(show_name no)
