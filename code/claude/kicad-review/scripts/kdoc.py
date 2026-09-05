@@ -6,8 +6,12 @@ Handles four input shapes, auto-detected by content sniffing (never by extension
 alone - project uploads lie about their extension):
   * the zip-container "pdf" that Claude's project uploader produces
     (per-page N.txt + N.jpeg + manifest.json) - pdftotext CANNOT read these
-  * real PDFs (starts with %PDF-; pdftotext -layout, page images rendered on
-    demand with pdftoppm)
+  * real PDFs (starts with %PDF-; one pdftotext -layout call for the whole
+    file, page images rendered on demand with pdftoppm). pdftotext decodes CID /
+    Identity-H TrueType fonts, so ordinary datasheets read fine with no font
+    parsing. Pages that come back with no text are image-only (a scan or a
+    figure-only page); they get tagged `scan N/M` and `index --ocr` runs
+    tesseract over just those pages.
   * "scraped" pdfs - some project uploads named *.pdf are actually raw text
     (e.g. a TI product-page scrape with \\r\\n lines and no PDF structure at
     all). No page images ever exist for these - text search only. If `list`
@@ -21,6 +25,7 @@ the page image can be opened for visual inspection.
 Usage:
   kdoc.py index /mnt/project/*                extract + cache everything
   kdoc.py index ~/Downloads/parsnip.pdf       ...or one file, or a directory
+  kdoc.py index scanned-appnote.pdf --ocr     OCR image-only pages (tesseract)
   kdoc.py grep 'R13|VCC_RF'                   search all docs, report doc:page:line
   kdoc.py grep 'current limiter' -d NEOM9N    restrict to docs matching a substring
   kdoc.py grep 'ICC_RF' --count               just hit counts per doc/page
@@ -38,7 +43,7 @@ for column/table-layout sensitive patterns.
 Cache defaults to ./.kdoc_cache (override with KDOC_CACHE). Re-extraction is
 automatic when the source file's size or mtime changes.
 """
-import sys, os, re, json, csv, zipfile, subprocess, argparse, glob
+import sys, os, re, json, csv, zipfile, subprocess, argparse, glob, shutil
 
 CACHE = os.environ.get('KDOC_CACHE', os.path.expanduser('~/.cache/kdoc'))
 TEXT_EXT = {'.txt', '.md', '.log', '.net', '.csv', '.tsv'}
@@ -71,12 +76,16 @@ def is_real_pdf(path):
 
 # ---------------- extraction ----------------
 
-def extract(path, force=False):
+def extract(path, force=False, ocr=False):
     out = os.path.join(CACHE, slug(path))
     mark = os.path.join(out, '.source')
-    if (not force and os.path.isdir(out) and os.path.exists(mark)
+    cached = (not force and os.path.isdir(out) and os.path.exists(mark)
             and open(mark).read().strip() == f"{os.path.abspath(path)}|{stamp(path)}"
-            and glob.glob(os.path.join(out, '*.txt'))):
+            and glob.glob(os.path.join(out, '*.txt')))
+    # a cached doc still needs re-extraction when --ocr is asked for and it has
+    # image-only pages left un-OCR'd (a .scan marker), otherwise the cache
+    # shortcut would swallow the --ocr request
+    if cached and not (ocr and os.path.exists(os.path.join(out, '.scan'))):
         return out
     os.makedirs(out, exist_ok=True)
     ext = os.path.splitext(path)[1].lower()
@@ -88,7 +97,7 @@ def extract(path, force=False):
         with zipfile.ZipFile(path) as z:
             z.extractall(out)
     elif is_real_pdf(path):
-        _pdf(path, out)
+        _pdf(path, out, ocr=ocr)
     else:
         # not xlsx, not a recognised text extension, not a zip container, and
         # no %PDF- header - most likely a project upload named *.pdf that is
@@ -136,7 +145,7 @@ def _scraped(path, out):
     _chunk(txt, out)
     open(os.path.join(out, '.scraped'), 'w').close()
 
-def _pdf(path, out):
+def _pdf(path, out, ocr=False):
     try:
         info = subprocess.run(['pdfinfo', path], capture_output=True, text=True).stdout
         m = re.search(r'Pages:\s+(\d+)', info)
@@ -149,10 +158,56 @@ def _pdf(path, out):
               f"machine (`pdfinfo -v` to check), or the file is corrupt/encrypted",
               file=sys.stderr)
         return
+    try:                        # stale marker from a prior extraction
+        os.remove(os.path.join(out, '.scan'))
+    except OSError:
+        pass
+    # One pdftotext call for the whole file (pages split on the form-feed it
+    # emits between pages), not one subprocess per page - ~Nx fewer forks on a
+    # 250-page TRM. pdftotext already decodes CID / Identity-H TrueType fonts,
+    # so this reads the same text Okular does; no font parsing needed here.
+    body = subprocess.run(['pdftotext', '-layout', path, '-'],
+                          capture_output=True, text=True).stdout.split('\f')
+    empty = []
     for p in range(1, n + 1):
-        txt = subprocess.run(['pdftotext', '-layout', '-f', str(p), '-l', str(p), path, '-'],
-                             capture_output=True, text=True).stdout
+        txt = body[p - 1] if p - 1 < len(body) else ''
         open(os.path.join(out, f'{p}.txt'), 'w', encoding='utf-8').write(txt)
+        if len(txt.strip()) < 8:
+            empty.append(p)
+    # A real PDF page with no extractable text is image-only (a scanned doc or a
+    # figure-only page). Without flagging it, grep just returns nothing and you
+    # cannot tell "not in the doc" from "the doc is a picture". OCR the blank
+    # pages when asked (and tesseract is present); else record them so
+    # list/grep can point at --ocr.
+    if empty and ocr:
+        empty = _ocr(path, out, empty)
+    if empty:
+        with open(os.path.join(out, '.scan'), 'w') as f:
+            f.write(f"{len(empty)}/{n}")
+
+def _ocr(path, out, page_nums):
+    """OCR the given image-only pages in place, returning those still blank
+    afterwards. Opt-in via `index --ocr`; needs tesseract (+ pdftoppm).
+    Temp images use a dotted prefix so they never register as page images."""
+    if not shutil.which('tesseract'):
+        print("  ! --ocr given but tesseract not on PATH; leaving image-only "
+              "pages blank (install tesseract to OCR them)", file=sys.stderr)
+        return page_nums
+    still = []
+    for p in page_nums:
+        base = os.path.join(out, f'.ocr{p}')
+        subprocess.run(['pdftoppm', '-png', '-r', '300', '-f', str(p), '-l', str(p),
+                        path, base], capture_output=True)
+        img = (sorted(glob.glob(base + '*.png')) or [None])[0]
+        if not img:
+            still.append(p); continue
+        txt = subprocess.run(['tesseract', img, '-', '--psm', '6'],
+                             capture_output=True, text=True).stdout
+        os.remove(img)
+        open(os.path.join(out, f'{p}.txt'), 'w', encoding='utf-8').write(txt)
+        if len(txt.strip()) < 8:
+            still.append(p)
+    return still
 
 def render_page(docdir, n, dpi=150):
     """Rasterise page n of a real PDF on demand (zip-container docs already have
@@ -181,16 +236,24 @@ def pages(docdir):
             out.append((int(b), f))
     return sorted(out)
 
+def _key(s):
+    """Fold a doc name or -d filter to alnum-only lowercase so 'lm61460-q1',
+    'lm61460_q1', 'LM61460 Q1' and 'lm61460q1' all address one doc. slug() turns
+    every non-word run into '_', so without this the on-disk name never matches
+    the hyphen/space form a user reads straight off the filename."""
+    return re.sub(r'[\W_]+', '', s).lower()
+
 def docs(filt=None):
     if not os.path.isdir(CACHE):
         return []
     d = sorted(x for x in os.listdir(CACHE) if os.path.isdir(os.path.join(CACHE, x)))
     if filt:
-        d = [x for x in d if filt.lower() in x.lower()]
+        fk = _key(filt)
+        d = [x for x in d if fk in _key(x)]
         # an exact name wins outright, so a doc whose name is a prefix of a
         # longer one (tps25751 vs TPS25751technicalreferencemanual) stays
         # addressable instead of always resolving to the longer sibling
-        exact = [x for x in d if x.lower() == filt.lower()]
+        exact = [x for x in d if _key(x) == fk]
         if exact:
             return exact
     return d
@@ -329,6 +392,10 @@ def fmt_tag(docdir):
     if os.path.exists(mark):
         src = open(mark).read().split('|')[0]
         if os.path.splitext(src)[1].lower() == '.pdf':
+            scan = os.path.join(docdir, '.scan')
+            if os.path.exists(scan):
+                # N/M image-only pages with no text layer - grep won't see them
+                return f"scan {open(scan).read().strip()}"
             return 'render'
     return 'text'
 
@@ -347,7 +414,7 @@ def c_index(a):
         try:
             if ext not in TEXT_EXT | {'.pdf', '.xlsx'} and not zipfile.is_zipfile(f):
                 continue
-            d = extract(f, force=a.force)
+            d = extract(f, force=a.force, ocr=a.ocr)
         except Exception as e:
             # named explicitly, so say exactly what went wrong and keep going
             print(f"  {slug(f):<38} FAILED: {type(e).__name__}: {e}")
@@ -372,6 +439,9 @@ def c_list(a):
         print("\n  note: doc(s) above named *.pdf but tagged text are scraped text, "
               "not real PDFs - grep/text work, no page images exist (re-upload the "
               "real PDF to the project if you need a figure from one of these)")
+    if any(os.path.exists(os.path.join(CACHE, d, '.scan')) for d in docs(a.doc)):
+        print("\n  note: doc(s) tagged `scan N/M` have N image-only page(s) with no "
+              "text layer; `kdoc.py index <file> --ocr` OCRs them (needs tesseract)")
 
 def _search(a, pat):
     """yield (doc, pagenum, docdir, line, fragment)"""
@@ -408,8 +478,11 @@ def c_grep(a):
         for (d, num), c in sorted(per.items(), key=lambda kv: (-kv[1], kv[0])):
             print(f"  {c:>3} hits  {d}:{page_label(os.path.join(CACHE, d), num)}")
     if not total:
+        scans = [d for d in docs(a.doc) if os.path.exists(os.path.join(CACHE, d, '.scan'))]
+        hint = (f"\n  {', '.join(scans)} has image-only page(s) with no text layer; "
+                f"re-index with `kdoc.py index <file> --ocr` to read them" if scans else "")
         print(f"no hits for {a.args[0]!r} in {len(docs(a.doc))} doc(s). "
-              f"try a shorter pattern, drop -d, or --raw for column/table layouts")
+              f"try a shorter pattern, drop -d, or --raw for column/table layouts" + hint)
         return 1
     else:
         print(f"\n{total} hits across {len({d for d, _ in per})} doc(s), "
@@ -536,6 +609,8 @@ def main():
     ap.add_argument('--case', action='store_true', help='case sensitive')
     ap.add_argument('--dpi', type=int, default=150)
     ap.add_argument('--force', action='store_true')
+    ap.add_argument('--ocr', action='store_true',
+                    help='index: OCR image-only PDF pages (needs tesseract)')
     ap.add_argument('-h', '--help', action='store_true')
     a = ap.parse_args()
     if a.help:

@@ -14,10 +14,15 @@ D=<skill>/scripts/kdoc.py   S=<skill>/scripts/ksch.py
 
 | question | file | tool | reference |
 | --- | --- | --- | --- |
-| what is wired to what, values, ERC, BOM | `.net` | `knet.py` | [knet](references/knet.md) |
+| what is wired to what, values, BOM | `.net` | `knet.py` | [knet](references/knet.md) |
 | where is it, does it fit, does it clash, where do the passives go | `.kicad_pcb` | `kpcb.py` | [kpcb](references/kpcb.md) |
+| does it pass DRC/ERC, real clearance/rule violations | `.kicad_pcb` + roots | `kdrc.py` | [kdrc](references/kdrc.md) |
 | what does the part's datasheet say | PDFs | `kdoc.py` | [kdoc](references/kdoc.md) |
 | show me the circuit | - | `ksch.py` | [ksch](references/ksch.md) |
+
+`knet check` and `kpcb check` are heuristics on the netlist and placement;
+`kdrc.py` runs **KiCad's own** DRC (honouring `parsnip.kicad_dru`) and ERC, the
+authoritative rules check. `kpcb.py FILE zones` reports pour-fill coverage.
 
 `kpcb.py` needs `knet.py` beside it (shared parser) but does **not** need the
 `.net` - pads carry their own net names and pin functions. Find the `.net` first:
@@ -47,6 +52,8 @@ scrambled. The plot only tells you which sheet a symbol lives on.
 | where does X connect / is X right | `knet.py FILE around X` - pins, types, nets, position, every part one hop away |
 | where is X, is there room | `kpcb.py FILE where REF` or `where 130,60 -r 10` |
 | where do these caps/inductor go | `kpcb.py FILE ic U13` - positions, rotations, the rule behind each, and a picture |
+| does the board pass real DRC + ERC | `kdrc.py FILE.kicad_pcb` - KiCad's own checks, all 3 roots, folded like `check` |
+| is the ground pour filled / covering | `kpcb.py FILE zones` - fill coverage per copper layer |
 | what voltage does this divider set | `knet.py FILE divider U5.OVLO` - nominal + worst case from real resistor values |
 | unfamiliar board, what is on it | `knet.py FILE summary` then `check` |
 | draw a circuit that exists | `knet.py FILE draw U8 -d 2 -o out.svg` |

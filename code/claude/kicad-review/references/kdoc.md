@@ -18,7 +18,12 @@ label across without stripping the `chunk`/`p` prefix by hand.
 Search is line-wrap insensitive by default (whitespace collapsed before matching),
 so a phrase broken across two PDF lines still hits; `--raw` when column layout
 matters. Invalid regex is treated as a literal. Other flags: `-C N`, `-m N`,
-`--case`, `--dpi N`, `--force`. Cache in `~/.cache/kdoc` (`KDOC_CACHE` overrides).
+`--case`, `--dpi N`, `--force`, `--ocr` (index only). Cache in `~/.cache/kdoc`
+(`KDOC_CACHE` overrides).
+
+`-d` matching is punctuation-insensitive: the slug for `lm61460-q1.pdf` is stored
+as `lm61460_q1`, but `-d lm61460-q1`, `-d "lm61460 q1"` and `-d lm61460q1` all
+resolve to it. Copy the name straight off the filename; don't hand-convert hyphens.
 
 Prefer plain strings over regex when grepping - the index is line-wrap normalised
 and a regex tuned to the raw layout will miss.
@@ -31,11 +36,25 @@ extension, and handles three cases behind a `.pdf` name plus
 
 - zip container of per-page `N.txt` + `N.jpeg` + `manifest.json` (`pdftotext` fails
   on these) - tag `img` in `list`
-- a real PDF (`%PDF-` header) - text via `pdftotext -layout`, page images rendered
-  on demand with `pdftoppm` - tag `render`
+- a real PDF (`%PDF-` header) - text via one `pdftotext -layout` call for the whole
+  file (pages split on form-feed), page images rendered on demand with `pdftoppm` -
+  tag `render`. `pdftotext` decodes CID / Identity-H TrueType fonts, so an ordinary
+  datasheet reads with no font parsing; if grep comes back empty the doc has the
+  text, the pattern is wrong (try shorter, or `--raw`).
 - scraped text with no PDF structure at all, e.g. a vendor product-page dump (seen
   with some TI datasheets in this project) - text-only, no page images ever exist -
   tag `text`. `list` flags which docs are this case.
+
+## Scanned / image-only pages
+
+A real PDF page that yields no extractable text is image-only (a scanned doc, or a
+figure-only page). Those pages are counted and the doc is tagged `scan N/M` in
+`list`; grep on such a doc says so and points at `--ocr` rather than silently
+returning nothing. `kdoc.py index <file> --ocr` rasterises just the blank pages at
+300 dpi and runs `tesseract` over them, writing the recovered text back into the
+cache (needs `tesseract` on PATH; without it the pages stay blank and it says so).
+Re-running `index --ocr` on an already-cached scan doc re-extracts it; a plain
+`index` keeps the cache.
 
 ## Finding the files
 

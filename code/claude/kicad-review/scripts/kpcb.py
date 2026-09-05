@@ -122,6 +122,16 @@ def overlap_area(a, b):
     h = min(a[3], b[3]) - max(a[1], b[1])
     return w * h if w > 0 and h > 0 else 0.0
 
+def poly_area(pts):
+    """Shoelace area of a ring of (x,y). Absolute, so winding direction and
+    island/hole orientation never make it negative."""
+    n = len(pts)
+    if n < 3:
+        return 0.0
+    s = sum(pts[i][0] * pts[(i + 1) % n][1] - pts[(i + 1) % n][0] * pts[i][1]
+            for i in range(n))
+    return abs(s) / 2.0
+
 def ctr(b):
     return ((b[0] + b[2]) / 2, (b[1] + b[3]) / 2)
 
@@ -249,11 +259,20 @@ class Board:
                        if isinstance(k, list) and len(k) > 1 and str(k[1]).endswith('.Cu')]
         self.fps, self.nets = {}, defaultdict(list)
         self.zones = []
+        self.fills = []                         # cached zone fills, per layer
         edge = []
 
         for z in kids(root, 'zone'):
+            net = val(z, 'net')
             lays = kid(z, 'layers') or kid(z, 'layer') or []
-            self.zones.append((val(z, 'net'), [l for l in lays[1:] if isinstance(l, str)]))
+            self.zones.append((net, [l for l in lays[1:] if isinstance(l, str)]))
+            for fp in kids(z, 'filled_polygon'):
+                pts = [(float(p[1]), float(p[2])) for p in (kid(fp, 'pts') or [])[1:]
+                       if isinstance(p, list) and p and p[0] == 'xy']
+                if len(pts) >= 3:
+                    self.fills.append({'net': net, 'layer': val(fp, 'layer'),
+                                       'pts': pts, 'area': poly_area(pts),
+                                       'bbox': bbox(pts)})
 
         edge += self._graphics(root, None, 'gr_')
         for node in kids(root, 'footprint'):
@@ -1678,7 +1697,11 @@ def find_netlist(board_path, given):
     if given:
         return (rel(given), 1) if os.path.exists(given) else (None, 0)
     stem = os.path.splitext(os.path.abspath(board_path))[0]
-    for c in (stem + '.net', os.path.join(os.path.dirname(stem), '*.net')):
+    d = os.path.dirname(stem)
+    # a *-merged.net (multi-root export) is authoritative; a bare stem.net can be
+    # a single-root export that silently omits whole sheets, so prefer merged.
+    for c in (stem + '-merged.net', os.path.join(d, '*-merged.net'),
+              stem + '.net', os.path.join(d, '*.net')):
         hits = sorted(glob.glob(c))
         if hits:
             return rel(hits[0]), len(hits)
@@ -1830,13 +1853,86 @@ def c_review(b, a):
         nxt.append(f"kpcb.py {b.path} map   # where the free space is, before placing more")
     if netpath:
         nxt.append(f"knet.py {netpath} check   # the electrical half; placement cannot see it")
+    if b.zones:
+        nxt.append(f"kpcb.py {b.path} zones   # pour coverage per layer (cached fill state)")
+    nxt.append(f"kdrc.py {b.path}   # KiCad's own DRC + ERC - real clearance/rules, not heuristics")
     nxt.append(f"kpcb.py {b.path} sync   # re-run after any schematic change")
     print("\n### next\n" + '\n'.join('  ' + x for x in nxt))
     return rc
 
+def c_zones(b, a):
+    """Zone-fill coverage per copper layer, from the fills cached in the board.
+
+    Reports gross copper area over board area, island count, largest-island
+    share, and the fill's bounding-box margins to each board edge - enough to
+    catch a pour that is fragmented, missing a layer, or nowhere near an edge.
+    It is geometry on the LAST SAVED fill, not a live refill: a zone shows 0
+    if it was never filled or a part moved after the last Fill All Zones."""
+    o = b.outline
+    board_area = max((poly_area(r) for r in b.rings), default=0.0) or \
+        ((o[2] - o[0]) * (o[3] - o[1]) if o else 0.0)
+    by_layer = defaultdict(lambda: defaultdict(list))     # layer -> net -> [fill]
+    for fl in b.fills:
+        by_layer[fl['layer']][fl['net']].append(fl)
+    declared = {(net, ly) for net, lays in b.zones for ly in lays}
+    filled = set()
+    rows = []
+    for ly in b.copper:
+        nets = by_layer.get(ly)
+        if not nets:
+            rows.append((ly, '-', 0.0, 0, 0.0, None))
+            continue
+        for net, fs in sorted(nets.items()):
+            filled.add((net, ly))
+            area = sum(f['area'] for f in fs)
+            fb = bbox([p for f in fs for p in f['pts']])
+            largest = max((f['area'] for f in fs), default=0.0)
+            rows.append((ly, net, area, len(fs), largest, fb))
+    unfilled = sorted(declared - filled)
+
+    if a.json:
+        print(json.dumps({'board_area_mm2': round(board_area, 1), 'outline': o,
+                          'layers': [{'layer': ly, 'net': net,
+                                      'area_mm2': round(ar, 1),
+                                      'coverage_pct': round(100 * ar / board_area, 1) if board_area else 0,
+                                      'islands': isl,
+                                      'largest_island_pct': round(100 * lg / ar, 1) if ar else 0,
+                                      'fill_bbox': [round(v, 2) for v in fb] if fb else None}
+                                     for ly, net, ar, isl, lg, fb in rows if net != '-'],
+                          'declared_unfilled': [{'net': n, 'layer': l} for n, l in unfilled]},
+                         indent=1))
+        return 0
+
+    print(f"{b.path}: zone fill coverage")
+    if o:
+        print(f"board {board_area:.0f} mm2 (outline ring)   bbox "
+              f"x {o[0]:.1f}..{o[2]:.1f}  y {o[1]:.1f}..{o[3]:.1f}")
+    print(f"\n{'layer':<8} {'net':<8} {'cover':>6} {'isl':>4} {'top1':>5}  "
+          f"uncovered margins (mm, of fill bbox)")
+    for ly, net, area, isl, largest, fb in rows:
+        if net == '-':
+            print(f"{ly:<8} {'-':<8} {'0%':>6} {'0':>4} {'-':>5}  (no fill on this layer)")
+            continue
+        cov = 100 * area / board_area if board_area else 0
+        top1 = 100 * largest / area if area else 0
+        marg = (f"top {fb[1]-o[1]:.1f}  bot {o[3]-fb[3]:.1f}  "
+                f"L {fb[0]-o[0]:.1f}  R {o[2]-fb[2]:.1f}") if (fb and o) else ''
+        print(f"{ly:<8} {net:<8} {cov:5.0f}% {isl:>4} {top1:4.0f}%  {marg}")
+    if unfilled:
+        print("\nDECLARED BUT NOT FILLED (never filled, or emptied on last save):")
+        for net, ly in unfilled:
+            print(f"  {net} on {ly}")
+    print("\nCoverage is gross copper area / board area; a low % or a small top-island "
+          "share means a\nfragmented pour. Margins are of the fill's bounding box, so they "
+          "only flag when NOTHING\nreaches that edge (one sliver hides the gap) - eyeball a "
+          "render for interior voids.\nFills are the LAST SAVED state: refill in KiCad "
+          "(Edit > Fill All Zones, save) or run\n`kdrc.py FILE drc` (refills in memory) if a "
+          "zone reads 0 or parts moved since the fill.")
+    return 0
+
 CMDS = {'summary': c_summary, 'check': c_check, 'where': c_where, 'map': c_map,
         'sheet': c_sheet, 'unplaced': c_unplaced, 'ic': c_ic, 'span': c_span,
-        'sync': c_sync, 'review': c_review}
+        'zones': c_zones, 'sync': c_sync, 'review': c_review}
 
 def main():
     ap = argparse.ArgumentParser(add_help=False)
