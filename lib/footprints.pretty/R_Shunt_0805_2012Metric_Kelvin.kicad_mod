@@ -1,0 +1,120 @@
+(footprint "R_Shunt_0805_2012Metric_Kelvin"
+	(version 20260206)
+	(generator "hand")
+	(layer "F.Cu")
+	(descr "0805 (2012 Metric) 2-terminal chip shunt on a pseudo-Kelvin 4-pad land. Each end cap is split into a wide current pad and a narrow sense pad; the two connect only through the resistor termination. Pad numbering matches parsnip R41 symbol: 1=current -BATT / 2=sense CSP (left), 4=current GND / 3=sense CSN (right). NOT a true 4-terminal device - both pads at an end share one solder joint, so this removes trace/via IR from the sense path but not the termination/joint drop.")
+	(tags "resistor shunt kelvin current-sense 0805")
+	(property "Reference" "REF**"
+		(at 0 -1.75 0)
+		(layer "F.SilkS")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "R_Shunt_0805_2012Metric_Kelvin"
+		(at 0 1.75 0)
+		(layer "F.Fab")
+		(hide yes)
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -1.1 -0.95)
+		(end 1.1 -0.95)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+	)
+	(fp_line
+		(start -1.1 0.95)
+		(end 1.1 0.95)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+	)
+	(fp_circle
+		(center -1.9 0.525)
+		(end -1.8 0.525)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+	)
+	(fp_rect
+		(start -1.7 -1.0)
+		(end 1.7 1.0)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.CrtYd")
+	)
+	(fp_rect
+		(start -1 -0.625)
+		(end 1 0.625)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.Fab")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.08)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -0.9125 -0.275)
+		(size 1.025 0.85)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+	)
+	(pad "2" smd rect
+		(at -0.9125 0.525)
+		(size 1.025 0.35)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+	)
+	(pad "4" smd rect
+		(at 0.9125 -0.275)
+		(size 1.025 0.85)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+	)
+	(pad "3" smd rect
+		(at 0.9125 0.525)
+		(size 1.025 0.35)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+	)
+	(embedded_fonts no)
+	(model "${KICAD10_3DMODEL_DIR}/Resistor_SMD.3dshapes/R_0805_2012Metric.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)
