@@ -63,7 +63,7 @@
           "min_clearance": 0.5,
           "min_island_area": 10.0,
           "min_thickness": 0.25,
-          "pad_connection": 1,
+          "pad_connection": 2,
           "remove_islands": 0,
           "thermal_relief_gap": 0.5,
           "thermal_relief_spoke_width": 0.5
@@ -210,7 +210,14 @@
         }
       ],
       "track_widths": [
-        0.0
+        0.0,
+        0.15,
+        0.2,
+        0.3,
+        0.4,
+        0.6,
+        1.0,
+        1.5
       ],
       "tuning_pattern_settings": {
         "diff_pair_defaults": {
@@ -242,6 +249,14 @@
         {
           "diameter": 0.0,
           "drill": 0.0
+        },
+        {
+          "diameter": 0.6,
+          "drill": 0.3
+        },
+        {
+          "diameter": 0.8,
+          "drill": 0.4
         }
       ],
       "zones_allow_external_fillets": false
@@ -528,12 +543,28 @@
         "wire_width": 6
       },
       {
-        "clearance": 0.2,
-        "name": "RF_50OHM",
+        "name": "PWR_HIGH",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 1,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 1.5,
+        "tuning_profile": ""
+      },
+      {
+        "name": "PWR_RAIL",
         "pcb_color": "rgba(0, 0, 0, 0.000)",
         "priority": 0,
         "schematic_color": "rgba(0, 0, 0, 0.000)",
-        "track_width": 0.36,
+        "track_width": 0.6,
+        "tuning_profile": ""
+      },
+      {
+        "clearance": 0.2,
+        "name": "RF_50OHM",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "priority": 2,
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.4,
         "tuning_profile": ""
       }
     ],
@@ -549,15 +580,63 @@
       },
       {
         "netclass": "RF_50OHM",
-        "pattern": "/LORA/LORA_ANT"
+        "pattern": "/Root/LoRa/LORA_ANT"
       },
       {
-        "netclass": "RF_50OHM",
-        "pattern": "/GNSS/AFT_GPS_ANT"
+        "netclass": "PWR_HIGH",
+        "pattern": "VSYS"
       },
       {
-        "netclass": "RF_50OHM",
-        "pattern": "/LORA/PRE_LORA_ANT"
+        "netclass": "PWR_HIGH",
+        "pattern": "+PACK"
+      },
+      {
+        "netclass": "PWR_HIGH",
+        "pattern": "+BATT"
+      },
+      {
+        "netclass": "PWR_HIGH",
+        "pattern": "-BATT"
+      },
+      {
+        "netclass": "PWR_HIGH",
+        "pattern": "PPHV"
+      },
+      {
+        "netclass": "PWR_HIGH",
+        "pattern": "VBUS"
+      },
+      {
+        "netclass": "PWR_RAIL",
+        "pattern": "+5V"
+      },
+      {
+        "netclass": "PWR_RAIL",
+        "pattern": "+3V3"
+      },
+      {
+        "netclass": "PWR_RAIL",
+        "pattern": "3V3_GNSS"
+      },
+      {
+        "netclass": "PWR_RAIL",
+        "pattern": "PD_LDO_3V3"
+      },
+      {
+        "netclass": "PWR_HIGH",
+        "pattern": "/Charger/PMID"
+      },
+      {
+        "netclass": "PWR_RAIL",
+        "pattern": "/Root/Rails/5V_RAW"
+      },
+      {
+        "netclass": "PWR_HIGH",
+        "pattern": "Net-(BT1--)"
+      },
+      {
+        "netclass": "PWR_HIGH",
+        "pattern": "Net-(BT1-+)"
       }
     ]
   },
@@ -566,7 +645,7 @@
       "idf": "",
       "netlist": "",
       "plot": "/home/limeskey/Downloads/",
-      "specctra_dsn": "",
+      "specctra_dsn": "../../../Downloads/parsnip.dsn",
       "step": "",
       "vrml": "meshtastic.wrl"
     },
@@ -790,7 +869,7 @@
         "uuid": "c8087976-4958-4446-b419-5a0b61d5634f"
       }
     ],
-    "used_designators": "D1-23,U1-20,C1-199,J1-15,JP1-18,TP1-20,R1-137,#PWR1-182,Y1-2,FL1-2,FB1-3,L1-7,SW1-6,RN1-2,NT1-6,F1-9,Q1-16,BT1-5,H1-4,TH1-6,#FLG1-7",
+    "used_designators": "#PWR1-185,Y1-2,FL1-2,FB1-3,L1-7,SW1-6,NT1-6,RN1-2,Q1-16,F1-9,BT1-5,H1-4,TH1-6,#FLG1-7,TP1-20,R1-137,JP1-18,J1-15,C1-199,U1-20,D1-23",
     "variants": []
   },
   "sheets": [

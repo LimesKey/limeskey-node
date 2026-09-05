@@ -6731,6 +6731,12 @@
 		(uuid "f318d775-e0f2-4212-b228-952a654df973")
 	)
 	(junction
+		(at 148.59 132.08)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "00aa0c90-0b83-43fb-b023-929bcea835f7")
+	)
+	(junction
 		(at 52.07 184.15)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6815,6 +6821,12 @@
 		(uuid "20948581-ec98-4524-9d36-ebecd93fe541")
 	)
 	(junction
+		(at 148.59 139.7)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "2337dabd-042d-43a0-b84d-ae70af4f5224")
+	)
+	(junction
 		(at 147.32 152.4)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6867,6 +6879,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "30d4e59e-0bc2-4b05-888b-88dc0d0d0d62")
+	)
+	(junction
+		(at 148.59 137.16)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "323872d6-996d-4606-a228-2c983b67bd0c")
 	)
 	(junction
 		(at 78.74 158.75)
@@ -7053,6 +7071,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "75cceb20-1ace-4688-b3aa-f6764845155a")
+	)
+	(junction
+		(at 148.59 134.62)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "782cb6e7-ff13-445d-a73a-1e8ab23ac7d9")
 	)
 	(junction
 		(at 149.86 184.15)
@@ -7566,6 +7590,16 @@
 	)
 	(wire
 		(pts
+			(xy 148.59 139.7) (xy 149.86 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0645bb65-f246-4897-a8b7-641f3c314232")
+	)
+	(wire
+		(pts
 			(xy 162.56 105.41) (xy 168.91 105.41)
 		)
 		(stroke
@@ -7633,6 +7667,16 @@
 			(type default)
 		)
 		(uuid "0c768852-d5a9-4ce2-a22a-dc9b694c3bc0")
+	)
+	(wire
+		(pts
+			(xy 148.59 137.16) (xy 149.86 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0efcc9f3-156c-4e1f-91f5-943ac8658a4d")
 	)
 	(wire
 		(pts
@@ -8186,6 +8230,16 @@
 	)
 	(wire
 		(pts
+			(xy 148.59 132.08) (xy 149.86 132.08)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2dc490b6-63ac-4c30-b1d9-2f5124bbe7f5")
+	)
+	(wire
+		(pts
 			(xy 275.59 82.55) (xy 275.59 83.82)
 		)
 		(stroke
@@ -8286,7 +8340,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 139.7) (xy 149.86 139.7)
+			(xy 146.05 139.7) (xy 148.59 139.7)
 		)
 		(stroke
 			(width 0)
@@ -8816,7 +8870,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 137.16) (xy 149.86 137.16)
+			(xy 146.05 137.16) (xy 148.59 137.16)
 		)
 		(stroke
 			(width 0)
@@ -9576,6 +9630,26 @@
 	)
 	(wire
 		(pts
+			(xy 148.59 134.62) (xy 149.86 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "953245dd-5d1c-4a59-937a-24d3e841a9c0")
+	)
+	(wire
+		(pts
+			(xy 148.59 134.62) (xy 148.59 137.16)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "955c2ec7-b352-4f1d-9bed-100e87b6f4b2")
+	)
+	(wire
+		(pts
 			(xy 52.07 186.69) (xy 57.15 186.69)
 		)
 		(stroke
@@ -9643,6 +9717,16 @@
 			(type default)
 		)
 		(uuid "9a0721f3-3685-4163-9369-d80a39187066")
+	)
+	(wire
+		(pts
+			(xy 148.59 137.16) (xy 148.59 139.7)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9a54da53-9e9a-4f64-a46a-896e705f7d82")
 	)
 	(wire
 		(pts
@@ -10496,7 +10580,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 132.08) (xy 149.86 132.08)
+			(xy 146.05 132.08) (xy 148.59 132.08)
 		)
 		(stroke
 			(width 0)
@@ -10536,7 +10620,7 @@
 	)
 	(wire
 		(pts
-			(xy 146.05 134.62) (xy 149.86 134.62)
+			(xy 146.05 134.62) (xy 148.59 134.62)
 		)
 		(stroke
 			(width 0)
@@ -10693,6 +10777,16 @@
 			(type default)
 		)
 		(uuid "ee7565ee-f4b5-46f8-a90e-470417dad9a3")
+	)
+	(wire
+		(pts
+			(xy 148.59 132.08) (xy 148.59 134.62)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "eea43613-7bb2-4605-a2f9-e1635c149c82")
 	)
 	(wire
 		(pts
@@ -10983,6 +11077,16 @@
 			(justify left bottom)
 		)
 		(uuid "7032ae01-520b-4e3f-a3a8-860afd40c04c")
+	)
+	(label "PMID"
+		(at 233.68 45.72 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e5fee955-4f8a-4fc6-9295-7e3cf977be59")
 	)
 	(global_label "I2C_HOST_SDA"
 		(shape bidirectional)
@@ -11584,7 +11688,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "footprints:R_Shunt_0805_2012Metric_Kelvin"
 			(at 62.23 185.928 90)
 			(hide yes)
 			(show_name no)
@@ -26091,7 +26195,7 @@
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
@@ -26119,7 +26223,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
 			(at 127 179.07 0)
 			(hide yes)
 			(show_name no)
